@@ -1,0 +1,28 @@
+/**
+* Typography
+ */
+
+body {
+    @apply text-gray-800 font-sans;
+}
+
+body ::selection {
+    @apply bg-blue-100;
+}
+
+h1, h2, h3, h4, h5 {
+    @apply mb-2 text-black font-display;
+}
+
+p {
+    max-width: 40rem;
+    @apply mb-2;
+}
+
+a {
+    @apply text-blue-600;
+
+    &:hover {
+        text-decoration: underline;
+    }
+}

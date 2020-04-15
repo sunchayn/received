@@ -1,0 +1,36 @@
+/**
+ * Primary Color
+ */
+$color-primary            : hsl(205, 65%, 55%);
+$color-primary-600        : hsl(205, 76%, 39%);
+$color-primary-700        : hsl(205, 82%, 33%);
+$color-primary-800        : hsl(205, 87%, 29%);
+$color-primary-900        : hsl(205, 100%, 21%);
+$color-primary-100        : hsl(205, 79%, 92%);
+$color-primary-200        : hsl(205, 97%, 85%);
+$color-primary-300        : hsl(205, 84%, 74%);
+$color-primary-400        : hsl(205, 74%, 65%);
+
+
+/**
+ * Secondary Color
+ */
+$color-secondary            : hsl(44, 92%, 63%);
+$color-secondary-600        : hsl(36, 77%, 49%);
+$color-secondary-700        : hsl(29, 80%, 44%);
+$color-secondary-800        : hsl(22, 82%, 39%);
+$color-secondary-900        : hsl(15, 86%, 30%);
+$color-secondary-100        : hsl(49, 100%, 96%);
+$color-secondary-200        : hsl(48, 100%, 88%);
+$color-secondary-300        : hsl(48, 95%, 76%);
+$color-secondary-400        : hsl(48, 94%, 68%);
+
+
+/**
+ * Breakpoints
+ * Mobile first
+ */
+$sm-breakpoint  : 576px;
+$md-breakpoint  : 768px;
+$lg-breakpoint  : 992px;
+$xl-breakpoint  : 1200px;
