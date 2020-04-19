@@ -14,6 +14,5 @@ class BroadcastServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-
     }
 }
