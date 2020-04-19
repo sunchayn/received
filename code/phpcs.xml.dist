@@ -18,4 +18,8 @@
     <!-- Standards to adapt -->
     <rule ref="PSR1"/>
     <rule ref="PSR2"/>
+
+    <rule ref="PSR1.Methods.CamelCapsMethodName">
+        <exclude-pattern>*/tests/*</exclude-pattern>
+    </rule>
 </ruleset>
