@@ -17,6 +17,15 @@ trait CreatesApplication
 
         $app->make(Kernel::class)->bootstrap();
 
+        $middleware = \App\Http\Middleware\VerifyCsrfToken::class;
+
+        $app->instance($middleware, new class {
+            public function handle($request, $next)
+            {
+                return $next($request);
+            }
+        });
+
         return $app;
     }
 }
