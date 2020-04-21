@@ -20,9 +20,11 @@ class CreateUsersTable extends Migration
             $table->string('username');
             $table->string('email')->nullable();
             $table->string('password');
+            $table->integer('country_code')->nullable();
             $table->string('phone_number');
             $table->string('verification_id')->nullable();
-            $table->string('two_fa_code')->nullable();
+            $table->string('authy_id')->nullable();
+            $table->boolean('ongoing_two_fa')->default(false);
             $table->datetime('verified_at')->nullable();
             $table->rememberToken();
 
