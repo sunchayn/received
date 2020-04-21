@@ -1,6 +1,8 @@
 <?php
 namespace Tests\Feature;
 
+use App\Services\SMS\Provider as SMSProvider;
+use App;
 use Auth;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -9,6 +11,12 @@ use Tests\TestCase;
 class AuthenticationTest extends TestCase
 {
     use RefreshDatabase;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+        SMSProvider::setupFakeService([]);
+    }
 
     /**
      * @dataProvider valid_user_data
@@ -75,6 +83,7 @@ class AuthenticationTest extends TestCase
 
         $data = [
             'phone_number' => $user->phone_number,
+            'country_code' =>  '216',
             'password' =>  123456,
         ];
 
@@ -222,6 +231,8 @@ class AuthenticationTest extends TestCase
      */
     public function it_verify_users()
     {
+        App::forgetInstance('SMS');
+
         $user = factory(User::class)->state('not_verified')->create();
         $this->signin($user);
 
@@ -229,8 +240,12 @@ class AuthenticationTest extends TestCase
 
         // It does not allow invalid verification codes
         // --
+        SMSProvider::setupFakeService([
+            'verification_should_succeed' => false,
+        ]);
+
         $data = [
-            'code' => null,
+            'code' => 122345,
         ];
 
         $this
@@ -245,6 +260,12 @@ class AuthenticationTest extends TestCase
         $data = [
             'code' => 123456,
         ];
+
+        App::forgetInstance('SMS');
+
+        SMSProvider::setupFakeService([
+            'verification_should_succeed' => true,
+        ]);
 
         $this
             ->json('post', $verificationRoute, $data)
@@ -290,7 +311,25 @@ class AuthenticationTest extends TestCase
         ;
 
         $user->refresh();
-        $this->assertNull($user->two_fa_code);
+        $this->assertFalse($user->needsTwoFA());
+    }
+
+    /**
+     * @test
+     */
+    public function user_can_request_another_verification_code()
+    {
+        $user = factory(User::class)->state('not_verified')->create();
+        $this->signin($user);
+
+        $previousVerificationId = $user->verification_id;
+
+        $this
+            ->json('post', route('auth.resend_verification_code'))
+            ->assertOk()
+        ;
+
+        $this->assertNotEquals($previousVerificationId, $user->refresh()->verification_id);
     }
 
     // Data providers
@@ -301,16 +340,19 @@ class AuthenticationTest extends TestCase
             [
                 [
                     'phone_number' => '',
+                    'country_code' => 'aa216',
                     'password' => '123456',
                 ],
                 [
                     'phone_number',
+                    'country_code',
                 ]
             ],
 
             [
                 [
-                    'phone_number' => 'aa',
+                    'phone_number' => '+2165555',
+                    'country_code' => '216',
                     'password' => '',
                 ],
                 [
@@ -326,7 +368,14 @@ class AuthenticationTest extends TestCase
         return [
             [
                 [
-                    'phone_number' => '+21699999999',
+                    'phone_number' => '99999999',
+                    'country_code' => '216',
+                    'password' => '123456',
+                ],
+
+                [
+                    'phone_number' => '99999999',
+                    'country_code' => '+216',
                     'password' => '123456',
                 ]
             ],

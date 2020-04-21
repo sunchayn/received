@@ -30,4 +30,15 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'sms' => [
+        'key' => env('SMS_SERVICE_KEY'),
+        'secret' => env('SMS_SERVICE_SECRET'),
+    ],
+
+    'twilio' => [
+        'verify_service_id' => env('TWILIO_VERIFICATION_SERVICE_ID'),
+        'authy_app_id' => env('TWILIO_AUTHY_APP_ID'),
+        'authy_email' => env('TWILIO_AUTHY_EMAIL'),
+    ]
+
 ];

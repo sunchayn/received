@@ -29,6 +29,8 @@ Route::middleware('auth')->group(function () {
         Route::get('/verify/{verification_id}', 'Auth\Verification@verificationPage')->name('verify');
         Route::post('/verify/{verification_id}', 'Auth\Verification@verify');
 
+        Route::post('/resend_verification_code', 'Auth\Verification@resendVerificationCode')->name('resend_verification_code');
+
         // 2FA
         Route::get('/two_factor_auth', 'Auth\Verification@twoFAPage')->name('2fa');
         Route::post('/two_factor_auth', 'Auth\Verification@check2FA');

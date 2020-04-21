@@ -13,7 +13,7 @@ $factory->define(User::class, function (Faker $faker) {
         'password' => bcrypt($faker->password),
         'phone_number' => $faker->phoneNumber,
         'verification_id' => null,
-        'two_fa_code' => null,
+        'ongoing_two_fa' => false,
         'verified_at' => $faker->dateTimeBetween('-1 year', 'now'),
     ];
 });
@@ -31,6 +31,6 @@ $factory->state(User::class, 'not_verified', function ($faker) {
 // --
 $factory->state(User::class, 'needs_2fa', function ($faker) {
     return [
-        'two_fa_code' => '123456',
+        'ongoing_two_fa' => true,
     ];
 });

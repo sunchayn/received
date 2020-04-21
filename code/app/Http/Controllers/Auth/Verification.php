@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Models\User;
+use App\Services\SMS\Exceptions\VerificationCodeNotSentException;
+use App\Services\SMS\Exceptions\VerificationNotAchievedException;
+use App\Services\SMS\ProviderInterface as SMSProviderInterface;
 use Carbon\Carbon;
 use Auth;
 
@@ -23,7 +26,9 @@ class Verification extends \App\Http\Controllers\Controller
 
         if (! $this->verifyRequestId($verification_id, $data['code'])) {
             return response()->json([
-                'error' => 'Invalid verification code.',
+                'errors' => [
+                    'code' => 'Invalid verification code.',
+                ]
             ], 422);
         }
 
@@ -32,6 +37,24 @@ class Verification extends \App\Http\Controllers\Controller
         $user->save();
 
         return redirect()->route('home');
+    }
+
+    public function resendVerificationCode()
+    {
+        $verification_id = $this->generateVerificationId(Auth::user()->phone_number);
+
+        if ($verification_id === false) {
+            return response()->json([
+                'error' => 'Internal service error. We\'re sorry for this inconvenient.',
+            ], 500);
+        }
+
+        Auth::user()->verification_id = $verification_id;
+        Auth::user()->save();
+
+        return response()->json([
+            'success' => 'Verification code has been sent.',
+        ], 200);
     }
 
     public function twoFAPage()
@@ -51,15 +74,41 @@ class Verification extends \App\Http\Controllers\Controller
             ], 422);
         }
 
-        Auth::user()->two_fa_code = null;
+        Auth::user()->ongoing_two_fa = false;
         Auth::user()->save();
 
         return redirect()->route('home');
     }
 
+    /**
+     * todo: Add request rate limit 1 code per minute
+     */
+    protected function generateVerificationId(String $phoneNumber)
+    {
+        /**
+         * @var SMSProviderInterface $smsProvider
+         */
+        $smsProvider = app()->make('SMS');
+
+        try {
+            return $smsProvider->sendVerificationCode($phoneNumber);
+        } catch (VerificationCodeNotSentException $e) {
+            return false;
+        }
+    }
+
     protected function verifyRequestId(string $verificationId, string $code)
     {
-        return true;
+        /**
+         * @var SMSProviderInterface $smsProvider
+         */
+        $smsProvider = app()->make('SMS');
+
+        try {
+            return $smsProvider->verify($verificationId, $code);
+        } catch (VerificationNotAchievedException $e) {
+            return false;
+        }
     }
 
     protected function verifyTwoFACode(\Illuminate\Contracts\Auth\Authenticatable $user, string $code)

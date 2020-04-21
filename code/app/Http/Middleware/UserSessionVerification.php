@@ -30,7 +30,7 @@ class UserSessionVerification
             return $next($request);
         }
 
-        if (Str::contains($request->path(), 'verify')) {
+        if (Str::contains($request->path(), 'verify') || Str::contains($request->path(), 'resend_verification_code')) {
             return $next($request);
         }
 

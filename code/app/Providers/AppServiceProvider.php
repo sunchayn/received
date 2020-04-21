@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Services\SMS\Provider;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -13,7 +14,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->singleton('SMS', function () {
+            return ( new Provider() )->getService();
+        });
     }
 
     /**
