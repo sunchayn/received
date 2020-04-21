@@ -1,10 +1,10 @@
-# Recieved;
+# Received;
 
 Public bucket for receiving files.
 
 ## About
 
-**Recieved;** is a platform that enable people to reserve a storage space and create a public gateway to recieves files from their friends, co-worker or themselves.
+**Received;** is a platform that enable people to reserve a storage space and create a public gateway to recieves files from their friends, co-worker or themselves.
 
 the idea is to create one **easy to remember** URL and protect each folder with different password. Hence, the whoever got the link can use the same URL to share files to different folders each with it's unique password.
 
