@@ -2,7 +2,7 @@
 
 namespace App\Services\SMS\Providers;
 
-use App\Services\SMS\AuthyContract;
+use App\Services\SMS\SmsServiceContract;
 use App\Services\SMS\ProviderInterface;
 use App\Services\SMS\Exceptions\UserNotCreatedException;
 use App\Services\SMS\Exceptions\TwoFactorCodeNotSentException;
@@ -35,8 +35,10 @@ class Twilio implements ProviderInterface
     /**
      * @inheritDoc
      */
-    public function sendVerificationCode(string $phoneNumber): string
+    public function sendVerificationCode(SmsServiceContract $user): string
     {
+        $phoneNumber = $user->getCountryCode() . $user->getPhoneNumber();
+
         try {
             return $this->client->verify->v2
                 ->services(config('services.twilio.verify_service_id'))
@@ -70,21 +72,22 @@ class Twilio implements ProviderInterface
     /**
      * @inheritDoc
      */
-    public function sendTwoFactorCode(AuthyContract $user): string
+    public function sendTwoFactorCode(SmsServiceContract $user): bool
     {
         $authy = new AuthyApi(config('services.twilio.authy_app_id'));
 
         $authyId = $user->getAuthyAppId();
 
         if (is_null($authyId)) {
-            $user = $authy->registerUser(
+            $authyUser = $authy->registerUser(
                 config('services.twilio.authy_mail'),
                 $user->getPhoneNumber(),
                 $user->getCountryCode()
             );
 
-            if ($user->ok()) {
-                $authyId = $user->id();
+            if ($authyUser->ok()) {
+                $authyId = $authyUser->id();
+                $user->setAuthyAppId($authyId);
             } else {
                 throw new UserNotCreatedException("Unable to create an authy user.");
             }
@@ -92,20 +95,16 @@ class Twilio implements ProviderInterface
 
         $response = $authy->requestSms($authyId);
 
-        if ($response->ok()) {
-            return true;
-        }
-
-        throw new TwoFactorCodeNotSentException("Unable to send two factor authentication code.");
+        return $response->ok();
     }
 
     /**
      * @inheritDoc
      */
-    public function verifyTwoFactorCode(string $authyId, string $code): bool
+    public function verifyTwoFactorCode(SmsServiceContract $user, string $code): bool
     {
         $authy = new AuthyApi(config('services.twilio.authy_app_id'));
-        $response = $authy->verifyToken($authyId, $code);
+        $response = $authy->verifyToken($user->getAuthyAppId(), $code);
 
         return $response->ok();
     }

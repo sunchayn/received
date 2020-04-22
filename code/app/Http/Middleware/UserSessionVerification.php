@@ -23,14 +23,10 @@ class UserSessionVerification
         }
 
         if (Auth::user()->isVerified()) {
-            if (Auth::user()->needsTwoFA() && !Str::contains($request->path(), 'two_factor_auth')) {
+            if (Auth::user()->needsTwoFa()) {
                 return redirect()->route('auth.2fa');
             }
 
-            return $next($request);
-        }
-
-        if (Str::contains($request->path(), 'verify') || Str::contains($request->path(), 'resend_verification_code')) {
             return $next($request);
         }
 

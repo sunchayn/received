@@ -2,7 +2,7 @@
 
 namespace App\Services\SMS\Providers;
 
-use App\Services\SMS\AuthyContract;
+use App\Services\SMS\SmsServiceContract;
 use App\Services\SMS\ProviderInterface;
 use Illuminate\Support\Str;
 
@@ -25,7 +25,7 @@ class Fake implements ProviderInterface
     /**
      * @inheritDoc
      */
-    public function sendVerificationCode(string $phoneNumber): string
+    public function sendVerificationCode(SmsServiceContract $user): string
     {
         return Str::random(10);
     }
@@ -42,7 +42,7 @@ class Fake implements ProviderInterface
     /**
      * @inheritDoc
      */
-    public function sendTwoFactorCode(AuthyContract $user): string
+    public function sendTwoFactorCode(SmsServiceContract $user): bool
     {
         return Str::random(10);
     }
@@ -50,7 +50,7 @@ class Fake implements ProviderInterface
     /**
      * @inheritDoc
      */
-    public function verifyTwoFactorCode(string $twoFactorAuthRequestId, string $code): bool
+    public function verifyTwoFactorCode(SmsServiceContract $user, string $code): bool
     {
         $shouldSucceed = $this->config['two_factor_verification_should_succeed'];
         return $shouldSucceed ? $shouldSucceed === true : false;

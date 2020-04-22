@@ -5,6 +5,7 @@ use App\Services\SMS\Provider as SMSProvider;
 use App;
 use Auth;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -276,6 +277,7 @@ class AuthenticationTest extends TestCase
 
         $this->assertNull($user->verification_id);
         $this->assertNotNull($user->verified_at);
+        $this->assertTrue($user->verified_at->diffInMinutes(Carbon::now()) <= 1);
     }
 
     /**
@@ -283,13 +285,19 @@ class AuthenticationTest extends TestCase
      */
     public function it_accept_two_fa_codes()
     {
+        App::forgetInstance('SMS');
+
         $user = factory(User::class)->state('needs_2fa')->create();
         $this->signin($user);
 
         // It does not allow invalid verification IDs
         // --
+        SMSProvider::setupFakeService([
+            'two_factor_verification_should_succeed' => false,
+        ]);
+
         $data = [
-            'code' => null,
+            'code' => 122,
         ];
 
         $this
@@ -305,13 +313,18 @@ class AuthenticationTest extends TestCase
             'code' => 123456,
         ];
 
+        App::forgetInstance('SMS');
+        SMSProvider::setupFakeService([
+            'two_factor_verification_should_succeed' => true,
+        ]);
+
         $this
             ->json('post', route('auth.2fa'), $data)
             ->assertRedirect(route('home'))
         ;
 
         $user->refresh();
-        $this->assertFalse($user->needsTwoFA());
+        $this->assertFalse($user->needsTwoFa());
     }
 
     /**
@@ -319,7 +332,10 @@ class AuthenticationTest extends TestCase
      */
     public function user_can_request_another_verification_code()
     {
-        $user = factory(User::class)->state('not_verified')->create();
+        $user = factory(User::class)->state('not_verified')->create([
+            'last_code_sent_at' => now()->subMinutes(5)
+        ]);
+
         $this->signin($user);
 
         $previousVerificationId = $user->verification_id;
@@ -330,6 +346,69 @@ class AuthenticationTest extends TestCase
         ;
 
         $this->assertNotEquals($previousVerificationId, $user->refresh()->verification_id);
+        $this->assertTrue($user->last_code_sent_at->diffInMinutes(Carbon::now()) <= 1);
+    }
+
+    /**
+     * @test
+     */
+    public function user_can_request_another_two_fa_code()
+    {
+        $user = factory(User::class)->state('needs_2fa')->create([
+            'last_code_sent_at' => now()->subMinutes(5)
+        ]);
+
+        $this->signin($user);
+
+        $this
+            ->json('post', route('auth.resend_2fa_code'))
+            ->assertOk()
+        ;
+
+        $this->assertTrue($user->last_code_sent_at->diffInMinutes(Carbon::now()) <= 1);
+    }
+
+    /**
+     * @test
+     */
+    public function it_limit_sms_rates()
+    {
+        // Verification code
+        // --
+        $user = factory(User::class)->state('not_verified')->create();
+
+        $this->signin($user);
+
+        // First SMS
+        $this
+            ->json('post', route('auth.resend_verification_code'))
+        ;
+
+        // Second
+        $this
+            ->json('post', route('auth.resend_verification_code'))
+            ->assertJsonValidationErrors([
+                'sms_rate',
+            ])
+        ;
+
+        // Two factor authentication
+        // --
+        $user = factory(User::class)->state('needs_2fa')->create();
+        $this->signin($user);
+
+        // First SMS
+        $this
+            ->json('post', route('auth.resend_2fa_code'))
+        ;
+
+        // Second
+        $this
+            ->json('post', route('auth.resend_2fa_code'))
+            ->assertJsonValidationErrors([
+                'sms_rate',
+            ])
+        ;
     }
 
     // Data providers

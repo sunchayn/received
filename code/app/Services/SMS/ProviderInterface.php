@@ -4,20 +4,18 @@ namespace App\Services\SMS;
 
 use App\Services\SMS\Exceptions\VerificationCodeNotSentException;
 use App\Services\SMS\Exceptions\VerificationNotAchievedException;
-use App\Services\SMS\Exceptions\TwoFactorCodeNotSentException;
 use App\Services\SMS\Exceptions\UserNotCreatedException;
 
 interface ProviderInterface
 {
-
     /**
-     * Send a verification code to the given phone number.
+     * Send a verification code to the given user
      *
-     * @param string $phoneNumber
+     * @param SmsServiceContract $user
      * @throws VerificationCodeNotSentException
      * @return string A unique identifier for the request.
      */
-    public function sendVerificationCode(string $phoneNumber): string;
+    public function sendVerificationCode(SmsServiceContract $user): string;
 
     /**
      * Verify the integrity of the given verification code.
@@ -30,22 +28,20 @@ interface ProviderInterface
     public function verify(string $verificationId, string $code): bool;
 
     /**
-     * Send a two factor authentication code to the given phone number.
+     * Send a 2FA code to the given user
      *
-     * @param AuthyContract $user
-     * @throws TwoFactorCodeNotSentException
+     * @param SmsServiceContract $user
      * @throws UserNotCreatedException
-     * @return string A unique identifier for the request.
+     * @return bool Indicates whether the code has been sent or not.
      */
-    public function sendTwoFactorCode(AuthyContract $user): string;
+    public function sendTwoFactorCode(SmsServiceContract $user): bool;
 
     /**
-     * Verify the integrity of the given two factor authentication code.
+     * Verify the integrity of the given 2FA code.
      *
-     * @param string $twoFactorAuthRequestId
+     * @param SmsServiceContract $user
      * @param string $code
-     * @throws VerificationNotAchievedException
      * @return bool
      */
-    public function verifyTwoFactorCode(string $twoFactorAuthRequestId, string $code): bool;
+    public function verifyTwoFactorCode(SmsServiceContract $user, string $code): bool;
 }

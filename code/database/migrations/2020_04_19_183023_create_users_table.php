@@ -26,6 +26,7 @@ class CreateUsersTable extends Migration
             $table->string('authy_id')->nullable();
             $table->boolean('ongoing_two_fa')->default(false);
             $table->datetime('verified_at')->nullable();
+            $table->datetime('last_code_sent_at')->nullable()->comment('Indicates when the last SMS with a verification/2fa code has been sent. Used to limit the SMS sending rate.');
             $table->rememberToken();
 
             $table->timestamps();

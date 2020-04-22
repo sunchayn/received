@@ -5,7 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Carbon;
-use App\Services\SMS\AuthyContract;
+use App\Services\SMS\SmsServiceContract;
+use App\Models\Traits\Verification;
 
 /**
  * App\Models\User
@@ -21,12 +22,15 @@ use App\Services\SMS\AuthyContract;
  * @property boolean $ongoing_two_fa
  * @property integer $country_code
  * @property Carbon|null $verified_at
+ * @property Carbon|null $last_code_sent_at
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @mixin Builder
  */
-class User extends Authenticatable implements AuthyContract
+class User extends Authenticatable implements SmsServiceContract
 {
+    use Verification;
+
     protected $guarded = [];
 
     protected $casts = [
@@ -35,6 +39,7 @@ class User extends Authenticatable implements AuthyContract
 
     protected $dates = [
         'verified_at',
+        'last_code_sent_at',
     ];
 
     public function isVerified()
@@ -42,11 +47,15 @@ class User extends Authenticatable implements AuthyContract
         return $this->verified_at != null;
     }
 
-    public function needsTwoFA()
+    public function needsTwoFa()
     {
         return $this->ongoing_two_fa;
     }
 
+    /**
+     * AuthyContract for double factor authentication
+     * --
+     */
 
     public function getAuthyAppId(): string
     {
@@ -61,5 +70,11 @@ class User extends Authenticatable implements AuthyContract
     public function getCountryCode(): string
     {
         return $this->country_code;
+    }
+
+    public function setAuthyAppId(string $id)
+    {
+        $this->authy_id = $id;
+        $this->save();
     }
 }
