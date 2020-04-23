@@ -95,9 +95,10 @@ export default {
                             this.validationNotification();
                         }
                     } else {
-                        // console.log(error);
+                        const message = error.response.data.message || 'Something went wrong.';
+
                         // Show an error notification is exists
-                        this.somethingWentWrongNotification();
+                        this.somethingWentWrongNotification({message: message});
                     }
                 })
                 .finally(() => {

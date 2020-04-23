@@ -40235,9 +40235,11 @@ Vue.config.optionMergeStrategies.notifications = function (toVal, fromVal) {
             _this.validationNotification();
           }
         } else {
-          // console.log(error);
-          // Show an error notification is exists
-          _this.somethingWentWrongNotification();
+          var message = error.response.data.message || 'Something went wrong.'; // Show an error notification is exists
+
+          _this.somethingWentWrongNotification({
+            message: message
+          });
         }
       })["finally"](function () {
         _this.form.data.submit.classList.remove('is-submitting');
