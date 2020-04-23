@@ -98,7 +98,7 @@ class Security extends \App\Http\Controllers\Controller
 
         $users->clear2FaStatus($user);
 
-        return redirect()->route('home');
+        return $this->redirectAndConsiderAjax(route('home'));
     }
 
     /**

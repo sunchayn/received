@@ -38,11 +38,11 @@ class Signin extends \App\Http\Controllers\Controller
 
             if ($user->isVerified()) {
                 $user->send2FaCode();
-                return redirect()->route('auth.2fa');
+                return $this->redirectAndConsiderAjax(route('auth.2fa'));
             }
 
             $id = $user->sendVerificationCode();
-            return redirect()->route('auth.verify', ['verification_id' => $id]);
+            return $this->redirectAndConsiderAjax(route('auth.verify', ['verification_id' => $id]));
         }
 
         return $this->jsonUnprocessableEntity('The given credentials does not match!');

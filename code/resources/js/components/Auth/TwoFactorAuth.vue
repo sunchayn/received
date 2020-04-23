@@ -1,7 +1,7 @@
 <template>
     <form action="#" @submit.prevent="submitHandler" id="js-code-form-hook">
         <div class="form-group">
-            <small>A 6 digit code has been sent to the number you provided, kindly enter it below to verify your phone number.</small>
+            <small>A 6 digit code has been sent to your number, kindly enter it below to verify your identity.</small>
         </div>
 
         <div class="form-groups">

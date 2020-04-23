@@ -2637,6 +2637,83 @@ module.exports = {
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Auth/Signin.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Auth/Signin.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _mixins_submitForm__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../mixins/submitForm */ "./resources/js/mixins/submitForm.js");
+/* harmony import */ var vue_tel_input__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-tel-input */ "./node_modules/vue-tel-input/dist/vue-tel-input.esm.js");
+/* harmony import */ var _ui_AppInput__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../ui/AppInput */ "./resources/js/ui/AppInput.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: [],
+  mixins: [_mixins_submitForm__WEBPACK_IMPORTED_MODULE_0__["default"]],
+  components: {
+    AppInput: _ui_AppInput__WEBPACK_IMPORTED_MODULE_2__["default"],
+    VueTelInput: vue_tel_input__WEBPACK_IMPORTED_MODULE_1__["VueTelInput"]
+  },
+  data: function data() {
+    return {
+      skeleton: {
+        phone_number: '',
+        password: ''
+      },
+      entity: {},
+      phone_number: ''
+    };
+  },
+  methods: {
+    setPhoneNumber: function setPhoneNumber(data) {
+      this.entity.country_code = data.country.dialCode;
+      this.entity.phone_number = data.number.significant;
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Auth/Signup.vue?vue&type=script&lang=js&":
 /*!**********************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Auth/Signup.vue?vue&type=script&lang=js& ***!
@@ -2741,6 +2818,72 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Auth/TwoFactorAuth.vue?vue&type=script&lang=js&":
+/*!*****************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Auth/TwoFactorAuth.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _mixins_submitForm__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../mixins/submitForm */ "./resources/js/mixins/submitForm.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  mixins: [_mixins_submitForm__WEBPACK_IMPORTED_MODULE_0__["default"]],
+  data: function data() {
+    return {
+      formHook: '#js-code-form-hook',
+      entity: {
+        code: ''
+      }
+    };
+  },
+  methods: {
+    checkInput: function checkInput(evt) {
+      evt = evt ? evt : window.event;
+      var charCode = evt.which ? evt.which : evt.keyCode;
+
+      if (charCode > 31 && (charCode < 48 || charCode > 57) || charCode === 46) {
+        evt.preventDefault();
+      } else {
+        return true;
+      }
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Auth/Verify.vue?vue&type=script&lang=js&":
 /*!**********************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Auth/Verify.vue?vue&type=script&lang=js& ***!
@@ -2795,7 +2938,6 @@ __webpack_require__.r(__webpack_exports__);
     checkInput: function checkInput(evt) {
       evt = evt ? evt : window.event;
       var charCode = evt.which ? evt.which : evt.keyCode;
-      console.log(charCode);
 
       if (charCode > 31 && (charCode < 48 || charCode > 57) || charCode === 46) {
         evt.preventDefault();
@@ -25364,6 +25506,114 @@ function _defineProperty(e,n,t){return n in e?Object.defineProperty(e,n,{value:t
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Auth/Signin.vue?vue&type=template&id=0325ff24&":
+/*!**************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Auth/Signin.vue?vue&type=template&id=0325ff24& ***!
+  \**************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("fragment", [
+    _c(
+      "form",
+      {
+        attrs: { id: "js-form-hook" },
+        on: {
+          submit: function($event) {
+            $event.preventDefault()
+            return _vm.submitHandler($event)
+          }
+        }
+      },
+      [
+        _c(
+          "div",
+          { staticClass: "form-group", attrs: { id: "css-overpower" } },
+          [
+            _c(
+              "div",
+              {
+                staticClass: "js-input",
+                attrs: { "data-name": "phone_number" }
+              },
+              [
+                _c("VueTelInput", {
+                  attrs: {
+                    enabledCountryCode: true,
+                    validCharactersOnly: true,
+                    placeholder: "Enter your phone number"
+                  },
+                  on: {
+                    onInput: _vm.setPhoneNumber,
+                    "country-changed": function($event) {
+                      _vm.entity.country_code = $event.dialCode
+                    }
+                  },
+                  model: {
+                    value: _vm.phone_number,
+                    callback: function($$v) {
+                      _vm.phone_number = $$v
+                    },
+                    expression: "phone_number"
+                  }
+                })
+              ],
+              1
+            )
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "form-group" },
+          [
+            _c("app-input", {
+              attrs: {
+                label: false,
+                name: "password",
+                type: "password",
+                placeholder: "*******"
+              },
+              model: {
+                value: _vm.entity.password,
+                callback: function($$v) {
+                  _vm.$set(_vm.entity, "password", $$v)
+                },
+                expression: "entity.password"
+              }
+            }),
+            _vm._v(" "),
+            _c("small", {
+              staticClass: "input-error",
+              attrs: { id: "js-error-holder" }
+            })
+          ],
+          1
+        ),
+        _vm._v(" "),
+        _c("input", {
+          staticClass: "button w-full uppercase",
+          attrs: { type: "submit", value: "Sign in" }
+        })
+      ]
+    )
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Auth/Signup.vue?vue&type=template&id=130356e4&":
 /*!**************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Auth/Signup.vue?vue&type=template&id=130356e4& ***!
@@ -25488,6 +25738,104 @@ var render = function() {
   )
 }
 var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Auth/TwoFactorAuth.vue?vue&type=template&id=0adc7267&":
+/*!*********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Auth/TwoFactorAuth.vue?vue&type=template&id=0adc7267& ***!
+  \*********************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "form",
+    {
+      attrs: { action: "#", id: "js-code-form-hook" },
+      on: {
+        submit: function($event) {
+          $event.preventDefault()
+          return _vm.submitHandler($event)
+        }
+      }
+    },
+    [
+      _vm._m(0),
+      _vm._v(" "),
+      _c("div", { staticClass: "form-groups" }, [
+        _c("div", { staticClass: "form-group mb-0" }, [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.entity.code,
+                expression: "entity.code"
+              }
+            ],
+            staticClass: "input px-2",
+            attrs: {
+              type: "text",
+              name: "code",
+              maxlength: "6",
+              placeholder: "# # # # # #"
+            },
+            domProps: { value: _vm.entity.code },
+            on: {
+              keypress: _vm.checkInput,
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.entity, "code", $event.target.value)
+              }
+            }
+          }),
+          _vm._v(" "),
+          _c("div", { staticClass: "input-error" })
+        ]),
+        _vm._v(" "),
+        _vm._m(1)
+      ])
+    ]
+  )
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group" }, [
+      _c("small", [
+        _vm._v(
+          "A 6 digit code has been sent to your number, kindly enter it below to verify your identity."
+        )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group mb-0" }, [
+      _c("input", {
+        staticClass: "button w-full uppercase",
+        attrs: { type: "submit", value: "Verify" }
+      })
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -39344,7 +39692,9 @@ window.CSRFToken = token.content;
 /***/ (function(module, exports, __webpack_require__) {
 
 var map = {
+	"./Auth/Signin.vue": "./resources/js/components/Auth/Signin.vue",
 	"./Auth/Signup.vue": "./resources/js/components/Auth/Signup.vue",
+	"./Auth/TwoFactorAuth.vue": "./resources/js/components/Auth/TwoFactorAuth.vue",
 	"./Auth/Verify.vue": "./resources/js/components/Auth/Verify.vue",
 	"./PhoneNumber.vue": "./resources/js/components/PhoneNumber.vue",
 	"./Welcome.vue": "./resources/js/components/Welcome.vue"
@@ -39369,6 +39719,75 @@ webpackContext.keys = function webpackContextKeys() {
 webpackContext.resolve = webpackContextResolve;
 module.exports = webpackContext;
 webpackContext.id = "./resources/js/components sync recursive \\.vue$/";
+
+/***/ }),
+
+/***/ "./resources/js/components/Auth/Signin.vue":
+/*!*************************************************!*\
+  !*** ./resources/js/components/Auth/Signin.vue ***!
+  \*************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Signin_vue_vue_type_template_id_0325ff24___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Signin.vue?vue&type=template&id=0325ff24& */ "./resources/js/components/Auth/Signin.vue?vue&type=template&id=0325ff24&");
+/* harmony import */ var _Signin_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Signin.vue?vue&type=script&lang=js& */ "./resources/js/components/Auth/Signin.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _Signin_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _Signin_vue_vue_type_template_id_0325ff24___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _Signin_vue_vue_type_template_id_0325ff24___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/Auth/Signin.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/Auth/Signin.vue?vue&type=script&lang=js&":
+/*!**************************************************************************!*\
+  !*** ./resources/js/components/Auth/Signin.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Signin_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./Signin.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Auth/Signin.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Signin_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/Auth/Signin.vue?vue&type=template&id=0325ff24&":
+/*!********************************************************************************!*\
+  !*** ./resources/js/components/Auth/Signin.vue?vue&type=template&id=0325ff24& ***!
+  \********************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Signin_vue_vue_type_template_id_0325ff24___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./Signin.vue?vue&type=template&id=0325ff24& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Auth/Signin.vue?vue&type=template&id=0325ff24&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Signin_vue_vue_type_template_id_0325ff24___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Signin_vue_vue_type_template_id_0325ff24___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
 
 /***/ }),
 
@@ -39437,6 +39856,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Signup_vue_vue_type_template_id_130356e4___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Signup_vue_vue_type_template_id_130356e4___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/Auth/TwoFactorAuth.vue":
+/*!********************************************************!*\
+  !*** ./resources/js/components/Auth/TwoFactorAuth.vue ***!
+  \********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _TwoFactorAuth_vue_vue_type_template_id_0adc7267___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./TwoFactorAuth.vue?vue&type=template&id=0adc7267& */ "./resources/js/components/Auth/TwoFactorAuth.vue?vue&type=template&id=0adc7267&");
+/* harmony import */ var _TwoFactorAuth_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./TwoFactorAuth.vue?vue&type=script&lang=js& */ "./resources/js/components/Auth/TwoFactorAuth.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _TwoFactorAuth_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _TwoFactorAuth_vue_vue_type_template_id_0adc7267___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _TwoFactorAuth_vue_vue_type_template_id_0adc7267___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/Auth/TwoFactorAuth.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/Auth/TwoFactorAuth.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************!*\
+  !*** ./resources/js/components/Auth/TwoFactorAuth.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_TwoFactorAuth_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./TwoFactorAuth.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Auth/TwoFactorAuth.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_TwoFactorAuth_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/Auth/TwoFactorAuth.vue?vue&type=template&id=0adc7267&":
+/*!***************************************************************************************!*\
+  !*** ./resources/js/components/Auth/TwoFactorAuth.vue?vue&type=template&id=0adc7267& ***!
+  \***************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TwoFactorAuth_vue_vue_type_template_id_0adc7267___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./TwoFactorAuth.vue?vue&type=template&id=0adc7267& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Auth/TwoFactorAuth.vue?vue&type=template&id=0adc7267&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TwoFactorAuth_vue_vue_type_template_id_0adc7267___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TwoFactorAuth_vue_vue_type_template_id_0adc7267___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
@@ -39682,7 +40170,9 @@ Vue.config.optionMergeStrategies.notifications = function (toVal, fromVal) {
     }
 
     if (this.preErrors) {
-      this.form.showErrors(this.preErrors);
+      this.form.showErrors({
+        errors: this.preErrors
+      });
     }
   },
   methods: {
@@ -39738,7 +40228,7 @@ Vue.config.optionMergeStrategies.notifications = function (toVal, fromVal) {
             _this.sanitizeErrors(error.response);
           }
 
-          _this.form.showErrors(error.response.data.errors); // Show an error notification is exists
+          _this.form.showErrors(error.response.data); // Show an error notification is exists
 
 
           if (typeof _this.validationNotification === 'function') {
@@ -39923,24 +40413,25 @@ var FormHandler = /*#__PURE__*/function () {
     }
   }, {
     key: "showErrors",
-    value: function showErrors(errors) {
+    value: function showErrors(input) {
       this.resetErrors();
+      var errors = input.errors;
 
       if (errors !== undefined) {
         for (var error in errors) {
-          var input = this.data.inputs[error];
+          var _input = this.data.inputs[error];
 
-          if (input) {
-            input.groupNode.classList.add('is-error');
+          if (_input) {
+            _input.groupNode.classList.add('is-error');
 
-            if (input.errorsHolder && typeof errors[error] !== 'boolean') {
-              input.errorsHolder.innerHTML = errors[error];
+            if (_input.errorsHolder && typeof errors[error] !== 'boolean') {
+              _input.errorsHolder.innerHTML = errors[error];
             }
           }
         }
       } else {
         if (this.data.error) {
-          this.data.error.innerHTML = response.data.message;
+          this.data.error.innerHTML = input.error;
           this.data.error.classList.add('is-visible');
         }
       }

@@ -60,8 +60,10 @@ class FormHandler {
         return new FormData(this.data.node);
     }
 
-    showErrors(errors) {
+    showErrors(input) {
         this.resetErrors();
+
+        const errors = input.errors;
 
         if (errors !== undefined) {
             for(const error in errors) {
@@ -76,7 +78,7 @@ class FormHandler {
             }
         } else {
             if (this.data.error) {
-                this.data.error.innerHTML = response.data.message;
+                this.data.error.innerHTML = input.error;
                 this.data.error.classList.add('is-visible')
             }
         }

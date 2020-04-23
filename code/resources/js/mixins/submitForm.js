@@ -33,7 +33,7 @@ export default {
         }
 
         if (this.preErrors) {
-            this.form.showErrors(this.preErrors);
+            this.form.showErrors({errors: this.preErrors});
         }
     },
 
@@ -88,7 +88,7 @@ export default {
                             this.sanitizeErrors(error.response);
                         }
 
-                        this.form.showErrors(error.response.data.errors);
+                        this.form.showErrors(error.response.data);
 
                         // Show an error notification is exists
                         if (typeof this.validationNotification === 'function') {

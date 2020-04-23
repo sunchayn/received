@@ -64,7 +64,7 @@
 
                                 <div class="form-group">
                                     <phone-number>
-                                        <div class="placeholder placeholder--input"></div>
+                                        <div class="placeholder placeholder--input" style="height: 42px;"></div>
                                     </phone-number>
                                 </div>
 

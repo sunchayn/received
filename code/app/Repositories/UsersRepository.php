@@ -27,6 +27,7 @@ class UsersRepository
     public function markAsVerified(User $user)
     {
         $user->verification_id = null;
+        $user->ongoing_two_fa = false;
         $user->verified_at = Carbon::now();
         $user->save();
     }
