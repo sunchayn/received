@@ -90,7 +90,7 @@ class Security extends \App\Http\Controllers\Controller
 
         if (! $user->check2FaCode($code)) {
             return $this->validationErrors([
-                'code' => 'Invalid two factor authentication code.'
+                'code' => 'Invalid 2FA code.'
             ]);
         }
 
