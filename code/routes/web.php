@@ -3,7 +3,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('pages.landing');
-})->name('landing_page')->middleware('clean_session');
+})->name('landing_page')->middleware(['guest', 'clean_session']);
 
 // Authentication
 // --
