@@ -57,7 +57,7 @@ class User extends Authenticatable implements SmsServiceContract
      * --
      */
 
-    public function getAuthyAppId(): string
+    public function getAuthyAppId()
     {
         return $this->authy_id;
     }

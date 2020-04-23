@@ -7,9 +7,9 @@ interface SmsServiceContract
     /**
      * Get the user Authy app identifier.
      *
-     * @return string
+     * @return mixed
      */
-    public function getAuthyAppId(): string;
+    public function getAuthyAppId();
 
     /**
      * Set an Authy app id for the given user.

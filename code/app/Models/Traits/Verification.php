@@ -113,14 +113,14 @@ trait Verification
              */
             $smsProvider = app()->make('SMS');
 
+            $this->{$this->ongoing2FaField}  = true;
+            $this->save();
+
             $delivered = $smsProvider->sendTwoFactorCode($this);
 
             if ($delivered) {
                 $this->{$this->smsDeliveryTimeField} = Carbon::now();
             }
-
-            $this->{$this->ongoing2FaField}  = true;
-            $this->save();
 
             return $delivered;
         } catch (UserNotCreatedException $e) {

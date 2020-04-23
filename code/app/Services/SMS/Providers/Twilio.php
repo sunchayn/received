@@ -82,11 +82,13 @@ class Twilio implements ProviderInterface
 
         $authyId = $user->getAuthyAppId();
 
+
         if (is_null($authyId)) {
             $authyUser = $authy->registerUser(
-                config('services.twilio.authy_mail'),
+                config('services.twilio.authy_email'),
                 $user->getPhoneNumber(),
-                $user->getCountryCode()
+                $user->getCountryCode(),
+                false
             );
 
             if ($authyUser->ok()) {
@@ -107,9 +109,14 @@ class Twilio implements ProviderInterface
      */
     public function verifyTwoFactorCode(SmsServiceContract $user, string $code): bool
     {
-        $authy = new AuthyApi(config('services.twilio.authy_app_id'));
-        $response = $authy->verifyToken($user->getAuthyAppId(), $code);
+        try {
+            $authy = new AuthyApi(config('services.twilio.authy_app_id'));
+            $response = $authy->verifyToken($user->getAuthyAppId(), $code);
 
-        return $response->ok();
+            return $response->ok();
+        } catch(\Exception $e) {
+            \Log::channel('sms')->debug( $e->getCode() . ' ' . $e->getMessage() );
+            return false;
+        }
     }
 }
