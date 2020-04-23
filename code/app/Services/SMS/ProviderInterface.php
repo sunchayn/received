@@ -20,12 +20,12 @@ interface ProviderInterface
     /**
      * Verify the integrity of the given verification code.
      *
-     * @param string $verificationId
+     * @param SmsServiceContract $user
      * @param string $code
      * @throws VerificationNotAchievedException
      * @return bool
      */
-    public function verify(string $verificationId, string $code): bool;
+    public function verify(SmsServiceContract $user, string $code): bool;
 
     /**
      * Send a 2FA code to the given user

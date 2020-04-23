@@ -33,7 +33,7 @@ class Fake implements ProviderInterface
     /**
      * @inheritDoc
      */
-    public function verify(string $requestId, string $code): bool
+    public function verify(SmsServiceContract $user, string $code): bool
     {
         $shouldSucceed = $this->config['verification_should_succeed'] ?? true;
         return $shouldSucceed ? $shouldSucceed === true : false;

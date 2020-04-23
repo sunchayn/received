@@ -37,7 +37,7 @@ class Twilio implements ProviderInterface
      */
     public function sendVerificationCode(SmsServiceContract $user): string
     {
-        $phoneNumber = $user->getCountryCode() . $user->getPhoneNumber();
+        $phoneNumber = '+' . $user->getCountryCode() . $user->getPhoneNumber();
 
         try {
             return $this->client->verify->v2
@@ -47,6 +47,7 @@ class Twilio implements ProviderInterface
                 ->sid
             ;
         } catch (TwilioException $e) {
+            \Log::channel('sms')->debug( $e->getCode() . ' ' . $e->getMessage() );
             throw new VerificationCodeNotSentException("Unable to send verification code.");
         }
     }
@@ -54,17 +55,20 @@ class Twilio implements ProviderInterface
     /**
      * @inheritDoc
      */
-    public function verify(string $requestId, string $code): bool
+    public function verify(SmsServiceContract $user, string $code): bool
     {
+        $phoneNumber = '+' . $user->getCountryCode() . $user->getPhoneNumber();
+        $verification = null;
         try {
             $verification = $this->client->verify->v2
                 ->services(config('services.twilio.verify_service_id'))
                 ->verificationChecks
-                ->create($code, ['verificationSid' => $requestId])
+                ->create($code, ['to' => $phoneNumber])
             ;
 
             return $verification->status === 'approved';
         } catch (TwilioException $e) {
+            \Log::channel('sms')->debug( $e->getCode() . ' ' . $e->getMessage() );
             throw new VerificationNotAchievedException("Unable to verify the code.");
         }
     }
