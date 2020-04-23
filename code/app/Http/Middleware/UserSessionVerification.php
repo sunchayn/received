@@ -30,6 +30,13 @@ class UserSessionVerification
             return $next($request);
         }
 
-        return redirect()->route('auth.verify', ['verification_id' => Auth::user()->verification_id]);
+        $id = Auth::user()->verification_id;
+
+        if (!$id) {
+            Auth::logout();
+            return redirect()->route('auth.signin');
+        }
+
+        return redirect()->route('auth.verify', ['verification_id' => $id]);
     }
 }
