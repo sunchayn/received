@@ -17,7 +17,7 @@ class Fake implements ProviderInterface
      * Fake constructor.
      * @param $config
      */
-    public function __construct($config)
+    public function __construct($config = [])
     {
         $this->config = $config;
     }
@@ -35,7 +35,7 @@ class Fake implements ProviderInterface
      */
     public function verify(string $requestId, string $code): bool
     {
-        $shouldSucceed = $this->config['verification_should_succeed'];
+        $shouldSucceed = $this->config['verification_should_succeed'] ?? true;
         return $shouldSucceed ? $shouldSucceed === true : false;
     }
 
@@ -52,7 +52,7 @@ class Fake implements ProviderInterface
      */
     public function verifyTwoFactorCode(SmsServiceContract $user, string $code): bool
     {
-        $shouldSucceed = $this->config['two_factor_verification_should_succeed'];
+        $shouldSucceed = $this->config['two_factor_verification_should_succeed'] ?? true;
         return $shouldSucceed ? $shouldSucceed === true : false;
     }
 }
