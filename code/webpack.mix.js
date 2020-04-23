@@ -1,7 +1,7 @@
 const mix = require('laravel-mix');
 const glob = require('glob-all');
 
-require('dotenv').config()
+require('dotenv').config();
 require('laravel-mix-purgecss');
 require('laravel-mix-tailwind');
 require('laravel-mix-alias');
@@ -12,6 +12,7 @@ mix.alias({
 
 mix.browserSync({
     proxy: process.env.APP_URL,
+    ui: false,
 });
 
 mix.options({
