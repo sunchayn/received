@@ -30,6 +30,8 @@
         "vue": "^2.6.10",
         "vue-fragment": "^1.5.1",
         "vue-notifications": "^1.0.2",
+        "vue-tel-input": "^4.4.0",
         "vue-template-compiler": "^2.6.10"
-    }
+    },
+    "dependencies": {}
 }

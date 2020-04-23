@@ -13,7 +13,7 @@ Vue.use(Fragment.Plugin);
 // VueJS Notifications
 function toast ({title, message, type, timeout, cb}) {
     if (type === VueNotifications.types.warn) type = 'warning';
-    return iziToast[type]({title, message, timeout, position: 'bottomLeft'})
+    return iziToast[type]({title, message, timeout, position: 'bottomCenter'})
 }
 
 Vue.use(VueNotifications, {
@@ -21,7 +21,14 @@ Vue.use(VueNotifications, {
     error: toast,
     info: toast,
     warn: toast
-})
+});
+
+// Vue Filters
+Vue.filter('capitalize', function (value) {
+    if (!value) return '';
+    value = value.toString();
+    return value.charAt(0).toUpperCase() + value.slice(1);
+});
 
 // Export VueJS
 window.Vue = Vue;

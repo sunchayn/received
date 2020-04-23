@@ -53,7 +53,7 @@ class Security extends \App\Http\Controllers\Controller
 
         $users->markAsVerified($user);
 
-        return redirect()->route('home');
+        return $this->redirectAndConsiderAjax(route('home'));
     }
 
     /**

@@ -1,0 +1,77 @@
+/**
+ * Inputs General Styling
+ */
+
+.input {
+    @apply block relative w-full bg-white max-w-full leading-5 py-2 px-4 border-gray-400 outline-none border;
+
+    border-radius: 5px;
+
+    &:active,
+    &:focus {
+        @apply z-10;
+        box-shadow: 0 0 0 4px $color-input-shadow-outline;
+    }
+
+    .form-group.is-error &{
+        @apply border-red-500 text-red-700;
+
+        &:active,
+        &:focus {
+            @apply border-red-400;
+            box-shadow: 0 0 0 4px $color-input-error-shadow-outline;
+        }
+    }
+
+    &:disabled {
+        @apply text-gray-500 border-gray-400;
+    }
+}
+
+.input-error {
+    display: none;
+    @apply text-sm mt-1 text-red-700;
+
+    .form-group.is-error &,
+    .js-form-group.is-error &,
+    &.is-visible {
+        display: block;
+    }
+}
+
+textarea.input {
+    resize: vertical;
+}
+
+/**
+* Hide number field arrows
+ */
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
+/**
+* Vendor
+ */
+
+#css-overpower .vue-tel-input {
+    @apply relative w-full bg-white max-w-full border-gray-400 outline-none border;
+
+    & input {
+        @apply py-2 px-4;
+    }
+
+    &:focus-within {
+        @apply z-10;
+        box-shadow: 0 0 0 4px $color-input-shadow-outline;
+    }
+}

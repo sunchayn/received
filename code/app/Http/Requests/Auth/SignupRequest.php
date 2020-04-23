@@ -28,7 +28,8 @@ class SignupRequest
         return [
             'phone_number' => 'required|regex:/^[0-9]{6,}$/|unique:users',
             'country_code' => 'required|regex:/^\+?[0-9]{3,4}$/',
-            'password' => 'required|string|min:6'
+            'password' => 'required|string|min:6',
+            'country' => 'sometimes|nullable',
         ];
     }
 
@@ -47,7 +48,7 @@ class SignupRequest
                 ->route('auth.signup')
                 ->withErrors($this->errors)
                 ->withInput()
-                ;
+            ;
         }
     }
 

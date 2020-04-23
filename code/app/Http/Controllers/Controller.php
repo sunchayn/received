@@ -85,4 +85,20 @@ class Controller extends BaseController
             'errors' => $errors,
         ], 422);
     }
+
+    /**
+     * Redirect to given route while returning proper response for AJAX requests.
+     *
+     * @param $route
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
+     */
+    protected function redirectAndConsiderAjax($route) {
+        if (request()->ajax()) {
+            return response()->json([
+                'redirect' => $route,
+            ], 200);
+        }
+
+        return redirect()->to($route);
+    }
 }

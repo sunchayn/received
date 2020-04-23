@@ -11,7 +11,6 @@ $color-primary-200        : hsl(205, 97%, 85%);
 $color-primary-300        : hsl(205, 84%, 74%);
 $color-primary-400        : hsl(205, 74%, 65%);
 
-
 /**
  * Secondary Color
  */
@@ -24,6 +23,12 @@ $color-secondary-100        : hsl(49, 100%, 96%);
 $color-secondary-200        : hsl(48, 100%, 88%);
 $color-secondary-300        : hsl(48, 95%, 76%);
 $color-secondary-400        : hsl(48, 94%, 68%);
+
+/**
+* Misc colors
+ */
+$color-input-shadow-outline         : #edf2f7;
+$color-input-error-shadow-outline   : rgba(#c53030, 0.15);
 
 
 /**

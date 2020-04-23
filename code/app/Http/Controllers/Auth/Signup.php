@@ -53,6 +53,8 @@ class Signup extends \App\Http\Controllers\Controller
 
         Auth::login($user);
 
-        return redirect()->route('auth.verify', ['verification_id' => $id]);
+        return response()->json([
+            'route' => route('auth.verify', ['verification_id' => $id])
+        ]);
     }
 }

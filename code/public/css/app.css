@@ -7,6 +7,10 @@
  */
 
 /**
+* Misc colors
+ */
+
+/**
  * Breakpoints
  * Mobile first
  */
@@ -676,6 +680,301 @@ a:hover {
   text-decoration: underline;
 }
 
+form {
+  margin-bottom: 0;
+}
+
+/**
+* Form groups
+ */
+
+.form-group {
+  margin-bottom: 0.75rem;
+}
+
+.form-groups {
+  display: flex;
+}
+
+.form-groups > .form-group {
+  margin-right: 0.5rem;
+  margin-left: 0.5rem;
+  flex: 1 1 0%;
+}
+
+.form-groups > .form-group:first-child {
+  margin-left: 0;
+}
+
+.form-groups > .form-group:last-child {
+  margin-right: 0;
+}
+
+/**
+* label module
+ */
+
+.label {
+  display: block;
+  font-size: 0.875rem;
+  margin-bottom: 0.25rem;
+  line-height: 1.25rem;
+  font-weight: 500;
+  color: #4a5568;
+}
+
+/**
+* Radio & Checkboxes Modules
+*/
+
+/**
+ * Inputs General Styling
+ */
+
+.input {
+  display: block;
+  position: relative;
+  width: 100%;
+  background-color: #fff;
+  max-width: 100%;
+  line-height: 1.25rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  border-color: #cbd5e0;
+  outline: 0;
+  border-width: 1px;
+  border-radius: 5px;
+}
+
+.input:active, .input:focus {
+  z-index: 10;
+  box-shadow: 0 0 0 4px #edf2f7;
+}
+
+.form-group.is-error .input {
+  border-color: #f56565;
+  color: #c53030;
+}
+
+.form-group.is-error .input:active, .form-group.is-error .input:focus {
+  border-color: #fc8181;
+  box-shadow: 0 0 0 4px rgba(197, 48, 48, 0.15);
+}
+
+.input:disabled {
+  color: #a0aec0;
+  border-color: #cbd5e0;
+}
+
+.input-error {
+  display: none;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+  color: #c53030;
+}
+
+.form-group.is-error .input-error, .js-form-group.is-error .input-error, .input-error.is-visible {
+  display: block;
+}
+
+textarea.input {
+  resize: vertical;
+}
+
+/**
+* Hide number field arrows
+ */
+
+/* Chrome, Safari, Edge, Opera */
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+/**
+* Vendor
+ */
+
+#css-overpower .vue-tel-input {
+  position: relative;
+  width: 100%;
+  background-color: #fff;
+  max-width: 100%;
+  border-color: #cbd5e0;
+  outline: 0;
+  border-width: 1px;
+}
+
+#css-overpower .vue-tel-input input {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+#css-overpower .vue-tel-input:focus-within {
+  z-index: 10;
+  box-shadow: 0 0 0 4px #edf2f7;
+}
+
+/**
+* Button module
+ */
+
+.button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+  border-width: 1px;
+  border-color: transparent;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 500;
+  border-radius: 0.25rem;
+  color: #fff;
+  background-color: #3182ce;
+  transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform;
+  transition-duration: 150ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  transition: background-color 300ms ease, box-shadow 300ms ease;
+}
+
+.button:hover {
+  background-color: #4299e1;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  text-decoration: underline;
+}
+
+.button:active, .button:focus {
+  outline: 0;
+  border-color: #2b6cb0;
+  background-color: #2b6cb0;
+  border-color: #90cdf4;
+  box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5);
+  outline: 0;
+}
+
+.button.is-submitting {
+  color: #edf2f7;
+  background-color: #63b3ed;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  pointer-events: none;
+}
+
+.button.is-hidden {
+  display: none;
+}
+
+.button.button--secondary {
+  background-color: #edf2f7;
+  color: #000;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.button.button--secondary:hover {
+  background-color: #edf2f7;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+}
+
+.button.button--secondary:active, .button.button--secondary:focus {
+  background-color: #e2e8f0;
+  border-color: #e2e8f0;
+  box-shadow: 0 0 0 4px #edf2f7;
+}
+
+.button.button--secondary.is-submitting {
+  color: #2d3748;
+  background-color: #f7fafc;
+}
+
+/**
+* Card module
+ */
+
+.card {
+  background-color: #fff;
+  border-radius: 0.5rem;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 0.75rem;
+  box-shadow: 0 0 3px rgba(153, 153, 153, 0.2), 0 0 20px rgba(204, 204, 204, 0.1);
+}
+
+.card_content {
+  padding: 1.5rem;
+}
+
+/**
+* Placeholder Module
+ */
+
+.placeholder {
+  background: #eee;
+  background: linear-gradient(to right, #eeeeee 8%, #dddddd 18%, #eeeeee 33%);
+  background-size: 1200px 104px;
+  -webkit-animation: shimmer 1s linear infinite forwards;
+          animation: shimmer 1s linear infinite forwards;
+}
+
+.placeholder--title, .placeholder--text {
+  width: 66.666667%;
+  height: 0.75rem;
+  display: block;
+  margin-top: 0.25rem;
+  margin-bottom: 0.25rem;
+}
+
+.placeholder--input {
+  width: 100%;
+  height: 2rem;
+  display: block;
+  margin-top: 0.25rem;
+  margin-bottom: 0.25rem;
+}
+
+.placeholder--text {
+  width: 100%;
+}
+
+@-webkit-keyframes shimmer {
+  0% {
+    background-position: -600px 0;
+  }
+
+  100% {
+    background-position: 600px 0;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -600px 0;
+  }
+
+  100% {
+    background-position: 600px 0;
+  }
+}
+
 .sr-only {
   position: absolute;
   width: 1px;
@@ -1112,6 +1411,10 @@ a:hover {
   background-color: #702459;
 }
 
+.bg-lightGray {
+  background-color: #FCFBFB;
+}
+
 .hover\:bg-transparent:hover {
   background-color: transparent;
 }
@@ -1484,6 +1787,10 @@ a:hover {
   background-color: #702459;
 }
 
+.hover\:bg-lightGray:hover {
+  background-color: #FCFBFB;
+}
+
 .focus\:bg-transparent:focus {
   background-color: transparent;
 }
@@ -1854,6 +2161,10 @@ a:hover {
 
 .focus\:bg-pink-900:focus {
   background-color: #702459;
+}
+
+.focus\:bg-lightGray:focus {
+  background-color: #FCFBFB;
 }
 
 .bg-bottom {
@@ -2308,6 +2619,10 @@ a:hover {
   border-color: #702459;
 }
 
+.border-lightGray {
+  border-color: #FCFBFB;
+}
+
 .hover\:border-transparent:hover {
   border-color: transparent;
 }
@@ -2680,6 +2995,10 @@ a:hover {
   border-color: #702459;
 }
 
+.hover\:border-lightGray:hover {
+  border-color: #FCFBFB;
+}
+
 .focus\:border-transparent:focus {
   border-color: transparent;
 }
@@ -3050,6 +3369,10 @@ a:hover {
 
 .focus\:border-pink-900:focus {
   border-color: #702459;
+}
+
+.focus\:border-lightGray:focus {
+  border-color: #FCFBFB;
 }
 
 .rounded-none {
@@ -7882,6 +8205,26 @@ a:hover {
   color: #702459;
 }
 
+.placeholder-lightGray::-webkit-input-placeholder {
+  color: #FCFBFB;
+}
+
+.placeholder-lightGray::-moz-placeholder {
+  color: #FCFBFB;
+}
+
+.placeholder-lightGray:-ms-input-placeholder {
+  color: #FCFBFB;
+}
+
+.placeholder-lightGray::-ms-input-placeholder {
+  color: #FCFBFB;
+}
+
+.placeholder-lightGray::placeholder {
+  color: #FCFBFB;
+}
+
 .focus\:placeholder-transparent:focus::-webkit-input-placeholder {
   color: transparent;
 }
@@ -9742,6 +10085,26 @@ a:hover {
   color: #702459;
 }
 
+.focus\:placeholder-lightGray:focus::-webkit-input-placeholder {
+  color: #FCFBFB;
+}
+
+.focus\:placeholder-lightGray:focus::-moz-placeholder {
+  color: #FCFBFB;
+}
+
+.focus\:placeholder-lightGray:focus:-ms-input-placeholder {
+  color: #FCFBFB;
+}
+
+.focus\:placeholder-lightGray:focus::-ms-input-placeholder {
+  color: #FCFBFB;
+}
+
+.focus\:placeholder-lightGray:focus::placeholder {
+  color: #FCFBFB;
+}
+
 .pointer-events-none {
   pointer-events: none;
 }
@@ -10389,6 +10752,10 @@ a:hover {
   color: #702459;
 }
 
+.text-lightGray {
+  color: #FCFBFB;
+}
+
 .hover\:text-transparent:hover {
   color: transparent;
 }
@@ -10761,6 +11128,10 @@ a:hover {
   color: #702459;
 }
 
+.hover\:text-lightGray:hover {
+  color: #FCFBFB;
+}
+
 .focus\:text-transparent:focus {
   color: transparent;
 }
@@ -11131,6 +11502,10 @@ a:hover {
 
 .focus\:text-pink-900:focus {
   color: #702459;
+}
+
+.focus\:text-lightGray:focus {
+  color: #FCFBFB;
 }
 
 .text-xs {
@@ -14432,6 +14807,10 @@ a:hover {
     background-color: #702459;
   }
 
+  .sm\:bg-lightGray {
+    background-color: #FCFBFB;
+  }
+
   .sm\:hover\:bg-transparent:hover {
     background-color: transparent;
   }
@@ -14804,6 +15183,10 @@ a:hover {
     background-color: #702459;
   }
 
+  .sm\:hover\:bg-lightGray:hover {
+    background-color: #FCFBFB;
+  }
+
   .sm\:focus\:bg-transparent:focus {
     background-color: transparent;
   }
@@ -15174,6 +15557,10 @@ a:hover {
 
   .sm\:focus\:bg-pink-900:focus {
     background-color: #702459;
+  }
+
+  .sm\:focus\:bg-lightGray:focus {
+    background-color: #FCFBFB;
   }
 
   .sm\:bg-bottom {
@@ -15628,6 +16015,10 @@ a:hover {
     border-color: #702459;
   }
 
+  .sm\:border-lightGray {
+    border-color: #FCFBFB;
+  }
+
   .sm\:hover\:border-transparent:hover {
     border-color: transparent;
   }
@@ -16000,6 +16391,10 @@ a:hover {
     border-color: #702459;
   }
 
+  .sm\:hover\:border-lightGray:hover {
+    border-color: #FCFBFB;
+  }
+
   .sm\:focus\:border-transparent:focus {
     border-color: transparent;
   }
@@ -16370,6 +16765,10 @@ a:hover {
 
   .sm\:focus\:border-pink-900:focus {
     border-color: #702459;
+  }
+
+  .sm\:focus\:border-lightGray:focus {
+    border-color: #FCFBFB;
   }
 
   .sm\:rounded-none {
@@ -21202,6 +21601,26 @@ a:hover {
     color: #702459;
   }
 
+  .sm\:placeholder-lightGray::-webkit-input-placeholder {
+    color: #FCFBFB;
+  }
+
+  .sm\:placeholder-lightGray::-moz-placeholder {
+    color: #FCFBFB;
+  }
+
+  .sm\:placeholder-lightGray:-ms-input-placeholder {
+    color: #FCFBFB;
+  }
+
+  .sm\:placeholder-lightGray::-ms-input-placeholder {
+    color: #FCFBFB;
+  }
+
+  .sm\:placeholder-lightGray::placeholder {
+    color: #FCFBFB;
+  }
+
   .sm\:focus\:placeholder-transparent:focus::-webkit-input-placeholder {
     color: transparent;
   }
@@ -23062,6 +23481,26 @@ a:hover {
     color: #702459;
   }
 
+  .sm\:focus\:placeholder-lightGray:focus::-webkit-input-placeholder {
+    color: #FCFBFB;
+  }
+
+  .sm\:focus\:placeholder-lightGray:focus::-moz-placeholder {
+    color: #FCFBFB;
+  }
+
+  .sm\:focus\:placeholder-lightGray:focus:-ms-input-placeholder {
+    color: #FCFBFB;
+  }
+
+  .sm\:focus\:placeholder-lightGray:focus::-ms-input-placeholder {
+    color: #FCFBFB;
+  }
+
+  .sm\:focus\:placeholder-lightGray:focus::placeholder {
+    color: #FCFBFB;
+  }
+
   .sm\:pointer-events-none {
     pointer-events: none;
   }
@@ -23709,6 +24148,10 @@ a:hover {
     color: #702459;
   }
 
+  .sm\:text-lightGray {
+    color: #FCFBFB;
+  }
+
   .sm\:hover\:text-transparent:hover {
     color: transparent;
   }
@@ -24081,6 +24524,10 @@ a:hover {
     color: #702459;
   }
 
+  .sm\:hover\:text-lightGray:hover {
+    color: #FCFBFB;
+  }
+
   .sm\:focus\:text-transparent:focus {
     color: transparent;
   }
@@ -24451,6 +24898,10 @@ a:hover {
 
   .sm\:focus\:text-pink-900:focus {
     color: #702459;
+  }
+
+  .sm\:focus\:text-lightGray:focus {
+    color: #FCFBFB;
   }
 
   .sm\:text-xs {
@@ -27753,6 +28204,10 @@ a:hover {
     background-color: #702459;
   }
 
+  .md\:bg-lightGray {
+    background-color: #FCFBFB;
+  }
+
   .md\:hover\:bg-transparent:hover {
     background-color: transparent;
   }
@@ -28125,6 +28580,10 @@ a:hover {
     background-color: #702459;
   }
 
+  .md\:hover\:bg-lightGray:hover {
+    background-color: #FCFBFB;
+  }
+
   .md\:focus\:bg-transparent:focus {
     background-color: transparent;
   }
@@ -28495,6 +28954,10 @@ a:hover {
 
   .md\:focus\:bg-pink-900:focus {
     background-color: #702459;
+  }
+
+  .md\:focus\:bg-lightGray:focus {
+    background-color: #FCFBFB;
   }
 
   .md\:bg-bottom {
@@ -28949,6 +29412,10 @@ a:hover {
     border-color: #702459;
   }
 
+  .md\:border-lightGray {
+    border-color: #FCFBFB;
+  }
+
   .md\:hover\:border-transparent:hover {
     border-color: transparent;
   }
@@ -29321,6 +29788,10 @@ a:hover {
     border-color: #702459;
   }
 
+  .md\:hover\:border-lightGray:hover {
+    border-color: #FCFBFB;
+  }
+
   .md\:focus\:border-transparent:focus {
     border-color: transparent;
   }
@@ -29691,6 +30162,10 @@ a:hover {
 
   .md\:focus\:border-pink-900:focus {
     border-color: #702459;
+  }
+
+  .md\:focus\:border-lightGray:focus {
+    border-color: #FCFBFB;
   }
 
   .md\:rounded-none {
@@ -34523,6 +34998,26 @@ a:hover {
     color: #702459;
   }
 
+  .md\:placeholder-lightGray::-webkit-input-placeholder {
+    color: #FCFBFB;
+  }
+
+  .md\:placeholder-lightGray::-moz-placeholder {
+    color: #FCFBFB;
+  }
+
+  .md\:placeholder-lightGray:-ms-input-placeholder {
+    color: #FCFBFB;
+  }
+
+  .md\:placeholder-lightGray::-ms-input-placeholder {
+    color: #FCFBFB;
+  }
+
+  .md\:placeholder-lightGray::placeholder {
+    color: #FCFBFB;
+  }
+
   .md\:focus\:placeholder-transparent:focus::-webkit-input-placeholder {
     color: transparent;
   }
@@ -36383,6 +36878,26 @@ a:hover {
     color: #702459;
   }
 
+  .md\:focus\:placeholder-lightGray:focus::-webkit-input-placeholder {
+    color: #FCFBFB;
+  }
+
+  .md\:focus\:placeholder-lightGray:focus::-moz-placeholder {
+    color: #FCFBFB;
+  }
+
+  .md\:focus\:placeholder-lightGray:focus:-ms-input-placeholder {
+    color: #FCFBFB;
+  }
+
+  .md\:focus\:placeholder-lightGray:focus::-ms-input-placeholder {
+    color: #FCFBFB;
+  }
+
+  .md\:focus\:placeholder-lightGray:focus::placeholder {
+    color: #FCFBFB;
+  }
+
   .md\:pointer-events-none {
     pointer-events: none;
   }
@@ -37030,6 +37545,10 @@ a:hover {
     color: #702459;
   }
 
+  .md\:text-lightGray {
+    color: #FCFBFB;
+  }
+
   .md\:hover\:text-transparent:hover {
     color: transparent;
   }
@@ -37402,6 +37921,10 @@ a:hover {
     color: #702459;
   }
 
+  .md\:hover\:text-lightGray:hover {
+    color: #FCFBFB;
+  }
+
   .md\:focus\:text-transparent:focus {
     color: transparent;
   }
@@ -37772,6 +38295,10 @@ a:hover {
 
   .md\:focus\:text-pink-900:focus {
     color: #702459;
+  }
+
+  .md\:focus\:text-lightGray:focus {
+    color: #FCFBFB;
   }
 
   .md\:text-xs {
@@ -41074,6 +41601,10 @@ a:hover {
     background-color: #702459;
   }
 
+  .lg\:bg-lightGray {
+    background-color: #FCFBFB;
+  }
+
   .lg\:hover\:bg-transparent:hover {
     background-color: transparent;
   }
@@ -41446,6 +41977,10 @@ a:hover {
     background-color: #702459;
   }
 
+  .lg\:hover\:bg-lightGray:hover {
+    background-color: #FCFBFB;
+  }
+
   .lg\:focus\:bg-transparent:focus {
     background-color: transparent;
   }
@@ -41816,6 +42351,10 @@ a:hover {
 
   .lg\:focus\:bg-pink-900:focus {
     background-color: #702459;
+  }
+
+  .lg\:focus\:bg-lightGray:focus {
+    background-color: #FCFBFB;
   }
 
   .lg\:bg-bottom {
@@ -42270,6 +42809,10 @@ a:hover {
     border-color: #702459;
   }
 
+  .lg\:border-lightGray {
+    border-color: #FCFBFB;
+  }
+
   .lg\:hover\:border-transparent:hover {
     border-color: transparent;
   }
@@ -42642,6 +43185,10 @@ a:hover {
     border-color: #702459;
   }
 
+  .lg\:hover\:border-lightGray:hover {
+    border-color: #FCFBFB;
+  }
+
   .lg\:focus\:border-transparent:focus {
     border-color: transparent;
   }
@@ -43012,6 +43559,10 @@ a:hover {
 
   .lg\:focus\:border-pink-900:focus {
     border-color: #702459;
+  }
+
+  .lg\:focus\:border-lightGray:focus {
+    border-color: #FCFBFB;
   }
 
   .lg\:rounded-none {
@@ -47844,6 +48395,26 @@ a:hover {
     color: #702459;
   }
 
+  .lg\:placeholder-lightGray::-webkit-input-placeholder {
+    color: #FCFBFB;
+  }
+
+  .lg\:placeholder-lightGray::-moz-placeholder {
+    color: #FCFBFB;
+  }
+
+  .lg\:placeholder-lightGray:-ms-input-placeholder {
+    color: #FCFBFB;
+  }
+
+  .lg\:placeholder-lightGray::-ms-input-placeholder {
+    color: #FCFBFB;
+  }
+
+  .lg\:placeholder-lightGray::placeholder {
+    color: #FCFBFB;
+  }
+
   .lg\:focus\:placeholder-transparent:focus::-webkit-input-placeholder {
     color: transparent;
   }
@@ -49704,6 +50275,26 @@ a:hover {
     color: #702459;
   }
 
+  .lg\:focus\:placeholder-lightGray:focus::-webkit-input-placeholder {
+    color: #FCFBFB;
+  }
+
+  .lg\:focus\:placeholder-lightGray:focus::-moz-placeholder {
+    color: #FCFBFB;
+  }
+
+  .lg\:focus\:placeholder-lightGray:focus:-ms-input-placeholder {
+    color: #FCFBFB;
+  }
+
+  .lg\:focus\:placeholder-lightGray:focus::-ms-input-placeholder {
+    color: #FCFBFB;
+  }
+
+  .lg\:focus\:placeholder-lightGray:focus::placeholder {
+    color: #FCFBFB;
+  }
+
   .lg\:pointer-events-none {
     pointer-events: none;
   }
@@ -50351,6 +50942,10 @@ a:hover {
     color: #702459;
   }
 
+  .lg\:text-lightGray {
+    color: #FCFBFB;
+  }
+
   .lg\:hover\:text-transparent:hover {
     color: transparent;
   }
@@ -50723,6 +51318,10 @@ a:hover {
     color: #702459;
   }
 
+  .lg\:hover\:text-lightGray:hover {
+    color: #FCFBFB;
+  }
+
   .lg\:focus\:text-transparent:focus {
     color: transparent;
   }
@@ -51093,6 +51692,10 @@ a:hover {
 
   .lg\:focus\:text-pink-900:focus {
     color: #702459;
+  }
+
+  .lg\:focus\:text-lightGray:focus {
+    color: #FCFBFB;
   }
 
   .lg\:text-xs {
@@ -54395,6 +54998,10 @@ a:hover {
     background-color: #702459;
   }
 
+  .xl\:bg-lightGray {
+    background-color: #FCFBFB;
+  }
+
   .xl\:hover\:bg-transparent:hover {
     background-color: transparent;
   }
@@ -54767,6 +55374,10 @@ a:hover {
     background-color: #702459;
   }
 
+  .xl\:hover\:bg-lightGray:hover {
+    background-color: #FCFBFB;
+  }
+
   .xl\:focus\:bg-transparent:focus {
     background-color: transparent;
   }
@@ -55137,6 +55748,10 @@ a:hover {
 
   .xl\:focus\:bg-pink-900:focus {
     background-color: #702459;
+  }
+
+  .xl\:focus\:bg-lightGray:focus {
+    background-color: #FCFBFB;
   }
 
   .xl\:bg-bottom {
@@ -55591,6 +56206,10 @@ a:hover {
     border-color: #702459;
   }
 
+  .xl\:border-lightGray {
+    border-color: #FCFBFB;
+  }
+
   .xl\:hover\:border-transparent:hover {
     border-color: transparent;
   }
@@ -55963,6 +56582,10 @@ a:hover {
     border-color: #702459;
   }
 
+  .xl\:hover\:border-lightGray:hover {
+    border-color: #FCFBFB;
+  }
+
   .xl\:focus\:border-transparent:focus {
     border-color: transparent;
   }
@@ -56333,6 +56956,10 @@ a:hover {
 
   .xl\:focus\:border-pink-900:focus {
     border-color: #702459;
+  }
+
+  .xl\:focus\:border-lightGray:focus {
+    border-color: #FCFBFB;
   }
 
   .xl\:rounded-none {
@@ -61165,6 +61792,26 @@ a:hover {
     color: #702459;
   }
 
+  .xl\:placeholder-lightGray::-webkit-input-placeholder {
+    color: #FCFBFB;
+  }
+
+  .xl\:placeholder-lightGray::-moz-placeholder {
+    color: #FCFBFB;
+  }
+
+  .xl\:placeholder-lightGray:-ms-input-placeholder {
+    color: #FCFBFB;
+  }
+
+  .xl\:placeholder-lightGray::-ms-input-placeholder {
+    color: #FCFBFB;
+  }
+
+  .xl\:placeholder-lightGray::placeholder {
+    color: #FCFBFB;
+  }
+
   .xl\:focus\:placeholder-transparent:focus::-webkit-input-placeholder {
     color: transparent;
   }
@@ -63025,6 +63672,26 @@ a:hover {
     color: #702459;
   }
 
+  .xl\:focus\:placeholder-lightGray:focus::-webkit-input-placeholder {
+    color: #FCFBFB;
+  }
+
+  .xl\:focus\:placeholder-lightGray:focus::-moz-placeholder {
+    color: #FCFBFB;
+  }
+
+  .xl\:focus\:placeholder-lightGray:focus:-ms-input-placeholder {
+    color: #FCFBFB;
+  }
+
+  .xl\:focus\:placeholder-lightGray:focus::-ms-input-placeholder {
+    color: #FCFBFB;
+  }
+
+  .xl\:focus\:placeholder-lightGray:focus::placeholder {
+    color: #FCFBFB;
+  }
+
   .xl\:pointer-events-none {
     pointer-events: none;
   }
@@ -63672,6 +64339,10 @@ a:hover {
     color: #702459;
   }
 
+  .xl\:text-lightGray {
+    color: #FCFBFB;
+  }
+
   .xl\:hover\:text-transparent:hover {
     color: transparent;
   }
@@ -64044,6 +64715,10 @@ a:hover {
     color: #702459;
   }
 
+  .xl\:hover\:text-lightGray:hover {
+    color: #FCFBFB;
+  }
+
   .xl\:focus\:text-transparent:focus {
     color: transparent;
   }
@@ -64414,6 +65089,10 @@ a:hover {
 
   .xl\:focus\:text-pink-900:focus {
     color: #702459;
+  }
+
+  .xl\:focus\:text-lightGray:focus {
+    color: #FCFBFB;
   }
 
   .xl\:text-xs {

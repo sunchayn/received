@@ -1,0 +1,12 @@
+/**
+* Card module
+ */
+
+.card {
+    @apply bg-white rounded-lg mx-auto mb-3;
+    box-shadow: 0 0 3px rgba(#999, .2), 0 0 20px rgba(#ccc, .1);
+}
+
+.card_content {
+    @apply p-6;
+}

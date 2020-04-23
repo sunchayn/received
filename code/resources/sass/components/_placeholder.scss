@@ -1,0 +1,34 @@
+/**
+* Placeholder Module
+ */
+
+.placeholder {
+    background: #eee;
+    background: linear-gradient(to right, #eeeeee 8%, #dddddd 18%, #eeeeee 33%);
+    background-size: 1200px 104px;
+    animation: shimmer 1s linear infinite forwards;
+
+    &--title {
+        @apply w-2/3 h-3 block my-1;
+    }
+
+    &--input {
+        @apply w-full h-8 block my-1;
+    }
+
+    &--text {
+        @extend .placeholder--title;
+        @apply w-full;
+    }
+}
+
+
+@keyframes shimmer {
+    0% {
+        background-position: -600px 0
+    }
+
+    100% {
+        background-position: 600px 0
+    }
+}

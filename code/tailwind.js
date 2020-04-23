@@ -10,7 +10,11 @@ module.exports = {
         display: ['Roboto', 'sans-serif'],
     },
 
-    extend: {},
+    extend: {
+        colors: {
+            lightGray: '#FCFBFB',
+        },
+    },
   },
   variants: {},
   plugins: [],
