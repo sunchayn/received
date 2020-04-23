@@ -2,8 +2,8 @@
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
-})->name('landing_page');
+    return view('pages.landing');
+})->name('landing_page')->middleware('clean_session');
 
 // Authentication
 // --
@@ -45,7 +45,7 @@ Route::middleware('auth')->group(function () {
         // Verify
         // --
         Route::get('/verify/{verification_id}', [
-            'uses' =>  'Auth\Security@verificationPage',
+            'uses' =>  'Auth\Security@verification',
             'as' => 'verify'
         ]);
 
