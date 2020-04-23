@@ -71,7 +71,7 @@ trait Verification
 
             return $verificationRequestId;
         } catch (BindingResolutionException $e) {
-            abort('Unable to resolve SMS service', 500);
+            abort(500, 'Unable to resolve SMS service');
             return false;
         } catch (VerificationCodeNotSentException $e) {
             return false;
@@ -92,11 +92,11 @@ trait Verification
              */
             $smsProvider = app()->make('SMS');
 
-            return $smsProvider->verify($this->{$this->verificationIdField}, $code);
+            return $smsProvider->verify($this, $code);
         } catch (VerificationNotAchievedException $e) {
             return false;
         } catch (BindingResolutionException $e) {
-            abort('Unable to resolve SMS service', 500);
+            abort(500, 'Unable to resolve SMS service');
             return false;
         }
     }
@@ -126,7 +126,7 @@ trait Verification
         } catch (UserNotCreatedException $e) {
             return false;
         } catch (BindingResolutionException $e) {
-            abort('Unable to resolve SMS service', 500);
+            abort(500, 'Unable to resolve SMS service');
             return false;
         }
     }
@@ -146,7 +146,7 @@ trait Verification
             $smsProvider = app()->make('SMS');
             return $smsProvider->verifyTwoFactorCode($this, $code);
         } catch (BindingResolutionException $e) {
-            abort('Unable to resolve SMS service', 500);
+            abort(500, 'Unable to resolve SMS service');
             return false;
         }
     }
