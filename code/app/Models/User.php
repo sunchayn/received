@@ -29,6 +29,7 @@ use Illuminate\Support\Collection;
  *
  * @property Collection|null $folders
  * @property OngoingNewPhoneVerification|null $ongoingNewPhoneVerification
+ * @property NotificationPrefs $notificationPrefs
  * @mixin Builder
  */
 class User extends Authenticatable implements SmsServiceContract
@@ -54,6 +55,11 @@ class User extends Authenticatable implements SmsServiceContract
     public function ongoingNewPhoneVerification()
     {
         return $this->hasOne(OngoingNewPhoneVerification::class);
+    }
+
+    public function notificationPrefs()
+    {
+        return $this->hasOne(NotificationPrefs::class);
     }
 
     public function isVerified()
