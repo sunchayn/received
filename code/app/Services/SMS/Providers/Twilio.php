@@ -78,7 +78,7 @@ class Twilio implements ProviderInterface
      */
     public function sendTwoFactorCode(SmsServiceContract $user): bool
     {
-        $authy = new AuthyApi(config('services.twilio.authy_app_id'));
+        $authy = new AuthyApi(config('services.twilio.authy_api_key'));
 
         $authyId = $user->getAuthyAppId();
 
@@ -110,7 +110,7 @@ class Twilio implements ProviderInterface
     public function verifyTwoFactorCode(SmsServiceContract $user, string $code): bool
     {
         try {
-            $authy = new AuthyApi(config('services.twilio.authy_app_id'));
+            $authy = new AuthyApi(config('services.twilio.authy_api_key'));
             $response = $authy->verifyToken($user->getAuthyAppId(), $code);
 
             return $response->ok();
