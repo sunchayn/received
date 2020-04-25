@@ -117,7 +117,9 @@ class AuthenticationTest extends TestCase
         $response = $this->ajax('post', route('auth.signin'), $data);
 
         $redirectRoute = route('auth.verify', ['verification_id' => Auth::user()->verification_id]);
-        $response->assertRedirect($redirectRoute);
+        $response->assertJsonFragment([
+            'redirect' => $redirectRoute,
+        ]);
 
         // Session is created
         $this->assertTrue(Auth::check());
@@ -131,7 +133,9 @@ class AuthenticationTest extends TestCase
 
         $this
             ->ajax('post', route('auth.signin'), $data)
-            ->assertRedirect(route('auth.2fa'))
+            ->assertJsonFragment([
+                'redirect' => route('auth.2fa'),
+            ])
         ;
 
         // Session is created
