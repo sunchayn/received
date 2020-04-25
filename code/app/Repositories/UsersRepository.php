@@ -21,7 +21,7 @@ class UsersRepository
 
     public function getByVerificationId($verification_id)
     {
-        return User::where('verification_id', $verification_id)->first();
+        return User::where('verification_id', $verification_id)->firstOrFail();
     }
 
     public function markAsVerified(User $user)
@@ -30,6 +30,21 @@ class UsersRepository
         $user->ongoing_two_fa = false;
         $user->verified_at = Carbon::now();
         $user->save();
+    }
+
+    public function confirmOngoingPhoneVerification(User $user)
+    {
+        $user->update([
+            'verification_id' => null,
+            'ongoing_two_fa' => false,
+            'verified_at' => Carbon::now(),
+            'phone_number' => $user->ongoingNewPhoneVerification->phone_number,
+            'country_code' => $user->ongoingNewPhoneVerification->country_code,
+        ]);
+
+        $user->ongoingNewPhoneVerification->delete();
+
+        return $user;
     }
 
     public function clear2FaStatus(User $user)

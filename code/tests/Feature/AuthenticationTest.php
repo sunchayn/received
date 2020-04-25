@@ -114,7 +114,9 @@ class AuthenticationTest extends TestCase
             'password' => $password,
         ];
 
-        $response = $this->ajax('post', route('auth.signin'), $data);
+        $response = $this
+            ->ajax('post', route('auth.signin'), $data)
+        ;
 
         $redirectRoute = route('auth.verify', ['verification_id' => Auth::user()->verification_id]);
         $response->assertJsonFragment([

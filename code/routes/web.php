@@ -122,4 +122,47 @@ Route::middleware(['auth', 'clean_session'])->group(function () {
             'as' => 'delete',
         ]);
     });
+
+    // Settings
+    Route::prefix('settings')->name('settings.')->group(function () {
+        // Settings default page
+        // --
+        Route::get('/', [
+            'uses' => 'Settings\Home@index',
+            'as' => 'index',
+        ]);
+
+        // Account settings
+        // --
+        Route::prefix('account')->group(function () {
+            Route::post('/change_phone', [
+                'uses' => 'Settings\Account@changePhone',
+                'as' => 'change_phone',
+            ]);
+
+            Route::post('/verify_phone/{verification_id}', [
+                'uses' => 'Settings\Account@verifyNewPhone',
+                'as' => 'verify_phone',
+            ]);
+
+            Route::patch('/password', [
+                'uses' => 'Settings\Account@password',
+                'as' => 'password',
+            ]);
+        });
+
+        // Profile Settings
+        // --
+        Route::prefix('profile')->group(function () {
+            Route::patch('/username', [
+                'uses' => 'Settings\Profile@username',
+                'as' => 'username',
+            ]);
+
+            Route::patch('/', [
+                'uses' => 'Settings\Profile@profile',
+                'as' => 'profile',
+            ]);
+        });
+    });
 });

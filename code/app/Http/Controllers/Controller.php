@@ -120,11 +120,11 @@ class Controller extends BaseController
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function unauthorized()
+    public function forbidden()
     {
         return response()->json([
-            'message' => 'Unauthorized!',
-        ], 401);
+            'message' => 'Forbidden!',
+        ], 403);
     }
 
     /**

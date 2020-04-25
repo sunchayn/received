@@ -12,6 +12,7 @@ $factory->define(User::class, function (Faker $faker) {
         'email' => $faker->email,
         'password' => bcrypt($faker->password),
         'phone_number' => $faker->phoneNumber,
+        'country_code' => $faker->countryCode,
         'verification_id' => null,
         'ongoing_two_fa' => false,
         'verified_at' => $faker->dateTimeBetween('-1 year', 'now'),

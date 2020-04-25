@@ -54,9 +54,10 @@ trait Verification
     /**
      * Send a verification code to user phone.
      *
+     * @param null $phoneNumber A different phone number to send verification to (used when changing user phone)
      * @return bool|string
      */
-    public function sendVerificationCode()
+    public function sendVerificationCode($phoneNumber = null)
     {
         try {
             /**
@@ -64,7 +65,11 @@ trait Verification
              */
             $smsProvider = app()->make('SMS');
 
-            $verificationRequestId = $smsProvider->sendVerificationCode($this);
+            if (is_null($phoneNumber)) {
+                $phoneNumber = '+' . $this->getCountryCode() . $this->getPhoneNumber();
+            }
+
+            $verificationRequestId = $smsProvider->sendVerificationCode($phoneNumber);
             $this->{$this->verificationIdField} = $verificationRequestId;
             $this->{$this->smsDeliveryTimeField} = Carbon::now();
             $this->save();

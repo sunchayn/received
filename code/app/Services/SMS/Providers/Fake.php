@@ -25,7 +25,7 @@ class Fake implements ProviderInterface
     /**
      * @inheritDoc
      */
-    public function sendVerificationCode(SmsServiceContract $user): string
+    public function sendVerificationCode(string $phoneNumber): string
     {
         return Str::random(10);
     }

@@ -11,11 +11,11 @@ interface ProviderInterface
     /**
      * Send a verification code to the given user
      *
-     * @param SmsServiceContract $user
+     * @param string $phoneNumber
      * @throws VerificationCodeNotSentException
      * @return string A unique identifier for the request.
      */
-    public function sendVerificationCode(SmsServiceContract $user): string;
+    public function sendVerificationCode(string $phoneNumber): string;
 
     /**
      * Verify the integrity of the given verification code.

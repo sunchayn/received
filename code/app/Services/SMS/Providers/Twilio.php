@@ -35,10 +35,8 @@ class Twilio implements ProviderInterface
     /**
      * @inheritDoc
      */
-    public function sendVerificationCode(SmsServiceContract $user): string
+    public function sendVerificationCode(string $phoneNumber): string
     {
-        $phoneNumber = '+' . $user->getCountryCode() . $user->getPhoneNumber();
-
         try {
             return $this->client->verify->v2
                 ->services(config('services.twilio.verify_service_id'))

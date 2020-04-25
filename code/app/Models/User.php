@@ -28,6 +28,7 @@ use Illuminate\Support\Collection;
  * @property Carbon|null $updated_at
  *
  * @property Collection|null $folders
+ * @property OngoingNewPhoneVerification|null $ongoingNewPhoneVerification
  * @mixin Builder
  */
 class User extends Authenticatable implements SmsServiceContract
@@ -48,6 +49,11 @@ class User extends Authenticatable implements SmsServiceContract
     public function folders()
     {
         return $this->hasMany(Folder::class);
+    }
+
+    public function ongoingNewPhoneVerification()
+    {
+        return $this->hasOne(OngoingNewPhoneVerification::class);
     }
 
     public function isVerified()

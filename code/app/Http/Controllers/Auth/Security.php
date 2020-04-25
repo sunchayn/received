@@ -41,7 +41,7 @@ class Security extends \App\Http\Controllers\Controller
     {
         $code = $request->validated()['code'];
 
-        $user = $users->getByVerificationId($verification_id) ?? Auth::user();
+        $user = $users->getByVerificationId($verification_id);
 
         if (! $user->checkVerificationCode($code)) {
             return $this->validationErrors([
