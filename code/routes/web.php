@@ -32,7 +32,7 @@ Route::prefix('/auth')->name('auth.')->middleware('guest')->group(function () {
 });
 
 Route::middleware('auth')->group(function () {
-    // Authentication
+    // Security
     // --
     Route::prefix('auth')->name('auth.')->group(function () {
         // Logout
@@ -83,4 +83,38 @@ Route::middleware(['auth', 'clean_session'])->group(function () {
     Route::get('/app', function () {
         return view('welcome');
     })->name('home');
+
+    // Folders
+    Route::prefix('folders')->name('folders.')->group(function() {
+
+        Route::get('/all', [
+            'uses' =>  'Folders@all',
+            'as' => 'all',
+        ]);
+
+        Route::post('/create', [
+            'uses' =>  'Folders@store',
+            'as' => 'create',
+        ]);
+
+        Route::patch('/share/{folder}', [
+            'uses' =>  'Folders@share',
+            'as' => 'share',
+        ]);
+
+        Route::patch('/revoke/{folder}', [
+            'uses' =>  'Folders@revoke',
+            'as' => 'revoke',
+        ]);
+
+        Route::patch('/edit/{folder}', [
+            'uses' =>  'Folders@save',
+            'as' => 'edit',
+        ]);
+
+        Route::delete('/delete/{folder}', [
+            'uses' =>  'Folders@delete',
+            'as' => 'delete',
+        ]);
+    });
 });

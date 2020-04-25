@@ -101,4 +101,38 @@ class Controller extends BaseController
 
         return redirect()->to($route);
     }
+
+    /**
+     * Return JSON data
+     *
+     * @param $data
+     * @param int $status
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function jsonData($data, $status = 200)
+    {
+        return response()->json($data, $status);
+    }
+
+    /**
+     * Return a forbidden HTTP response.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function unauthorized()
+    {
+        return response()->json([
+            'message' => 'Unauthorized!',
+        ], 401);
+    }
+
+    /**
+     * Return an empty HTTP response.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function empty()
+    {
+        return response()->json(null, 204);
+    }
 }

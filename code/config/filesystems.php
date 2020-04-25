@@ -45,12 +45,17 @@ return [
 
         'local' => [
             'driver' => 'local',
-            'root' => storage_path('app'),
+            'root' => storage_path(env('STORAGE_PREFIX', '')  .'app'),
+        ],
+
+        'buckets' => [
+            'driver' => 'local',
+            'root' => storage_path(env('STORAGE_PREFIX', '') . 'app/buckets'),
         ],
 
         'public' => [
             'driver' => 'local',
-            'root' => storage_path('app/public'),
+            'root' => storage_path(env('STORAGE_PREFIX', '') . 'app/public'),
             'url' => env('APP_URL').'/storage',
             'visibility' => 'public',
         ],

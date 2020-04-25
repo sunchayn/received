@@ -26,6 +26,7 @@ abstract class TestCase extends BaseTestCase
     /**
      * Create user session with the given $user or authenticate a new one.
      * @param User|null $user
+     * @return \Illuminate\Contracts\Auth\Authenticatable
      */
     public function signin(User $user = null)
     {
@@ -34,5 +35,20 @@ abstract class TestCase extends BaseTestCase
         }
 
         Auth::login($user);
+
+        return Auth::user();
+    }
+
+    /**
+     * Make sure that given entity has the expected new data
+     *
+     * @param $data
+     * @param $entity
+     */
+    protected function assertNewDataIsPersisted($data, $entity) {
+        foreach ($data as $key => $value) {
+            $entityValue = $entity->$key;
+            $this->assertEquals($value, $entityValue);
+        }
     }
 }

@@ -7,6 +7,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Carbon;
 use App\Services\SMS\SmsServiceContract;
 use App\Models\Traits\Verification;
+use Illuminate\Support\Collection;
 
 /**
  * App\Models\User
@@ -25,6 +26,8 @@ use App\Models\Traits\Verification;
  * @property Carbon|null $last_code_sent_at
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
+ *
+ * @property Collection|null $folders
  * @mixin Builder
  */
 class User extends Authenticatable implements SmsServiceContract
@@ -42,6 +45,10 @@ class User extends Authenticatable implements SmsServiceContract
         'last_code_sent_at',
     ];
 
+    public function folders() {
+        return $this->hasMany(Folder::class);
+    }
+
     public function isVerified()
     {
         return $this->verified_at != null;
@@ -52,11 +59,14 @@ class User extends Authenticatable implements SmsServiceContract
         return $this->ongoing_two_fa;
     }
 
+    public function getBucket() {
+        return 'bucket_' . $this->id;
+    }
+
     /**
      * AuthyContract for double factor authentication
      * --
      */
-
     public function getAuthyAppId()
     {
         return $this->authy_id;
