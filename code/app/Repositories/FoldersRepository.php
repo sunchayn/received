@@ -41,6 +41,15 @@ class FoldersRepository
         return $folder;
     }
 
+    public function changePassword(Folder $folder, array $data)
+    {
+        $folder->update([
+            'password' => bcrypt($data['password']),
+        ]);
+
+        return $folder;
+    }
+
     public function revoke(Folder $folder)
     {
         $folder->update([

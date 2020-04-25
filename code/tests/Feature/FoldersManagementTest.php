@@ -179,7 +179,6 @@ class FoldersManagementTest extends TestCase
         ;
     }
 
-
     /**
      * @test
      */
@@ -213,6 +212,44 @@ class FoldersManagementTest extends TestCase
 
         $this
             ->ajax('patch', route('folders.share', ['folder' => $folder->id]), $data)
+            ->assertForbidden()
+        ;
+    }
+
+
+    /**
+     * @test
+     */
+    public function user_can_change_folder_password()
+    {
+        $this->signin();
+
+        $data = [
+            'password' => '123456',
+        ];
+
+        // Changing his folder's password is Allowed
+        // --
+        $folder = factory(Folder::class)->create([
+            'user_id' => Auth::id(),
+        ]);
+
+        $this
+            ->ajax('patch', route('folders.changePassword', ['folder' => $folder->id]), $data)
+            ->assertOk()
+        ;
+
+        $this->assertTrue(\Hash::check($data['password'], $folder->refresh()->password));
+
+        // Changing another user folder's password is Forbidden
+        // --
+        $anotherUser = factory(User::class)->create();
+        $folder = factory(Folder::class)->create([
+            'user_id' => $anotherUser->id,
+        ]);
+
+        $this
+            ->ajax('patch', route('folders.changePassword', ['folder' => $folder->id]), $data)
             ->assertForbidden()
         ;
     }

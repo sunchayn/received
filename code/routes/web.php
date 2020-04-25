@@ -102,6 +102,11 @@ Route::middleware(['auth', 'clean_session'])->group(function () {
             'as' => 'share',
         ]);
 
+        Route::patch('/change_password/{folder}', [
+            'uses' =>  'Folders@changePassword',
+            'as' => 'changePassword',
+        ]);
+
         Route::patch('/revoke/{folder}', [
             'uses' =>  'Folders@revoke',
             'as' => 'revoke',

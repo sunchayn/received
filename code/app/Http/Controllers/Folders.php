@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Folders\CreateRequest;
 use App\Http\Requests\Folders\DeleteRequest;
+use App\Http\Requests\Folders\PasswordChangingRequest;
 use App\Http\Requests\Folders\RevokeRequest;
 use App\Http\Requests\Folders\ShareRequest;
 use App\Http\Requests\Folders\UpdateRequest;
@@ -70,6 +71,22 @@ class Folders extends Controller
     {
         $folders->share($folder, $request->validated());
         return $this->jsonSuccess('The folder has been shared.');
+    }
+
+    /**
+     * PATCH /folders/change_password/{folder}
+     *
+     * Change a given folder's password
+     *
+     * @param PasswordChangingRequest $request
+     * @param FoldersRepository $folders
+     * @param Folder $folder
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function changePassword(PasswordChangingRequest $request, FoldersRepository $folders, Folder $folder)
+    {
+        $folders->changePassword($folder, $request->validated());
+        return $this->jsonSuccess('The folder has been updated.');
     }
 
     /**
