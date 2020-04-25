@@ -24,7 +24,8 @@ class UserNotificationPreferencesTest extends TestCase
     /**
      * @test
      */
-    public function it_create_user_notification_preferences_on_signup() {
+    public function it_create_user_notification_preferences_on_signup()
+    {
         $data = factory(User::class)->make();
 
         $this
@@ -40,7 +41,8 @@ class UserNotificationPreferencesTest extends TestCase
      * @test
      * @param $data
      */
-    public function user_can_update_his_notification_preferences($data) {
+    public function user_can_update_his_notification_preferences($data)
+    {
         $user = factory(User::class)->create();
 
         factory(NotificationPrefs::class)->create([
@@ -60,7 +62,8 @@ class UserNotificationPreferencesTest extends TestCase
     // Data providers
     // --
 
-    public function preferences_data_provider() {
+    public function preferences_data_provider()
+    {
         return [
             [
                 [

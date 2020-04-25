@@ -16,7 +16,8 @@ class Notifications extends Controller
      * @param NotificationsRequest $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function save(NotificationsRequest $request) {
+    public function save(NotificationsRequest $request)
+    {
         $data = $request->validated();
 
         $prefs = Auth::user()->notificationPrefs;
