@@ -29,8 +29,15 @@ class Account extends Controller
          */
         $user = Auth::user();
 
+        // Delete previous ongoing verification
+        if ($user->ongoingNewPhoneVerification) {
+            $user->ongoingNewPhoneVerification->delete();
+        }
+
+        // Send verification code
         $phoneNumber = $phoneNumber = '+' . $data['country_code'] . $data['phone_number'];
         $user->sendVerificationCode($phoneNumber);
+        
         $user->ongoingNewPhoneVerification()->create($data);
 
         return $this->jsonData([
