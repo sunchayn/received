@@ -92,7 +92,8 @@ class Controller extends BaseController
      * @param $route
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
-    protected function redirectAndConsiderAjax($route) {
+    protected function redirectAndConsiderAjax($route)
+    {
         if (request()->ajax()) {
             return response()->json([
                 'redirect' => $route,

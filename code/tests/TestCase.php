@@ -45,7 +45,8 @@ abstract class TestCase extends BaseTestCase
      * @param $data
      * @param $entity
      */
-    protected function assertNewDataIsPersisted($data, $entity) {
+    protected function assertNewDataIsPersisted($data, $entity)
+    {
         foreach ($data as $key => $value) {
             $entityValue = $entity->$key;
             $this->assertEquals($value, $entityValue);

@@ -47,7 +47,7 @@ class Twilio implements ProviderInterface
                 ->sid
             ;
         } catch (TwilioException $e) {
-            \Log::channel('sms')->debug( $e->getCode() . ' ' . $e->getMessage() );
+            \Log::channel('sms')->debug($e->getCode() . ' ' . $e->getMessage());
             throw new VerificationCodeNotSentException("Unable to send verification code.");
         }
     }
@@ -68,7 +68,7 @@ class Twilio implements ProviderInterface
 
             return $verification->status === 'approved';
         } catch (TwilioException $e) {
-            \Log::channel('sms')->debug( $e->getCode() . ' ' . $e->getMessage() );
+            \Log::channel('sms')->debug($e->getCode() . ' ' . $e->getMessage());
             throw new VerificationNotAchievedException("Unable to verify the code.");
         }
     }
@@ -114,8 +114,8 @@ class Twilio implements ProviderInterface
             $response = $authy->verifyToken($user->getAuthyAppId(), $code);
 
             return $response->ok();
-        } catch(\Exception $e) {
-            \Log::channel('sms')->debug( $e->getCode() . ' ' . $e->getMessage() );
+        } catch (\Exception $e) {
+            \Log::channel('sms')->debug($e->getCode() . ' ' . $e->getMessage());
             return false;
         }
     }

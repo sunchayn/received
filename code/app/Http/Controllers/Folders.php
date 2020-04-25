@@ -2,104 +2,103 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Str;
+use App\Http\Requests\Folders\CreateRequest;
+use App\Http\Requests\Folders\DeleteRequest;
+use App\Http\Requests\Folders\RevokeRequest;
+use App\Http\Requests\Folders\ShareRequest;
+use App\Http\Requests\Folders\UpdateRequest;
+use App\Repositories\FoldersRepository;
 use App\Models\Folder;
 use Auth;
-use Storage;
 
 class Folders extends Controller
 {
-    public function all() {
+    /**
+     * GET /folders/all
+     *
+     * Return a JSON array of current user folders.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function all()
+    {
         return $this->jsonData(Auth::user()->folders);
     }
 
-    public function store() {
-        $data = request()->validate([
-            'name' => 'required',
-        ]);
-
-        $folder = Auth::user()->folders()->where('name', $data['name'])->first();
-
-        if ($folder) {
-            return $this->validationErrors([
-                'name' => 'The folder is already exists',
-            ]);
-        }
-
-        $data['slug'] = Str::slug($data['name']);
-        $folder = Auth::user()->folders()->create($data);
-
-        $bucket = Auth::user()->getBucket();
-        if (! Storage::disk('buckets')->has($bucket)) {
-            Storage::disk('buckets')->makeDirectory($bucket);
-        }
-
-        Storage::disk('buckets')->makeDirectory($bucket . '/' . $folder->slug);
-
+    /**
+     * POST /folders
+     *
+     * Create a new folder
+     *
+     * @param CreateRequest $request
+     * @param FoldersRepository $folders
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function store(CreateRequest $request, FoldersRepository $folders)
+    {
+        $folder = $folders->create($request->validated());
         return $this->jsonData($folder, 201);
     }
 
-    public function save(Folder $folder) {
-        if (! $folder->isOwnedBy(Auth::user())) {
-            return $this->unauthorized();
-        }
-
-        $data = request()->validate([
-            'name' => 'required',
-        ]);
-
-        $folderWithSameName = Auth::user()->folders()->where('name', $data['name'])->first();
-
-        if ($folderWithSameName && $folderWithSameName->id != $folder->id) {
-            return $this->validationErrors([
-                'name' => 'The folder is already exists',
-            ]);
-        }
-
-        $data['slug'] = Str::slug($data['name']);
-        $folder->update($data);
-
+    /**
+     * PATCH /folders/edit/{folder}
+     *
+     * Update a given folder
+     *
+     * @param UpdateRequest $request
+     * @param Folder $folder
+     * @param FoldersRepository $folders
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function save(UpdateRequest $request, FoldersRepository $folders, Folder $folder)
+    {
+        $folder = $folders->update($folder, $request->validated());
         return $this->jsonData($folder);
     }
 
-    public function share(Folder $folder) {
-        if (! $folder->isOwnedBy(Auth::user())) {
-            return $this->unauthorized();
-        }
-
-        $data = request()->validate([
-            'password' => 'required|min:6',
-        ]);
-
-        $folder->update([
-            'password' => bcrypt($data['password']),
-            'shared_at' => now(),
-        ]);
-
+    /**
+     * PATCH /folders/share/{folder}
+     *
+     * Share a given folder
+     *
+     * @param ShareRequest $request
+     * @param Folder $folder
+     * @param FoldersRepository $folders
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function share(ShareRequest $request, FoldersRepository $folders, Folder $folder)
+    {
+        $folders->share($folder, $request->validated());
         return $this->jsonSuccess('The folder has been shared.');
     }
 
-    public function revoke(Folder $folder) {
-        if (! $folder->isOwnedBy(Auth::user())) {
-            return $this->unauthorized();
-        }
-
-        $folder->update([
-            'password' => null,
-            'shared_at' => null,
-        ]);
-
+    /**
+     * PATCH /folders/revoke/{folder}
+     *
+     * @param RevokeRequest $request
+     * @param FoldersRepository $folders
+     * @param Folder $folder
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function revoke(RevokeRequest $request, FoldersRepository $folders, Folder $folder)
+    {
+        $folders->revoke($folder);
         return $this->jsonSuccess('The folder access has been revoked.');
     }
 
-    public function delete(Folder $folder) {
-        if (! $folder->isOwnedBy(Auth::user())) {
-            return $this->unauthorized();
-        }
-
-        Storage::disk('buckets')->deleteDirectory(Auth::user()->getBucket() . '/' . $folder->slug);
-        $folder->delete();
-
+    /**
+     * DELETE /folders/{folder}
+     *
+     * Delete a given folder
+     *
+     * @param DeleteRequest $request
+     * @param FoldersRepository $folders
+     * @param Folder $folder
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function delete(DeleteRequest $request, FoldersRepository $folders, Folder $folder)
+    {
+        $folders->delete($folder);
         return $this->empty();
     }
 }

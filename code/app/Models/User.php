@@ -45,7 +45,8 @@ class User extends Authenticatable implements SmsServiceContract
         'last_code_sent_at',
     ];
 
-    public function folders() {
+    public function folders()
+    {
         return $this->hasMany(Folder::class);
     }
 
@@ -59,7 +60,8 @@ class User extends Authenticatable implements SmsServiceContract
         return $this->ongoing_two_fa;
     }
 
-    public function getBucket() {
+    public function getBucket()
+    {
         return 'bucket_' . $this->id;
     }
 

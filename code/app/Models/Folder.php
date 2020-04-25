@@ -25,15 +25,18 @@ class Folder extends Model
         'shared_at',
     ];
 
-    public function isShared() {
+    public function isShared()
+    {
         return $this->shared_at !== null && $this->password !== null;
     }
 
-    public function user() {
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
 
-    public function isOwnedBy(User $user) {
+    public function isOwnedBy(User $user)
+    {
         return $this->user_id == $user->id;
     }
 }

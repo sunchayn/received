@@ -85,7 +85,7 @@ Route::middleware(['auth', 'clean_session'])->group(function () {
     })->name('home');
 
     // Folders
-    Route::prefix('folders')->name('folders.')->group(function() {
+    Route::prefix('folders')->name('folders.')->group(function () {
 
         Route::get('/all', [
             'uses' =>  'Folders@all',

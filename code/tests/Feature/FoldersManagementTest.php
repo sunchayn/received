@@ -68,7 +68,8 @@ class FoldersManagementTest extends TestCase
      * @param $data
      * @test
      */
-    public function it_create_user_bucket_when_it_does_not_exists($data) {
+    public function it_create_user_bucket_when_it_does_not_exists($data)
+    {
         $this->signin();
 
         // Clean bucket directory
@@ -88,7 +89,8 @@ class FoldersManagementTest extends TestCase
      * @param $data
      * @test
      */
-    public function it_create_folder_in_storage($data) {
+    public function it_create_folder_in_storage($data)
+    {
         $this->signin();
 
         $this
@@ -106,9 +108,10 @@ class FoldersManagementTest extends TestCase
      * @param $data
      * @test
      */
-    public function it_does_not_allow_unverified_users_to_create_folder($data) {
+    public function it_does_not_allow_unverified_users_to_create_folder($data)
+    {
         $user = factory(User::class)->state('not_verified')->create();
-        $this->signin( $user );
+        $this->signin($user);
 
         $this
             ->post(route('folders.create'), $data)
@@ -124,7 +127,8 @@ class FoldersManagementTest extends TestCase
      * @param $expectedErrors
      * @test
      */
-    public function it_does_not_allow_invalid_data_when_creating_folders($data, $expectedErrors) {
+    public function it_does_not_allow_invalid_data_when_creating_folders($data, $expectedErrors)
+    {
         $this->signin();
 
         $this
@@ -139,7 +143,8 @@ class FoldersManagementTest extends TestCase
      * @param $data
      * @test
      */
-    public function it_does_not_allow_multiple_folders_with_the_same_name($data) {
+    public function it_does_not_allow_multiple_folders_with_the_same_name($data)
+    {
         $this->signin();
 
         // Folder with the same name for current user
@@ -178,7 +183,8 @@ class FoldersManagementTest extends TestCase
     /**
      * @test
      */
-    public function user_can_share_a_folder() {
+    public function user_can_share_a_folder()
+    {
         $this->signin();
 
         $data = [
@@ -207,7 +213,7 @@ class FoldersManagementTest extends TestCase
 
         $this
             ->ajax('patch', route('folders.share', ['folder' => $folder->id]), $data)
-            ->assertUnauthorized()
+            ->assertForbidden()
         ;
     }
 
@@ -216,8 +222,14 @@ class FoldersManagementTest extends TestCase
      * @param $data
      * @test
      */
-    public function user_can_update_his_folder($data) {
+    public function user_can_update_his_folder($data)
+    {
         $this->signin();
+        $bucket = Auth::user()->getBucket();
+
+        # Clear the bucket
+        Storage::disk('buckets')->deleteDirectory($bucket);
+        Storage::disk('buckets')->makeDirectory($bucket);
 
         // Updating his folder is Allowed
         // --
@@ -225,12 +237,21 @@ class FoldersManagementTest extends TestCase
             'user_id' => Auth::id(),
         ]);
 
+        $oldSlug = $folder->slug;
+        Storage::disk('buckets')->makeDirectory($bucket . '/' . $oldSlug);
+
         $this
             ->ajax('patch', route('folders.edit', ['folder' => $folder->id]), $data)
             ->assertOk()
         ;
 
-        $this->assertNewDataIsPersisted($data, $folder->refresh());
+        $folder->refresh();
+
+        $this->assertNewDataIsPersisted($data, $folder);
+
+        # Folder is renamed
+        $this->assertfalse(Storage::disk('buckets')->has($bucket . '/' . $oldSlug));
+        $this->assertTrue(Storage::disk('buckets')->has($bucket . '/' . $folder->slug));
 
         // Sharing another user folder is Forbidden
         // --
@@ -241,14 +262,15 @@ class FoldersManagementTest extends TestCase
 
         $this
             ->ajax('patch', route('folders.edit', ['folder' => $folder->id]), $data)
-            ->assertUnauthorized()
+            ->assertForbidden()
         ;
     }
 
     /**
      * @test
      */
-    public function user_can_revoke_sharing_access() {
+    public function user_can_revoke_sharing_access()
+    {
         $this->signin();
 
         // Revoking his folder is Allowed
@@ -273,7 +295,7 @@ class FoldersManagementTest extends TestCase
 
         $this
             ->ajax('patch', route('folders.revoke', ['folder'=> $folder->id]))
-            ->assertUnauthorized()
+            ->assertForbidden()
         ;
 
         $this->assertTrue($folder->refresh()->isShared());
@@ -282,7 +304,8 @@ class FoldersManagementTest extends TestCase
     /**
      * @test
      */
-    public function user_can_delete_his_folder() {
+    public function user_can_delete_his_folder()
+    {
         $this->signin();
 
         // Deleting his folder is Allowed
@@ -304,7 +327,6 @@ class FoldersManagementTest extends TestCase
 
         // Deleting another user's folder is Forbidden
         // --
-
         $anotherUser = factory(User::class)->create();
         $folder = factory(Folder::class)->state('shared')->create([
             'user_id' => $anotherUser->id,
@@ -314,7 +336,7 @@ class FoldersManagementTest extends TestCase
 
         $this
             ->ajax('delete', route('folders.delete', ['folder'=> $folder->id]))
-            ->assertUnauthorized()
+            ->assertForbidden()
         ;
 
         $this->assertTrue(Storage::disk('buckets')->has($anotherUser->getBucket() . '/' . $folder->slug));
