@@ -2987,6 +2987,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 
 
@@ -3000,6 +3004,7 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       folder: null,
+      index: null,
       folders: {
         loaded: false,
         data: []
@@ -3035,8 +3040,26 @@ __webpack_require__.r(__webpack_exports__);
     });
   },
   methods: {
+    showFolder: function showFolder(folder, index) {
+      this.folder = folder;
+      this.index = index;
+    },
     addNewFolder: function addNewFolder(folder) {
-      this.folders.data.push(folder);
+      this.folders.data.unshift(folder);
+    },
+    deleteFolder: function deleteFolder(id, index) {
+      var _this2 = this;
+
+      axios["delete"](this.routes["delete"].replace('__id', id)).then(function (response) {
+        _this2.folders.data.splice(index, 1);
+
+        _this2.folder = null;
+        _this2.index = null;
+
+        _this2.$refs.toolbar.reset();
+      })["catch"](function (error) {
+        alert('Unable to delete the folder! Kindly reload the page.');
+      });
     }
   }
 });
@@ -3138,6 +3161,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['folder'],
   data: function data() {
@@ -3188,10 +3212,146 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['folder'],
+  props: ['folder', 'index', 'routes'],
   data: function data() {
-    return {};
+    return {
+      deleted: false,
+      sharing: false,
+      shareData: {
+        password: '',
+        shared: false,
+        error: null
+      }
+    };
+  },
+  watch: {
+    sharing: function sharing() {
+      var _this = this;
+
+      this.shareData.shared = false;
+      this.shareData.error = null;
+      this.shareData.password = '';
+
+      if (this.sharing === true) {
+        this.$nextTick(function () {
+          _this.$refs['share-input'].focus();
+        });
+      }
+    }
+  },
+  methods: {
+    reset: function reset() {
+      this.deleted = false;
+    },
+    shareFolder: function shareFolder() {
+      var _this2 = this;
+
+      this.$refs.shareButton.classList.add('is-submitting');
+      axios.patch(this.routes.share.replace('__id', this.folder.id), {
+        password: this.shareData.password
+      }).then(function (response) {
+        _this2.shareData.shared = true;
+        _this2.folder.is_shared = true;
+      })["catch"](function (error) {
+        if (error.response.status === 422) {
+          _this2.shareData.error = error.response.data.errors.password[0];
+        } else {
+          var message = error.response.data.message || 'Unable to create a new folder.'; // Show an error notification is exists
+
+          _this2.error({
+            message: message
+          });
+        }
+      })["finally"](function () {
+        _this2.$refs.shareButton.classList.remove('is-submitting');
+      });
+    },
+    revokeAccess: function revokeAccess() {
+      var _this3 = this;
+
+      axios.patch(this.routes.revoke.replace('__id', this.folder.id)).then(function (response) {
+        _this3.folder.is_shared = false;
+      })["catch"](function (error) {
+        var message = error.response.data.message || 'Unable to create a new folder.'; // Show an error notification is exists
+
+        _this3.error({
+          message: message
+        });
+      });
+    }
+  },
+  notifications: {
+    error: {
+      type: 'error',
+      title: 'Error',
+      message: 'Something went wrong.'
+    }
   }
 });
 
@@ -26295,19 +26455,18 @@ var render = function() {
           current: _vm.folder,
           routes: _vm.routes
         },
-        on: {
-          folderCreated: _vm.addNewFolder,
-          showFolder: function($event) {
-            _vm.folder = $event
-          }
-        }
+        on: { folderCreated: _vm.addNewFolder, showFolder: _vm.showFolder }
       }),
       _vm._v(" "),
       _c(
         "div",
         { staticClass: "flex flex-col w-4/5" },
         [
-          _c("Toolbar", { attrs: { folder: _vm.folder } }),
+          _c("Toolbar", {
+            ref: "toolbar",
+            attrs: { folder: _vm.folder, index: _vm.index, routes: _vm.routes },
+            on: { delete: _vm.deleteFolder }
+          }),
           _vm._v(" "),
           _c("Files", { attrs: { folder: _vm.folder } })
         ],
@@ -26518,7 +26677,7 @@ var render = function() {
       _vm._v(" "),
       _c("span", { staticClass: "files_column w-3/12" }, [_vm._v("Sent on")]),
       _vm._v(" "),
-      _c("span", { staticClass: "files_column w-2/12" }, [_vm._v("action")])
+      _c("span", { staticClass: "files_column w-2/12" }, [_vm._v("Action")])
     ]),
     _vm._v(" "),
     _c(
@@ -26546,9 +26705,9 @@ var render = function() {
                 _vm._v(" "),
                 _c("span", { staticClass: "files_column w-2/12" }, [
                   _c(
-                    "a",
+                    "button",
                     {
-                      attrs: { href: "#" },
+                      staticClass: "mr-2 hover:underline",
                       on: {
                         click: function($event) {
                           return _vm.$emit("download", file)
@@ -26556,6 +26715,19 @@ var render = function() {
                       }
                     },
                     [_vm._v("download")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "hover:underline",
+                      on: {
+                        click: function($event) {
+                          return _vm.$emit("delete", file)
+                        }
+                      }
+                    },
+                    [_vm._v("delete")]
                   )
                 ])
               ])
@@ -26588,133 +26760,436 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm.folder
-    ? _c(
-        "header",
-        { staticClass: "border-b border-gray-300 p-2 leading-none flex pr-5" },
-        [
-          _c("div", { staticClass: "flex items-center" }, [
-            _c(
-              "svg",
-              {
-                staticClass: "w-12 mr-2 icon-folder",
-                attrs: {
-                  xmlns: "http://www.w3.org/2000/svg",
-                  viewBox: "0 0 24 24"
-                }
-              },
-              [
-                _c("g", [
-                  _c("path", {
-                    staticClass: "secondary",
-                    attrs: {
-                      d: "M22 10H2V6c0-1.1.9-2 2-2h7l2 2h7a2 2 0 0 1 2 2v2z"
-                    }
-                  }),
-                  _c("rect", {
-                    staticClass: "primary",
-                    attrs: {
-                      width: "20",
-                      height: "12",
-                      x: "2",
-                      y: "8",
-                      rx: "2"
-                    }
-                  })
-                ])
-              ]
-            ),
-            _vm._v(" "),
-            _c("div", [
-              _c("h1", { staticClass: "mb-1" }, [
-                _vm._v(_vm._s(_vm.folder.name))
+  return _c(
+    "fragment",
+    [
+      _vm.deleted
+        ? _c(
+            "header",
+            { staticClass: "browser_toolbar block text-right leading-normal" },
+            [
+              _c("small", [
+                _vm._v(
+                  "Are you sure you want to delete this folder? your files will be permanently deleted."
+                )
               ]),
               _vm._v(" "),
-              _c("small", { staticClass: "text-gray-700" }, [
-                _vm._v(
-                  _vm._s(_vm.folder.files.length) + " files in this folder"
-                )
-              ])
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "ml-auto flex items-center" }, [
-            _c("button", { staticClass: "button button--outline mr-2" }, [
+              _c("br"),
+              _vm._v(" "),
               _c(
-                "svg",
+                "button",
                 {
-                  staticClass: "icon-cloud-download w-6 mr-2",
-                  attrs: {
-                    xmlns: "http://www.w3.org/2000/svg",
-                    viewBox: "0 0 24 24"
+                  staticClass:
+                    "text-sm outline-none text-gray-600 hover:text-gray-800 mr-2",
+                  attrs: { type: "button" },
+                  on: {
+                    click: function($event) {
+                      return _vm.$emit("delete", _vm.folder.id, _vm.index)
+                    }
                   }
                 },
-                [
-                  _c("path", {
-                    staticClass: "primary",
-                    attrs: {
-                      d:
-                        "M15 15v-3a3 3 0 0 0-6 0v3H6a4 4 0 0 1-.99-7.88 5.5 5.5 0 0 1 10.86-.82A4.49 4.49 0 0 1 22 10.5a4.5 4.5 0 0 1-4.5 4.5H15z"
-                    }
-                  }),
-                  _c("path", {
-                    staticClass: "secondary",
-                    attrs: {
-                      d:
-                        "M11 18.59V12a1 1 0 0 1 2 0v6.59l1.3-1.3a1 1 0 0 1 1.4 1.42l-3 3a1 1 0 0 1-1.4 0l-3-3a1 1 0 0 1 1.4-1.42l1.3 1.3z"
-                    }
-                  })
-                ]
+                [_vm._v("confirm")]
               ),
               _vm._v(" "),
-              _c("div", [_vm._v("Download")])
-            ]),
-            _vm._v(" "),
-            _c("button", { staticClass: "button button--outline mr-2" }, [
               _c(
-                "svg",
+                "button",
                 {
-                  staticClass: "icon-inbox-upload w-6 mr-2",
-                  attrs: {
-                    xmlns: "http://www.w3.org/2000/svg",
-                    viewBox: "0 0 24 24"
+                  staticClass:
+                    "text-sm outline-none text-gray-600 hover:text-gray-800",
+                  attrs: { type: "button" },
+                  on: {
+                    click: function($event) {
+                      _vm.deleted = false
+                    }
                   }
                 },
-                [
-                  _c("path", {
-                    staticClass: "primary",
-                    attrs: {
-                      d:
-                        "M8 4a1 1 0 0 1-1 1H5v10h2a2 2 0 0 1 2 2c0 1.1.9 2 2 2h2a2 2 0 0 0 2-2c0-1.1.9-2 2-2h2V5h-2a1 1 0 0 1 0-2h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5c0-1.1.9-2 2-2h2a1 1 0 0 1 1 1z"
-                    }
-                  }),
-                  _c("path", {
-                    staticClass: "secondary",
-                    attrs: {
-                      d:
-                        "M11 6.41V13a1 1 0 0 0 2 0V6.41l1.3 1.3a1 1 0 0 0 1.4-1.42l-3-3a1 1 0 0 0-1.4 0l-3 3a1 1 0 0 0 1.4 1.42L11 6.4z"
-                    }
-                  })
-                ]
-              ),
-              _vm._v(" "),
-              _c("div", [_vm._v("Share folder")])
-            ])
-          ])
-        ]
-      )
-    : _c(
-        "header",
-        {
-          staticClass:
-            "border-b border-gray-300 px-2 py-4 leading-none flex items-center"
-        },
-        [
-          _c("h1", { staticClass: "mb-0 text-gray-700" }, [
-            _vm._v("Select a folder to browse its content")
-          ])
-        ]
-      )
+                [_vm._v("undo")]
+              )
+            ]
+          )
+        : [
+            _vm.folder
+              ? _c("header", { staticClass: "browser_toolbar" }, [
+                  _c("div", { staticClass: "flex items-center" }, [
+                    _c(
+                      "svg",
+                      {
+                        staticClass: "w-12 mr-2 icon-folder",
+                        attrs: {
+                          xmlns: "http://www.w3.org/2000/svg",
+                          viewBox: "0 0 24 24"
+                        }
+                      },
+                      [
+                        _c("g", [
+                          _c("path", {
+                            staticClass: "secondary",
+                            attrs: {
+                              d:
+                                "M22 10H2V6c0-1.1.9-2 2-2h7l2 2h7a2 2 0 0 1 2 2v2z"
+                            }
+                          }),
+                          _c("rect", {
+                            staticClass: "primary",
+                            attrs: {
+                              width: "20",
+                              height: "12",
+                              x: "2",
+                              y: "8",
+                              rx: "2"
+                            }
+                          })
+                        ])
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c("div", [
+                      _c("h1", { staticClass: "mb-1" }, [
+                        _vm._v(_vm._s(_vm.folder.name) + " "),
+                        _vm.folder.is_shared
+                          ? _c("span", { staticClass: "badge" }, [
+                              _vm._v("shared")
+                            ])
+                          : _vm._e()
+                      ]),
+                      _vm._v(" "),
+                      _c("small", { staticClass: "text-gray-700" }, [
+                        _vm._v(
+                          _vm._s(_vm.folder.files.length) +
+                            " files in this folder"
+                        )
+                      ])
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "ml-auto flex items-center" }, [
+                    _c("div", { staticClass: "mr-2 relative" }, [
+                      !_vm.folder.is_shared
+                        ? _c(
+                            "button",
+                            {
+                              staticClass: "button button--outline",
+                              on: {
+                                click: function($event) {
+                                  _vm.sharing = !_vm.sharing
+                                }
+                              }
+                            },
+                            [
+                              _c(
+                                "svg",
+                                {
+                                  staticClass: "icon-inbox-upload w-6 mr-2",
+                                  attrs: {
+                                    xmlns: "http://www.w3.org/2000/svg",
+                                    viewBox: "0 0 24 24"
+                                  }
+                                },
+                                [
+                                  _c("path", {
+                                    staticClass: "primary",
+                                    attrs: {
+                                      d:
+                                        "M8 4a1 1 0 0 1-1 1H5v10h2a2 2 0 0 1 2 2c0 1.1.9 2 2 2h2a2 2 0 0 0 2-2c0-1.1.9-2 2-2h2V5h-2a1 1 0 0 1 0-2h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5c0-1.1.9-2 2-2h2a1 1 0 0 1 1 1z"
+                                    }
+                                  }),
+                                  _c("path", {
+                                    staticClass: "secondary",
+                                    attrs: {
+                                      d:
+                                        "M11 6.41V13a1 1 0 0 0 2 0V6.41l1.3 1.3a1 1 0 0 0 1.4-1.42l-3-3a1 1 0 0 0-1.4 0l-3 3a1 1 0 0 0 1.4 1.42L11 6.4z"
+                                    }
+                                  })
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c("div", [_vm._v("Share folder")])
+                            ]
+                          )
+                        : _c(
+                            "button",
+                            {
+                              staticClass: "button button--outline",
+                              on: { click: _vm.revokeAccess }
+                            },
+                            [
+                              _c(
+                                "svg",
+                                {
+                                  staticClass: "w-6 mr-2 icon-lock",
+                                  attrs: {
+                                    xmlns: "http://www.w3.org/2000/svg",
+                                    viewBox: "0 0 24 24"
+                                  }
+                                },
+                                [
+                                  _c("g", [
+                                    _c("path", {
+                                      staticClass: "secondary",
+                                      attrs: {
+                                        d:
+                                          "M12 10v3a2 2 0 0 0-1 3.73V18a1 1 0 0 0 1 1v3H5a2 2 0 0 1-2-2v-8c0-1.1.9-2 2-2h7z"
+                                      }
+                                    }),
+                                    _c("path", {
+                                      staticClass: "primary",
+                                      attrs: {
+                                        d:
+                                          "M12 19a1 1 0 0 0 1-1v-1.27A2 2 0 0 0 12 13v-3h3V7a3 3 0 0 0-6 0v3H7V7a5 5 0 1 1 10 0v3h2a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-7v-3z"
+                                      }
+                                    })
+                                  ])
+                                ]
+                              ),
+                              _vm._v(
+                                "\n                        Revoke access\n                    "
+                              )
+                            ]
+                          ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          directives: [
+                            {
+                              name: "show",
+                              rawName: "v-show",
+                              value: _vm.sharing,
+                              expression: "sharing"
+                            }
+                          ],
+                          staticClass:
+                            "absolute border border-gray-200 shadow mt-2 right-0 bg-white p-5 z-20 max-w-full",
+                          staticStyle: { "min-width": "320px" }
+                        },
+                        [
+                          !_vm.shareData.shared
+                            ? [
+                                _c("h1", [_vm._v("Sharing a folder")]),
+                                _vm._v(" "),
+                                _c(
+                                  "p",
+                                  {
+                                    staticClass:
+                                      "text-gray-700 text-sm leading-snug"
+                                  },
+                                  [
+                                    _vm._v(
+                                      "Passwords are not saved in plain format, make sure you've copied it before saving."
+                                    )
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "form-group" }, [
+                                  _c("input", {
+                                    directives: [
+                                      {
+                                        name: "model",
+                                        rawName: "v-model",
+                                        value: _vm.shareData.password,
+                                        expression: "shareData.password"
+                                      }
+                                    ],
+                                    ref: "share-input",
+                                    staticClass: "input",
+                                    attrs: {
+                                      type: "text",
+                                      placeholder: "password"
+                                    },
+                                    domProps: { value: _vm.shareData.password },
+                                    on: {
+                                      input: function($event) {
+                                        if ($event.target.composing) {
+                                          return
+                                        }
+                                        _vm.$set(
+                                          _vm.shareData,
+                                          "password",
+                                          $event.target.value
+                                        )
+                                      }
+                                    }
+                                  }),
+                                  _vm._v(" "),
+                                  _c(
+                                    "small",
+                                    {
+                                      staticClass: "input-error",
+                                      class: {
+                                        "is-visible": _vm.shareData.error
+                                      }
+                                    },
+                                    [
+                                      _vm._v(
+                                        "\n                                    " +
+                                          _vm._s(_vm.shareData.error) +
+                                          "\n                                "
+                                      )
+                                    ]
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "flex" }, [
+                                  _c(
+                                    "button",
+                                    {
+                                      ref: "shareButton",
+                                      staticClass: "button mr-2 flex-1",
+                                      attrs: { type: "submit" },
+                                      on: { click: _vm.shareFolder }
+                                    },
+                                    [_vm._v("Share")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "button",
+                                    {
+                                      staticClass:
+                                        "button button--outline flex-1",
+                                      attrs: { type: "submit" },
+                                      on: {
+                                        click: function($event) {
+                                          _vm.sharing = false
+                                        }
+                                      }
+                                    },
+                                    [_vm._v("Dismiss")]
+                                  )
+                                ])
+                              ]
+                            : [
+                                _c("div", { staticClass: "text-center" }, [
+                                  _c(
+                                    "svg",
+                                    {
+                                      staticClass: "icon-check w-12 mx-auto",
+                                      attrs: {
+                                        xmlns: "http://www.w3.org/2000/svg",
+                                        viewBox: "0 0 24 24"
+                                      }
+                                    },
+                                    [
+                                      _c("circle", {
+                                        staticClass:
+                                          "fill-current text-green-200",
+                                        attrs: { cx: "12", cy: "12", r: "10" }
+                                      }),
+                                      _vm._v(" "),
+                                      _c("path", {
+                                        staticClass:
+                                          "fill-current text-green-900",
+                                        attrs: {
+                                          d:
+                                            "M10 14.59l6.3-6.3a1 1 0 0 1 1.4 1.42l-7 7a1 1 0 0 1-1.4 0l-3-3a1 1 0 0 1 1.4-1.42l2.3 2.3z"
+                                        }
+                                      })
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "h2",
+                                    {
+                                      staticClass:
+                                        "text-gray-700 leading-snug my-2"
+                                    },
+                                    [_vm._v("Public access created!")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "p",
+                                    {
+                                      staticClass:
+                                        "text-gray-700 text-sm leading-snug"
+                                    },
+                                    [
+                                      _vm._v(
+                                        "In order to start receiving files forward your public bucket URL and this folder password to the interested parties."
+                                      )
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "button",
+                                    {
+                                      staticClass:
+                                        "button button--outline w-full",
+                                      attrs: { type: "submit" },
+                                      on: {
+                                        click: function($event) {
+                                          _vm.sharing = false
+                                        }
+                                      }
+                                    },
+                                    [_vm._v("Dismiss")]
+                                  )
+                                ])
+                              ]
+                        ],
+                        2
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      { staticClass: "button button--outline mr-2" },
+                      [
+                        _c(
+                          "svg",
+                          {
+                            staticClass: "icon-cloud-download w-6 mr-2",
+                            attrs: {
+                              xmlns: "http://www.w3.org/2000/svg",
+                              viewBox: "0 0 24 24"
+                            }
+                          },
+                          [
+                            _c("path", {
+                              staticClass: "primary",
+                              attrs: {
+                                d:
+                                  "M15 15v-3a3 3 0 0 0-6 0v3H6a4 4 0 0 1-.99-7.88 5.5 5.5 0 0 1 10.86-.82A4.49 4.49 0 0 1 22 10.5a4.5 4.5 0 0 1-4.5 4.5H15z"
+                              }
+                            }),
+                            _c("path", {
+                              staticClass: "secondary",
+                              attrs: {
+                                d:
+                                  "M11 18.59V12a1 1 0 0 1 2 0v6.59l1.3-1.3a1 1 0 0 1 1.4 1.42l-3 3a1 1 0 0 1-1.4 0l-3-3a1 1 0 0 1 1.4-1.42l1.3 1.3z"
+                              }
+                            })
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c("div", [_vm._v("Download")])
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "button button--outline button--red",
+                        on: {
+                          click: function($event) {
+                            _vm.deleted = true
+                          }
+                        }
+                      },
+                      [
+                        _c("span", { staticClass: "h-6" }),
+                        _vm._v("Delete\n                ")
+                      ]
+                    )
+                  ])
+                ])
+              : _c("header", { staticClass: "browser_toolbar" }, [
+                  _c("h1", { staticClass: "text-gray-700 my-2" }, [
+                    _vm._v("Select a folder to browse its content")
+                  ])
+                ])
+          ]
+    ],
+    2
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -26843,7 +27318,7 @@ var render = function() {
               "ul",
               { staticClass: "browser-sidebar_folders_content" },
               [
-                _vm._l(_vm.folders.data, function(folder) {
+                _vm._l(_vm.folders.data, function(folder, index) {
                   return _c(
                     "li",
                     {
@@ -26854,7 +27329,7 @@ var render = function() {
                       },
                       on: {
                         click: function($event) {
-                          return _vm.$emit("showFolder", folder)
+                          return _vm.$emit("showFolder", folder, index)
                         }
                       }
                     },
@@ -40847,15 +41322,14 @@ __webpack_require__.r(__webpack_exports__);
 /*!*********************************************!*\
   !*** ./resources/js/components/Browser.vue ***!
   \*********************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Browser_vue_vue_type_template_id_ad6afee6___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Browser.vue?vue&type=template&id=ad6afee6& */ "./resources/js/components/Browser.vue?vue&type=template&id=ad6afee6&");
 /* harmony import */ var _Browser_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Browser.vue?vue&type=script&lang=js& */ "./resources/js/components/Browser.vue?vue&type=script&lang=js&");
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _Browser_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _Browser_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -40885,7 +41359,7 @@ component.options.__file = "resources/js/components/Browser.vue"
 /*!**********************************************************************!*\
   !*** ./resources/js/components/Browser.vue?vue&type=script&lang=js& ***!
   \**********************************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -41316,15 +41790,14 @@ __webpack_require__.r(__webpack_exports__);
 /*!***************************************************!*\
   !*** ./resources/js/partials/browser/sidebar.vue ***!
   \***************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _sidebar_vue_vue_type_template_id_ad288614___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./sidebar.vue?vue&type=template&id=ad288614& */ "./resources/js/partials/browser/sidebar.vue?vue&type=template&id=ad288614&");
 /* harmony import */ var _sidebar_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./sidebar.vue?vue&type=script&lang=js& */ "./resources/js/partials/browser/sidebar.vue?vue&type=script&lang=js&");
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _sidebar_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _sidebar_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -41354,7 +41827,7 @@ component.options.__file = "resources/js/partials/browser/sidebar.vue"
 /*!****************************************************************************!*\
   !*** ./resources/js/partials/browser/sidebar.vue?vue&type=script&lang=js& ***!
   \****************************************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

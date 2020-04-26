@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Models\User;
 use App\Models\Folder;
+use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 use Auth;
@@ -217,6 +218,39 @@ class FoldersManagementTest extends TestCase
         $this
             ->ajax('patch', route('folders.share', ['folder' => $folder->id]), $data)
             ->assertForbidden()
+        ;
+    }
+
+    /**
+     * @test
+     */
+    public function user_cant_use_the_same_password_with_two_folders() {
+        $this->signin();
+
+        $password = '123456';
+
+        $data = [
+            'password' => $password,
+        ];
+
+        // Folder with the same password
+        factory(Folder::class)->create([
+            'user_id' => Auth::id(),
+            'password' => bcrypt($password),
+            'shared_at' => Carbon::now(),
+        ]);
+
+        // New folder to be shared
+        $folder = factory(Folder::class)->create([
+            'user_id' => Auth::id(),
+        ]);
+
+        $this
+            ->ajax('patch', route('folders.share', ['folder' => $folder->id]), $data)
+            ->assertStatus(422)
+            ->assertJsonValidationErrors([
+                'password'
+            ])
         ;
     }
 

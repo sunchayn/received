@@ -8,12 +8,16 @@
             :routes="routes"
 
             @folderCreated="addNewFolder"
-            @showFolder="folder=$event"
+            @showFolder="showFolder"
         />
 
         <div class="flex flex-col w-4/5">
             <Toolbar
+                ref="toolbar"
                 :folder="folder"
+                :index="index"
+                :routes="routes"
+                @delete="deleteFolder"
             />
 
             <Files
@@ -40,6 +44,7 @@
         data() {
             return {
                 folder: null,
+                index: null,
 
                 folders: {
                     loaded: false,
@@ -85,8 +90,27 @@
         },
 
         methods: {
+            showFolder(folder, index) {
+                this.folder = folder;
+                this.index = index;
+            },
+
             addNewFolder(folder) {
-                this.folders.data.push(folder);
+                this.folders.data.unshift(folder);
+            },
+
+            deleteFolder(id, index) {
+                axios.delete(this.routes.delete.replace('__id', id))
+                    .then(response => {
+                        this.folders.data.splice(index, 1);
+                        this.folder = null;
+                        this.index = null;
+                        this.$refs.toolbar.reset();
+                    })
+                    .catch(error => {
+                        alert('Unable to delete the folder! Kindly reload the page.')
+                    })
+                ;
             }
         },
     }

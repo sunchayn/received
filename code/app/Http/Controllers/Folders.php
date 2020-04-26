@@ -69,9 +69,17 @@ class Folders extends Controller
      */
     public function share(ShareRequest $request, FoldersRepository $folders, Folder $folder)
     {
-        //todo: Prevent using the same password used with another folder
+        $data = $request->validated();
 
-        $folders->share($folder, $request->validated());
+        $folderWithTheSamePassword = $folders->getFolderByPassword(Auth::user(), $data['password']);
+
+        if ($folderWithTheSamePassword) {
+            return $this->validationErrors([
+                'password' => ['This password is already used with another folder'],
+            ]);
+        }
+
+        $folders->share($folder, $data);
         return $this->jsonSuccess('The folder has been shared.');
     }
 

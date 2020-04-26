@@ -34,9 +34,9 @@
 
                 <ul class="browser-sidebar_folders_content" v-else>
                     <li class="browser-sidebar_folders_item"
-                        v-for="folder in folders.data"
+                        v-for="(folder, index) in folders.data"
                         :key="folder.id"
-                        @click="$emit('showFolder', folder)"
+                        @click="$emit('showFolder', folder, index)"
                         :class="{'is-active' : current && current.id === folder.id}"
                     >
                         <span>{{folder.name}}</span>
@@ -117,7 +117,6 @@
                 ;
             }
         },
-
 
         notifications: {
             error: {

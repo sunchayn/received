@@ -11,6 +11,7 @@
                 create: '{{route('folders.create')}}',
                 delete: '{{route('folders.delete', ['folder' => '__id'])}}',
                 share: '{{route('folders.share', ['folder' => '__id'])}}',
+                revoke: '{{route('folders.revoke', ['folder' => '__id'])}}',
                 edit: '{{route('folders.edit', ['folder' => '__id'])}}',
                 storage_info: '{{route('me.storage_info')}}',
             }"

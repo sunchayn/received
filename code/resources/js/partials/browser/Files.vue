@@ -7,7 +7,7 @@
             <span class="files_column w-2/12">Size</span>
             <span class="files_column w-2/12">Type</span>
             <span class="files_column w-3/12">Sent on</span>
-            <span class="files_column w-2/12">action</span>
+            <span class="files_column w-2/12">Action</span>
         </header>
         <div class="files_content" @scroll="moveTableHeader">
             <template v-if="folder">
@@ -20,7 +20,8 @@
                     <span class="files_column w-2/12">{{file.type}}</span>
                     <span class="files_column w-3/12">{{file.sent_on}}</span>
                     <span class="files_column w-2/12">
-                    <a href="#" @click="$emit('download', file)">download</a>
+                    <button class="mr-2 hover:underline" @click="$emit('download', file)">download</button>
+                    <button class="hover:underline" @click="$emit('delete', file)">delete</button>
                 </span>
                 </div>
             </template>

@@ -52,7 +52,7 @@ class User extends Authenticatable implements SmsServiceContract
 
     public function folders()
     {
-        return $this->hasMany(Folder::class);
+        return $this->hasMany(Folder::class)->latest();
     }
 
     public function shared()

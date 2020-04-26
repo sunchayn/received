@@ -63,6 +63,20 @@
     }
 }
 
+.button.button--red {
+    @apply border-red-200 text-red-700;
+
+    &:hover {
+        @apply bg-red-100;
+    }
+
+    &:active,
+    &:focus {
+        @apply bg-red-100 border-red-200;
+    }
+
+}
+
 .add-button {
     @apply flex items-center text-gray-700;
     transition: all ease 300ms;

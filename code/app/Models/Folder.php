@@ -80,6 +80,7 @@ class Folder extends Model
     {
         $data = parent::toArray();
         $data['size'] = $this->getFolderSize('mb');
+        $data['is_shared'] = $this->isShared();
 
         return $data;
     }

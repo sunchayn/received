@@ -817,6 +817,19 @@ form {
 }
 
 /**
+* Browser toolbar module
+ */
+
+.browser_toolbar {
+  border-bottom-width: 1px;
+  border-color: #e2e8f0;
+  line-height: 1;
+  display: flex;
+  padding: 0.5rem;
+  padding-right: 1.25rem;
+}
+
+/**
 * Form groups
  */
 
@@ -1062,6 +1075,20 @@ input[type=number] {
   background-color: #f7fafc;
 }
 
+.button.button--red {
+  border-color: #fed7d7;
+  color: #c53030;
+}
+
+.button.button--red:hover {
+  background-color: #fff5f5;
+}
+
+.button.button--red:active, .button.button--red:focus {
+  background-color: #fff5f5;
+  border-color: #fed7d7;
+}
+
 .add-button {
   display: flex;
   align-items: center;
@@ -1185,6 +1212,25 @@ input[type=number] {
 .meter_fg {
   display: block;
   background-color: #4299e1;
+}
+
+/**
+* Badge module
+ */
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  line-height: 1;
+  border-radius: 9999px;
+  background-color: #e6fffa;
+  color: #234e52;
+  font-weight: 500;
+  font-size: 0.75rem;
 }
 
 .sr-only {
