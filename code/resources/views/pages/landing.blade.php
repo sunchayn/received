@@ -1,4 +1,4 @@
-@extends('layouts.landing')
+@extends('layouts.base')
 
 @section('content')
     <div id="js-border-color-cycle"
@@ -99,4 +99,8 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('javascript')
+    <script src="{{mix('js/landing.js')}}"></script>
 @endsection

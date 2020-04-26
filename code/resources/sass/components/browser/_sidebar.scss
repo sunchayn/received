@@ -1,0 +1,32 @@
+/**
+* Browser sidebar module
+ */
+
+.browser-sidebar {
+    @apply border-r border-gray-300 flex flex-col;
+}
+
+.browser-sidebar_folders {
+    @apply flex-1 flex flex-col px-5 border-b border-gray-300;
+    background: linear-gradient(to top, rgba(#cccccc, 0.2), rgba(#cccccc, 0.1) 10%, rgba(#cccccc, 0));
+}
+
+.browser-sidebar_folders_header {
+    @apply mb-2 py-2 border-b border-gray-300 uppercase text-xs font-bold text-gray-700;
+}
+
+.browser-sidebar_folders_content {
+    @apply flex-1 flex-col overflow-y-auto;
+}
+
+.browser-sidebar_folders_item {
+    @apply flex justify-between items-center py-2 cursor-pointer text-gray-700;
+
+    &:hover, &.is-active {
+        @apply text-gray-900;
+
+        & > span {
+            @apply underline;
+        }
+    }
+}

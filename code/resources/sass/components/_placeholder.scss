@@ -12,6 +12,10 @@
         @apply w-2/3 h-3 block my-1;
     }
 
+    &--button {
+        @apply w-full h-5 block my-1;
+    }
+
     &--input {
         @apply w-full h-8 block my-1;
     }

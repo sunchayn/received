@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Traits\StorageSize;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
@@ -14,6 +15,8 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Plan extends Model
 {
+    use StorageSize;
+
     protected $guarded = [];
 
     /**

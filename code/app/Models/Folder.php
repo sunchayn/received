@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Traits\StorageSize;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
@@ -23,10 +24,16 @@ use Illuminate\Support\Carbon;
  */
 class Folder extends Model
 {
+    use StorageSize;
+
     protected $guarded = [];
 
     protected $dates = [
         'shared_at',
+    ];
+
+    protected $with = [
+        'files',
     ];
 
     public function isShared()
@@ -52,5 +59,28 @@ class Folder extends Model
     public function getPath()
     {
         return $this->user->getBucket() . '/' . $this->slug;
+    }
+
+    public function getFolderSize($unit = 'kb')
+    {
+        $size = $this->files->reduce(function ($carry, $file) {
+            /**
+             * @var File $file
+             */
+
+            $carry += $file->size;
+            return $carry;
+        });
+
+        return $size ? $this->getSizeIn($size, $unit) : 0;
+    }
+
+    // Exporting
+    public function toArray()
+    {
+        $data = parent::toArray();
+        $data['size'] = $this->getFolderSize('mb');
+
+        return $data;
     }
 }

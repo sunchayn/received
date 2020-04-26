@@ -30,3 +30,11 @@ a {
 form {
     margin-bottom: 0;
 }
+
+.primary {
+    @apply fill-current text-gray-400;
+}
+
+.secondary {
+    @apply fill-current text-gray-900;
+}

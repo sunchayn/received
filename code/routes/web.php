@@ -80,9 +80,18 @@ Route::middleware('auth')->prefix('auth')->name('auth.')->group(function () {
 // --
 Route::middleware(['auth', 'clean_session'])->group(function () {
     // App main entry point
-    Route::get('/app', function () {
-        return view('welcome');
-    })->name('home');
+    Route::get('/app', [
+        'uses' => 'App@index',
+        'as' => 'home'
+    ]);
+
+    // User data
+    Route::prefix('me')->group(function () {
+        Route::get('/storage_info', [
+            'uses' => 'UserData@storageInfo',
+            'as' => 'me.storage_info'
+        ]);
+    });
 
     // Folders
     Route::prefix('folders')->name('folders.')->group(function () {
@@ -176,7 +185,6 @@ Route::middleware(['auth', 'clean_session'])->group(function () {
         });
     });
 });
-
 
 // Files upload
 // --

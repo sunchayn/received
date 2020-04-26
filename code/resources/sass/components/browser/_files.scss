@@ -1,0 +1,38 @@
+/**
+* Files module
+ */
+
+.files {
+    @apply flex flex-col relative overflow-hidden;
+}
+
+.files_header {
+    @apply border-b border-gray-300 flex text-sm select-none absolute w-full;
+
+    & > .files_column {
+        @apply border-r border-gray-300;
+        background: linear-gradient(to top, rgba(212,212,213,0.5) 0%, rgba(212,212,213,0) 20%)
+    }
+}
+
+.files_content {
+    @apply flex-1 overflow-auto;
+    margin-top: 22px;
+    background: linear-gradient(  to bottom, #ffffff, #ffffff 50%, #f5f5f5 50%, #f5f5f5); background-size: 100% 50px;
+}
+
+.files_row {
+    @apply flex select-none relative;
+    height: 25px;
+
+    &:hover {
+        background-color: #E6F7FF;
+    }
+}
+
+.files_column {
+    @apply px-2 flex-grow flex items-center text-sm;
+    min-width: 100px;
+    word-break: keep-all;
+    white-space: nowrap;
+}

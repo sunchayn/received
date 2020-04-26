@@ -684,6 +684,138 @@ form {
   margin-bottom: 0;
 }
 
+.primary {
+  fill: currentColor;
+  color: #cbd5e0;
+}
+
+.secondary {
+  fill: currentColor;
+  color: #1a202c;
+}
+
+/**
+* Browser sidebar module
+ */
+
+.browser-sidebar {
+  border-right-width: 1px;
+  border-color: #e2e8f0;
+  display: flex;
+  flex-direction: column;
+}
+
+.browser-sidebar_folders {
+  flex: 1 1 0%;
+  display: flex;
+  flex-direction: column;
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+  border-bottom-width: 1px;
+  border-color: #e2e8f0;
+  background: linear-gradient(to top, rgba(204, 204, 204, 0.2), rgba(204, 204, 204, 0.1) 10%, rgba(204, 204, 204, 0));
+}
+
+.browser-sidebar_folders_header {
+  margin-bottom: 0.5rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom-width: 1px;
+  border-color: #e2e8f0;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #4a5568;
+}
+
+.browser-sidebar_folders_content {
+  flex: 1 1 0%;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.browser-sidebar_folders_item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  cursor: pointer;
+  color: #4a5568;
+}
+
+.browser-sidebar_folders_item:hover, .browser-sidebar_folders_item.is-active {
+  color: #1a202c;
+}
+
+.browser-sidebar_folders_item:hover > span, .browser-sidebar_folders_item.is-active > span {
+  text-decoration: underline;
+}
+
+/**
+* Files module
+ */
+
+.files {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+}
+
+.files_header {
+  border-bottom-width: 1px;
+  border-color: #e2e8f0;
+  display: flex;
+  font-size: 0.875rem;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  position: absolute;
+  width: 100%;
+}
+
+.files_header > .files_column {
+  border-right-width: 1px;
+  border-color: #e2e8f0;
+  background: linear-gradient(to top, rgba(212, 212, 213, 0.5) 0%, rgba(212, 212, 213, 0) 20%);
+}
+
+.files_content {
+  flex: 1 1 0%;
+  overflow: auto;
+  margin-top: 22px;
+  background: linear-gradient(to bottom, #ffffff, #ffffff 50%, #f5f5f5 50%, #f5f5f5);
+  background-size: 100% 50px;
+}
+
+.files_row {
+  display: flex;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  position: relative;
+  height: 25px;
+}
+
+.files_row:hover {
+  background-color: #E6F7FF;
+}
+
+.files_column {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  font-size: 0.875rem;
+  min-width: 100px;
+  word-break: keep-all;
+  white-space: nowrap;
+}
+
 /**
 * Form groups
  */
@@ -836,10 +968,10 @@ input[type=number] {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
-  padding-left: 1.25rem;
-  padding-right: 1.25rem;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
   border-width: 1px;
   border-color: transparent;
   font-size: 0.875rem;
@@ -906,6 +1038,61 @@ input[type=number] {
   background-color: #f7fafc;
 }
 
+.button.button--outline {
+  background-color: transparent;
+  border-width: 1px;
+  border-color: #edf2f7;
+  color: #000;
+  box-shadow: none;
+}
+
+.button.button--outline:hover {
+  background-color: #f7fafc;
+  box-shadow: none;
+}
+
+.button.button--outline:active, .button.button--outline:focus {
+  background-color: #edf2f7;
+  border-color: #edf2f7;
+  box-shadow: none;
+}
+
+.button.button--outline.is-submitting {
+  color: #2d3748;
+  background-color: #f7fafc;
+}
+
+.add-button {
+  display: flex;
+  align-items: center;
+  color: #4a5568;
+  transition: all ease 300ms;
+}
+
+.add-button > svg {
+  border-radius: 9999px;
+  margin-right: 0.5rem;
+  background-color: #4299d7;
+  transition: all ease 300ms;
+}
+
+.add-button > svg > path {
+  fill: #ffffff;
+}
+
+.add-button:active, .add-button:focus {
+  outline: 0;
+}
+
+.add-button:hover {
+  color: #1a202c;
+  text-decoration: none;
+}
+
+.add-button:hover > svg {
+  box-shadow: 0 0 0 3px #b4dffe;
+}
+
 /**
 * Card module
  */
@@ -943,6 +1130,14 @@ input[type=number] {
   margin-bottom: 0.25rem;
 }
 
+.placeholder--button {
+  width: 100%;
+  height: 1.25rem;
+  display: block;
+  margin-top: 0.25rem;
+  margin-bottom: 0.25rem;
+}
+
 .placeholder--input {
   width: 100%;
   height: 2rem;
@@ -973,6 +1168,23 @@ input[type=number] {
   100% {
     background-position: 600px 0;
   }
+}
+
+/**
+* Meter module
+ */
+
+.meter_bg {
+  width: 100%;
+  height: 0.5rem;
+  display: flex;
+  background-color: #ebf8ff;
+  margin-top: 0.5rem;
+}
+
+.meter_fg {
+  display: block;
+  background-color: #4299e1;
 }
 
 .sr-only {
