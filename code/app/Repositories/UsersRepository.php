@@ -58,4 +58,9 @@ class UsersRepository
         $user->ongoing_two_fa = false;
         $user->save();
     }
+
+    public function getByUsername($username): User
+    {
+        return User::where('username', $username)->firstOrFail();
+    }
 }

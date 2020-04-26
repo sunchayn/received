@@ -3,6 +3,9 @@
 namespace App\Repositories;
 
 use App\Models\Folder;
+use App\Models\Subscription;
+use App\Models\User;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Str;
 use Storage;
 use Auth;
@@ -66,6 +69,23 @@ class FoldersRepository
         $folder->delete();
     }
 
+    public function getFolderByPassword(User $user, string $password)
+    {
+        $result = null;
+
+        /**
+         * @var Fodler $folder
+         */
+        foreach ($user->shared as $folder) {
+            if (\Hash::check($password, $folder->password)) {
+                $result = $folder;
+                break;
+            }
+        }
+
+        return $result;
+    }
+
     // Inner Helpers
     // --
 
@@ -93,5 +113,39 @@ class FoldersRepository
     private function deleteDirectory(Folder $folder)
     {
         Storage::disk('buckets')->deleteDirectory(Auth::user()->getBucket() . '/' . $folder->slug);
+    }
+
+    public function canUploadFiles($files, Subscription $subscription)
+    {
+        $size = $this->getUploadedFilesSize($files);
+        return $subscription->remainingStorage() > $size;
+    }
+
+    public function getUploadedFilesSize($files)
+    {
+        $size = 0;
+
+        /**
+         * @var UploadedFile $file
+         */
+        foreach ($files as $file) {
+            $size += $file->getSize() / 1024;
+        }
+
+        return $size;
+    }
+
+    public function uploadFiles($files, Folder $folder)
+    {
+        $entities = [];
+
+        $filesRepository = new FilesRepository();
+
+        foreach ($files as $file) {
+            $entities[] = ($entity = $filesRepository->create($folder, $file));
+            $file->storeAs($folder->getPath(), "{$entity->filename}.{$entity->extension}", 'buckets');
+        }
+
+        return $entities;
     }
 }

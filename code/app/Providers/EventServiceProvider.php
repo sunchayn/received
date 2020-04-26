@@ -16,6 +16,11 @@ class EventServiceProvider extends ServiceProvider
             'App\Listeners\CreateUserNotificationPreferences',
             'App\Listeners\CreateUserDefaultPlan',
         ],
+
+        'App\Events\FilesUploaded' => [
+            'App\Listeners\SendUploadedFilesNotification',
+            'App\Listeners\RecalculateUserStorage',
+        ],
     ];
 
     /**

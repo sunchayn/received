@@ -34,6 +34,7 @@ class PlanManagementTest extends TestCase
 
         $this
             ->ajax('post', route('auth.signup'), $data->toArray())
+            ->assertOk()
         ;
 
         $user = User::first();

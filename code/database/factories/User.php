@@ -3,6 +3,7 @@
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
 use App\Models\User;
+use App\Models\Plan;
 use Faker\Generator as Faker;
 
 $factory->define(User::class, function (Faker $faker) {
@@ -34,4 +35,26 @@ $factory->state(User::class, 'needs_2fa', function ($faker) {
     return [
         'ongoing_two_fa' => true,
     ];
+});
+
+// With notification preferences
+// --
+$factory->state(User::class, 'with_prefs', function ($faker) {
+    return [];
+});
+
+$factory->afterCreatingState(User::class, 'with_prefs', function (User $user, $faker) {
+    $user->notificationPrefs()->create([]);
+});
+
+// With subscription
+// --
+$factory->state(User::class, 'with_subscription', function ($faker) {
+    return [];
+});
+
+$factory->afterCreatingState(User::class, 'with_subscription', function (User $user, $faker) {
+    $user->subscription()->create([
+        'plan_id' => factory(Plan::class)->create()->id,
+    ]);
 });

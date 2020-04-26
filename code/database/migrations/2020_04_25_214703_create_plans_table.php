@@ -18,7 +18,7 @@ class CreatePlansTable extends Migration
 
             $table->string('title');
             $table->text('description');
-            $table->integer('storage_limit')->comment('Storage limit in Bytes');
+            $table->integer('storage_limit')->comment('Storage limit in Kilobytes');
             $table->boolean('is_default')->default(false)->comment('Default plan assigned to users on registration. Must be one record with is_default set to TRUE');
 
             $table->timestamps();

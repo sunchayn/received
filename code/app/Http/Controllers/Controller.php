@@ -77,12 +77,14 @@ class Controller extends BaseController
      * Return a json array of validation errors with HTTP Unprocessable Entity Code.
      *
      * @param $errors
+     * @param array $data Extra data tp send alongside the errors
      * @return \Illuminate\Http\JsonResponse
      */
-    public function validationErrors($errors)
+    public function validationErrors($errors, $data = [])
     {
         return response()->json([
             'errors' => $errors,
+            'data' => $data,
         ], 422);
     }
 

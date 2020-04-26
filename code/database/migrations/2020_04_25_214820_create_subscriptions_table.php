@@ -18,7 +18,7 @@ class CreateSubscriptionsTable extends Migration
 
             $table->unsignedBigInteger('plan_id');
             $table->unsignedBigInteger('user_id');
-            $table->integer('used_storage')->default(0);
+            $table->integer('used_storage')->default(0)->comment('used storage in Kilobytes');
 
             $table->foreign('plan_id')->references('id')->on('plans')->cascadeOnDelete();
             $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();

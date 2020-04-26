@@ -69,6 +69,8 @@ class Folders extends Controller
      */
     public function share(ShareRequest $request, FoldersRepository $folders, Folder $folder)
     {
+        //todo: Prevent using the same password used with another folder
+
         $folders->share($folder, $request->validated());
         return $this->jsonSuccess('The folder has been shared.');
     }

@@ -28,9 +28,11 @@ use Illuminate\Support\Collection;
  * @property Carbon|null $updated_at
  *
  * @property Collection|null $folders
+ * @property Collection|null $shared
  * @property OngoingNewPhoneVerification|null $ongoingNewPhoneVerification
  * @property NotificationPrefs $notificationPrefs
  * @property Subscription $subscription
+ * @property Plan $plan
  * @mixin Builder
  */
 class User extends Authenticatable implements SmsServiceContract
@@ -51,6 +53,15 @@ class User extends Authenticatable implements SmsServiceContract
     public function folders()
     {
         return $this->hasMany(Folder::class);
+    }
+
+    public function shared()
+    {
+        return $this
+            ->hasMany(Folder::class)
+            ->whereNotNull('password')
+            ->whereNotNull('shared_at')
+        ;
     }
 
     public function ongoingNewPhoneVerification()

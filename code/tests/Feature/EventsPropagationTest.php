@@ -2,12 +2,15 @@
 
 namespace Tests\Feature;
 
+use App\Events\FilesUploaded;
 use App\Events\UserCreated;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Event;
 use Tests\TestCase;
 use App\Models\User;
 use App\Services\SMS\Provider as SMSProvider;
+use Storage;
 
 class EventsPropagationTest extends TestCase
 {
@@ -17,6 +20,7 @@ class EventsPropagationTest extends TestCase
     {
         parent::setUp();
         SMSProvider::setupFakeService([]);
+        Storage::fake('buckets');
     }
 
     /**
@@ -33,5 +37,31 @@ class EventsPropagationTest extends TestCase
         ;
 
         Event::assertDispatched(UserCreated::class);
+    }
+
+    /**
+     * @test
+     */
+    public function it_fire_an_event_upon_files_upload()
+    {
+        Event::fake();
+
+        // Prepare required conditions
+        // --
+        $this->prepareFolderForUpload($password, $_, $user, 100);
+
+        $data = [
+            'password' => $password,
+            'files' => [
+                UploadedFile::fake()->create('file.jpg', 10),
+            ],
+        ];
+
+        // Upload files
+        // --
+        $route = route('send.upload', ['username' => $user->username]);
+        $this->ajax('post', $route, $data)->assertOk();
+
+        Event::assertDispatched(FilesUploaded::class);
     }
 }

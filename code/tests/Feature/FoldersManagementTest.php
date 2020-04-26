@@ -13,6 +13,12 @@ class FoldersManagementTest extends TestCase
 {
     use RefreshDatabase;
 
+    public function setUp(): void
+    {
+        parent::setUp();
+        Storage::fake('buckets');
+    }
+
     /**
      * @test
      */
@@ -71,9 +77,6 @@ class FoldersManagementTest extends TestCase
     public function it_create_user_bucket_when_it_does_not_exists($data)
     {
         $this->signin();
-
-        // Clean bucket directory
-        Storage::disk('buckets')->deleteDirectory(Auth::user()->getBucket());
 
         $this->assertFalse(Storage::disk('buckets')->has(Auth::user()->getBucket()));
 
@@ -142,6 +145,7 @@ class FoldersManagementTest extends TestCase
      * @dataProvider folder_valid_data
      * @param $data
      * @test
+     * @throws \Exception
      */
     public function it_does_not_allow_multiple_folders_with_the_same_name($data)
     {
@@ -216,7 +220,6 @@ class FoldersManagementTest extends TestCase
         ;
     }
 
-
     /**
      * @test
      */
@@ -263,10 +266,6 @@ class FoldersManagementTest extends TestCase
     {
         $this->signin();
         $bucket = Auth::user()->getBucket();
-
-        # Clear the bucket
-        Storage::disk('buckets')->deleteDirectory($bucket);
-        Storage::disk('buckets')->makeDirectory($bucket);
 
         // Updating his folder is Allowed
         // --

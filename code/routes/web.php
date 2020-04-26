@@ -31,53 +31,53 @@ Route::prefix('/auth')->name('auth.')->middleware('guest')->group(function () {
     ]);
 });
 
-Route::middleware('auth')->group(function () {
-    // Security
+// Security
+// --
+Route::middleware('auth')->prefix('auth')->name('auth.')->group(function () {
+    // Logout
     // --
-    Route::prefix('auth')->name('auth.')->group(function () {
-        // Logout
-        // --
-        Route::get('/logout', [
-            'uses' =>  'Auth\Logout@logout',
-            'as' => 'logout'
-        ]);
+    Route::get('/logout', [
+        'uses' =>  'Auth\Logout@logout',
+        'as' => 'logout'
+    ]);
 
-        // Verify
-        // --
-        Route::get('/verify/{verification_id}', [
-            'uses' =>  'Auth\Security@verification',
-            'as' => 'verify'
-        ]);
+    // Verify
+    // --
+    Route::get('/verify/{verification_id}', [
+        'uses' =>  'Auth\Security@verification',
+        'as' => 'verify'
+    ]);
 
-        Route::post('/verify/{verification_id}', [
-            'uses' =>  'Auth\Security@verify',
-        ]);
+    Route::post('/verify/{verification_id}', [
+        'uses' =>  'Auth\Security@verify',
+    ]);
 
-        // 2FA
-        // --
-        Route::get('/two_factor_auth', [
-            'uses' =>  'Auth\Security@twoFaPage',
-            'as' => '2fa'
-        ]);
+    // 2FA
+    // --
+    Route::get('/two_factor_auth', [
+        'uses' =>  'Auth\Security@twoFaPage',
+        'as' => '2fa'
+    ]);
 
-        Route::post('/two_factor_auth', [
-            'uses' =>  'Auth\Security@check2FA',
-        ]);
+    Route::post('/two_factor_auth', [
+        'uses' =>  'Auth\Security@check2FA',
+    ]);
 
-        // Resend SMS codes
-        // --
-        Route::post('/resend_verification_code', [
-            'uses' =>  'Auth\Security@resendVerificationCode',
-            'as' => 'resend_verification_code'
-        ]);
+    // Resend SMS codes
+    // --
+    Route::post('/resend_verification_code', [
+        'uses' =>  'Auth\Security@resendVerificationCode',
+        'as' => 'resend_verification_code'
+    ]);
 
-        Route::post('/resend_2fa_code', [
-            'uses' =>  'Auth\Security@resendTwoFaCode',
-            'as' => 'resend_2fa_code'
-        ]);
-    });
+    Route::post('/resend_2fa_code', [
+        'uses' =>  'Auth\Security@resendTwoFaCode',
+        'as' => 'resend_2fa_code'
+    ]);
 });
 
+// App internal logic
+// --
 Route::middleware(['auth', 'clean_session'])->group(function () {
     // App main entry point
     Route::get('/app', function () {
@@ -175,4 +175,24 @@ Route::middleware(['auth', 'clean_session'])->group(function () {
             ]);
         });
     });
+});
+
+
+// Files upload
+// --
+Route::prefix('u/{username}')->group(function () {
+    Route::get('/', [
+        'uses' => 'Send\Home@index',
+        'as' => 'send.index',
+    ]);
+
+    Route::post('/unlock', [
+        'uses' => 'Send\Folders@unlock',
+        'as' => 'send.unlock',
+    ]);
+
+    Route::post('/upload', [
+        'uses' => 'Send\Folders@upload',
+        'as' => 'send.upload',
+    ]);
 });
