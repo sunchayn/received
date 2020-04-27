@@ -174,7 +174,6 @@ Route::middleware(['auth', 'clean_session'])->group(function () {
             ]);
         });
 
-
         // Notification preferences Settings
         // --
         Route::prefix('notifications')->group(function () {

@@ -15,7 +15,15 @@
                     <p class="mb-0 text-gray-700 text-sm">shared on: {{folder.shared_at}}</p>
                 </div>
                 <div class="ml-auto pl-2 flex flex-col">
-                    <button class="button px-3 py-1 mb-2">Change password</button>
+                    <div class="relative">
+                        <button class="button px-3 py-1 mb-2" @click="changePassword(folder.id)">Change password</button>
+                        <FolderPassword
+                            :new="false"
+                            :ref="'password-' + folder.id"
+                            :key="folder.id"
+                            :route="routes.changePassword.replace('__id', folder.id)"
+                        />
+                    </div>
                     <button class="hover:underline" @click="revokeAccess(folder.id, index)">revoke access</button>
                 </div>
             </div>
@@ -30,8 +38,14 @@
 </template>
 
 <script>
+    import FolderPassword from "@/ui/FolderPassword";
+
     export default {
         props: ['routes', 'folders'],
+
+        components: {
+            FolderPassword,
+        },
 
         data() {
             return {
@@ -51,6 +65,10 @@
                         })
                     ;
                 }
+            },
+
+            changePassword(id) {
+                this.$refs['password-' + id][0].show();
             }
         },
 

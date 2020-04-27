@@ -14,10 +14,12 @@
                         username: '{{route('settings.username')}}',
                         submit:  '{{route('settings.profile')}}',
                     },
+
                     account: {
                         change_phone: '{{route('settings.change_phone')}}',
                         submit:  '{{route('settings.password')}}',
                     },
+
                     notifications: {
                         submit:  '{{route('settings.notifications')}}',
                     },

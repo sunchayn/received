@@ -28,6 +28,10 @@
     }
 }
 
+.button.button--slim {
+    @apply py-1 px-3;
+}
+
 .button.button--secondary {
     @apply bg-gray-200 text-black shadow-md;
 

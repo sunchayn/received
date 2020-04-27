@@ -1030,6 +1030,13 @@ input[type=number] {
   display: none;
 }
 
+.button.button--slim {
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+}
+
 .button.button--secondary {
   background-color: #edf2f7;
   color: #000;

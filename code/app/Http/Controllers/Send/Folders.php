@@ -40,7 +40,7 @@ class Folders extends \App\Http\Controllers\Controller
 
         if (! $folder) {
             return $this->validationErrors([
-                'password' => ['Invalid password.'],
+                'password' => ['There\'s no public bucket matching the given credentials.'],
             ]);
         }
 
@@ -92,7 +92,7 @@ class Folders extends \App\Http\Controllers\Controller
 
         if (! $folder) {
             return $this->validationErrors([
-                'password' => ['Invalid password.'],
+                'password' => ['There\'s no public bucket matching the given credentials.'],
             ]);
         }
 

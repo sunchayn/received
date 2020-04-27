@@ -1,4 +1,4 @@
-<header class="py-2 px-5 relative z-50{{ !isset($border) || $border !== false ? ' border-b border-gray-300' : '' }}">
+<header class="py-2 px-5 relative z-50{{ !isset($border) || $border !== false ? ' bg-white border-b border-gray-300' : '' }}">
     <nav class="flex items-center">
         <h1 class="font-black text-xl">received;</h1>
         <div class="ml-auto">
