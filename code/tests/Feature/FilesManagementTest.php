@@ -1,0 +1,123 @@
+<?php
+
+namespace Tests\Feature;
+
+use App\Models\User;
+use App\Models\Folder;
+use App\Models\File;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\UploadedFile;
+use Tests\TestCase;
+use Storage;
+use Auth;
+
+class FilesManagementTest extends TestCase
+{
+    use RefreshDatabase;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+        Storage::fake('buckets');
+    }
+
+    /**
+     * @test
+     */
+    public function user_can_download_his_files() {
+        $this->signin();
+
+        // Downloading his file is Allowed
+        // --
+        $folder = factory(Folder::class)->create([
+            'user_id' => Auth::id(),
+        ]);
+
+        /**
+         * @var File $file
+         */
+        $file = factory(File::class)->create([
+            'folder_id' => $folder->id,
+        ]);
+
+        $qualifiedFilename = $file->filename . '.' . $file->extension;
+
+        Storage::disk('buckets')->makeDirectory(Auth::user()->getBucket() . '/' . $folder->slug);
+        UploadedFile::fake()
+            ->create($qualifiedFilename, 2000)
+            ->storeAs($folder->getPath(), $qualifiedFilename, 'buckets')
+        ;
+
+        $this
+            ->get(route('files.download', ['file'=> $file->id]))
+            ->assertHeader('Content-Disposition', 'attachment; filename='. $qualifiedFilename)
+        ;
+
+        // Downloading another user file is Forbidden
+        // --
+        $anotherUser = factory(User::class)->create();
+        $folder = factory(Folder::class)->create([
+            'user_id' => $anotherUser->id,
+        ]);
+
+        $file = factory(File::class)->create([
+            'folder_id' => $folder->id,
+        ]);
+
+        $this
+            ->get(route('files.download', ['file'=> $file->id]))
+            ->assertForbidden()
+        ;
+    }
+
+    /**
+     * @test
+     */
+    public function user_can_delete_his_files() {
+        $this->signin();
+
+        // Downloading his file is Allowed
+        // --
+        $folder = factory(Folder::class)->create([
+            'user_id' => Auth::id(),
+        ]);
+
+        /**
+         * @var File $file
+         */
+        $file = factory(File::class)->create([
+            'folder_id' => $folder->id,
+        ]);
+
+        $qualifiedFilename = $file->filename . '.' . $file->extension;
+
+        Storage::disk('buckets')->makeDirectory(Auth::user()->getBucket() . '/' . $folder->slug);
+        UploadedFile::fake()
+            ->create($qualifiedFilename, 2000)
+            ->storeAs($folder->getPath(), $qualifiedFilename, 'buckets')
+        ;
+
+        $this
+            ->delete(route('files.delete', ['file'=> $file->id]))
+            ->assertNoContent()
+        ;
+
+        Storage::disk('buckets')->assertMissing($file->getPath());
+
+        // Deleting another user folder is Forbidden
+        // --
+        $anotherUser = factory(User::class)->create();
+        $folder = factory(Folder::class)->create([
+            'user_id' => $anotherUser->id,
+        ]);
+
+        $file = factory(File::class)->create([
+            'folder_id' => $folder->id,
+        ]);
+
+        $this
+            ->delete(route('files.delete', ['file'=> $file->id]))
+            ->assertForbidden()
+        ;
+    }
+}

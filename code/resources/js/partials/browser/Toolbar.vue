@@ -140,7 +140,7 @@
                         if (error.response.status === 422) {
                             this.shareData.error = error.response.data.errors.password[0];
                         } else {
-                            let message = error.response.data.message || 'Unable to create a new folder.';
+                            let message = error.response.data.message || 'Unable to share the folder.';
                             this.error({message: message});
                         }
                     })
@@ -153,8 +153,7 @@
                         this.folder.is_shared = false;
                     })
                     .catch(error => {
-                        let message = error.response.data.message || 'Unable to create a new folder.';
-                        // Show an error notification is exists
+                        let message = error.response.data.message || 'Unable to revoke folder access.';
                         this.error({message: message});
                     })
                 ;

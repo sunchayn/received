@@ -26,7 +26,7 @@ class FilesRepository
     private function decideFileName(Folder $folder, UploadedFile $file)
     {
         $filename = pathinfo($file->getClientOriginalName())['filename'];
-        $existentFile = $folder->files()->where('filename', $filename)->first();
+        $existentFile = $folder->files()->where('filename', $filename)->count() > 0;
 
         return !$existentFile ? $filename : $filename . '_' . time();
     }

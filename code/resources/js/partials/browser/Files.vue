@@ -13,7 +13,7 @@
         <div class="files_content" @scroll="moveTableHeader">
             <template v-if="folder">
                 <div class="files_row"
-                     v-for="file in folder.files"
+                     v-for="(file, index) in folder.files"
                      :key="file.id"
                 >
                     <span class="files_column w-4/12">{{file.filename}}</span>
@@ -23,7 +23,7 @@
                     <span class="files_column w-2/12">{{file.sent_on}}</span>
                     <span class="files_column w-2/12">
                     <button class="mr-2 hover:underline" @click="$emit('download', file)">download</button>
-                    <button class="hover:underline" @click="$emit('delete', file)">delete</button>
+                    <button class="hover:underline" @click="$emit('delete', file, index)">delete</button>
                 </span>
                 </div>
             </template>

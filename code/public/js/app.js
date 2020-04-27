@@ -2992,6 +2992,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 
 
@@ -3063,6 +3065,31 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (error) {
         alert('Unable to delete the folder! Kindly reload the page.');
       });
+    },
+    downloadFile: function downloadFile(file) {
+      window.open(this.routes.file_download.replace('__id', file.id));
+    },
+    deleteFile: function deleteFile(file, index) {
+      var _this3 = this;
+
+      if (confirm('Are you sure?')) {
+        axios["delete"](this.routes.file_delete.replace('__id', file.id)).then(function (response) {
+          _this3.folder.files.splice(index, 1);
+        })["catch"](function (error) {
+          var message = error.response.data.message || 'We were unable to delete the file.';
+
+          _this3.error({
+            message: message
+          });
+        });
+      }
+    }
+  },
+  notifications: {
+    errorNotification: {
+      type: 'error',
+      title: 'Error',
+      message: 'Something went wrong.'
     }
   }
 });
@@ -3474,7 +3501,7 @@ __webpack_require__.r(__webpack_exports__);
         if (error.response.status === 422) {
           _this2.shareData.error = error.response.data.errors.password[0];
         } else {
-          var message = error.response.data.message || 'Unable to create a new folder.';
+          var message = error.response.data.message || 'Unable to share the folder.';
 
           _this2.error({
             message: message
@@ -3488,7 +3515,7 @@ __webpack_require__.r(__webpack_exports__);
       axios.patch(this.routes.revoke.replace('__id', this.folder.id)).then(function (response) {
         _this3.folder.is_shared = false;
       })["catch"](function (error) {
-        var message = error.response.data.message || 'Unable to create a new folder.'; // Show an error notification is exists
+        var message = error.response.data.message || 'Unable to revoke folder access.';
 
         _this3.error({
           message: message
@@ -40680,7 +40707,10 @@ var render = function() {
             on: { delete: _vm.deleteFolder }
           }),
           _vm._v(" "),
-          _c("Files", { attrs: { folder: _vm.folder } })
+          _c("Files", {
+            attrs: { folder: _vm.folder },
+            on: { download: _vm.downloadFile, delete: _vm.deleteFile }
+          })
         ],
         1
       )
@@ -41024,7 +41054,7 @@ var render = function() {
       { staticClass: "files_content", on: { scroll: _vm.moveTableHeader } },
       [
         _vm.folder
-          ? _vm._l(_vm.folder.files, function(file) {
+          ? _vm._l(_vm.folder.files, function(file, index) {
               return _c("div", { key: file.id, staticClass: "files_row" }, [
                 _c("span", { staticClass: "files_column w-4/12" }, [
                   _vm._v(_vm._s(file.filename))
@@ -41066,7 +41096,7 @@ var render = function() {
                       staticClass: "hover:underline",
                       on: {
                         click: function($event) {
-                          return _vm.$emit("delete", file)
+                          return _vm.$emit("delete", file, index)
                         }
                       }
                     },

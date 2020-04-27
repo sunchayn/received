@@ -137,6 +137,19 @@ Route::middleware(['auth', 'clean_session'])->group(function () {
         ]);
     });
 
+    // Files
+    Route::prefix('files')->name('files.')->group(function () {
+        Route::delete('/{file}', [
+            'uses' => 'Files@delete',
+            'as' => 'delete'
+        ]);
+
+        Route::get('/download/{file}', [
+            'uses' => 'Files@download',
+            'as' => 'download'
+        ]);
+    });
+
     // Settings
     Route::prefix('settings')->name('settings.')->group(function () {
         // Settings default page

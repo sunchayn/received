@@ -22,6 +22,8 @@
 
             <Files
                 :folder="folder"
+                @download="downloadFile"
+                @delete="deleteFile"
             />
         </div>
     </div>
@@ -113,8 +115,34 @@
                         alert('Unable to delete the folder! Kindly reload the page.')
                     })
                 ;
+            },
+
+            downloadFile(file) {
+                window.open(this.routes.file_download.replace('__id', file.id))
+            },
+
+            deleteFile(file, index) {
+                if (confirm('Are you sure?')) {
+                    axios.delete(this.routes.file_delete.replace('__id', file.id))
+                        .then(response => {
+                            this.folder.files.splice(index, 1);
+                        })
+                        .catch(error => {
+                            let message = error.response.data.message || 'We were unable to delete the file.';
+                            this.error({message: message});
+                        })
+                }
             }
         },
+
+
+        notifications: {
+            errorNotification: {
+                type: 'error',
+                title: 'Error',
+                message: 'Something went wrong.'
+            },
+        }
     }
 
 </script>

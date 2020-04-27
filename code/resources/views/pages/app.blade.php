@@ -14,6 +14,8 @@
                 revoke: '{{route('folders.revoke', ['folder' => '__id'])}}',
                 edit: '{{route('folders.edit', ['folder' => '__id'])}}',
                 download: '{{route('folders.download', ['folder' => '__id'])}}',
+                file_download: '{{route('files.download', ['file' => '__id'])}}',
+                file_delete: '{{route('files.delete', ['file' => '__id'])}}',
                 storage_info: '{{route('me.storage_info')}}',
             }"
         >
