@@ -3228,6 +3228,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 
@@ -3450,6 +3451,8 @@ __webpack_require__.r(__webpack_exports__);
         _this2.shareData.shared = true;
         _this2.folder.is_shared = true;
       })["catch"](function (error) {
+        _this2.$refs.shareButton.classList.remove('is-submitting');
+
         if (error.response.status === 422) {
           _this2.shareData.error = error.response.data.errors.password[0];
         } else {
@@ -3459,8 +3462,6 @@ __webpack_require__.r(__webpack_exports__);
             message: message
           });
         }
-      })["finally"](function () {
-        _this2.$refs.shareButton.classList.remove('is-submitting');
       });
     },
     revokeAccess: function revokeAccess() {
@@ -3999,13 +4000,52 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _mixins_submitForm__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/mixins/submitForm */ "./resources/js/mixins/submitForm.js");
 //
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
+  mixins: [_mixins_submitForm__WEBPACK_IMPORTED_MODULE_0__["default"]],
   data: function data() {
-    return {};
+    return {
+      entity: {
+        notify_by_SMS: '',
+        notify_by_mail: ''
+      },
+      formHook: '#js-notifications-form-hook',
+      verb: 'patch'
+    };
+  },
+  notifications: {
+    successNotification: {
+      type: 'success',
+      title: 'Success',
+      message: 'Preferences updated!'
+    }
   }
 });
 
@@ -4150,9 +4190,69 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['routes', 'folders'],
   data: function data() {
     return {};
+  },
+  methods: {
+    revokeAccess: function revokeAccess(id, index) {
+      var _this = this;
+
+      if (confirm('Are you sure?')) {
+        axios.patch(this.routes.revoke.replace('__id', id)).then(function (response) {
+          _this.folders.splice(index, 1);
+
+          _this.$forceUpdate();
+        })["catch"](function (error) {
+          _this.errorNotification();
+        });
+      }
+    }
+  },
+  notifications: {
+    accessRevoked: {
+      type: 'success',
+      title: 'Success',
+      message: 'Folder access has been revoked.'
+    },
+    passwordChanged: {
+      type: 'success',
+      title: 'Success',
+      message: 'Folder sharing password has been changed.'
+    },
+    errorNotification: {
+      type: 'error',
+      title: 'Error',
+      message: 'Something went wrong.'
+    }
   }
 });
 
@@ -40655,7 +40755,10 @@ var render = function() {
           _vm._v(" "),
           _vm.current === "shared-folders"
             ? _c("SharedFolders", {
-                attrs: { routes: this.routes.sharedFolders }
+                attrs: {
+                  routes: this.routes.sharedFolders,
+                  folders: this.data.sharedFolders.folders
+                }
               })
             : _vm._e()
         ],
@@ -40946,7 +41049,7 @@ var render = function() {
                   _vm._v(" "),
                   _c("div", { staticClass: "ml-auto flex items-center" }, [
                     _c("div", { staticClass: "mr-2 relative" }, [
-                      !_vm.folder.is_shared
+                      _vm.folder.is_shared === false
                         ? _c(
                             "button",
                             {
@@ -41867,7 +41970,134 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div")
+  return _c("fragment", [
+    _c("h2", [_vm._v("Notifications preferences")]),
+    _vm._v(" "),
+    _c("hr", { staticClass: "my-2" }),
+    _vm._v(" "),
+    _c(
+      "form",
+      {
+        attrs: { id: "js-notifications-form-hook" },
+        on: {
+          submit: function($event) {
+            $event.preventDefault()
+            return _vm.submitHandler($event)
+          }
+        }
+      },
+      [
+        _c("div", { staticClass: "form-group" }, [
+          _c("label", [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.entity.notify_by_sms,
+                  expression: "entity.notify_by_sms"
+                }
+              ],
+              staticClass: "mr-2",
+              attrs: { type: "checkbox" },
+              domProps: {
+                checked: Array.isArray(_vm.entity.notify_by_sms)
+                  ? _vm._i(_vm.entity.notify_by_sms, null) > -1
+                  : _vm.entity.notify_by_sms
+              },
+              on: {
+                change: function($event) {
+                  var $$a = _vm.entity.notify_by_sms,
+                    $$el = $event.target,
+                    $$c = $$el.checked ? true : false
+                  if (Array.isArray($$a)) {
+                    var $$v = null,
+                      $$i = _vm._i($$a, $$v)
+                    if ($$el.checked) {
+                      $$i < 0 &&
+                        _vm.$set(_vm.entity, "notify_by_sms", $$a.concat([$$v]))
+                    } else {
+                      $$i > -1 &&
+                        _vm.$set(
+                          _vm.entity,
+                          "notify_by_sms",
+                          $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                        )
+                    }
+                  } else {
+                    _vm.$set(_vm.entity, "notify_by_sms", $$c)
+                  }
+                }
+              }
+            }),
+            _vm._v(" Notify by SMS\n            ")
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "form-group" }, [
+          _c("label", [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.entity.notify_by_mail,
+                  expression: "entity.notify_by_mail"
+                }
+              ],
+              staticClass: "mr-2",
+              attrs: { type: "checkbox" },
+              domProps: {
+                checked: Array.isArray(_vm.entity.notify_by_mail)
+                  ? _vm._i(_vm.entity.notify_by_mail, null) > -1
+                  : _vm.entity.notify_by_mail
+              },
+              on: {
+                change: function($event) {
+                  var $$a = _vm.entity.notify_by_mail,
+                    $$el = $event.target,
+                    $$c = $$el.checked ? true : false
+                  if (Array.isArray($$a)) {
+                    var $$v = null,
+                      $$i = _vm._i($$a, $$v)
+                    if ($$el.checked) {
+                      $$i < 0 &&
+                        _vm.$set(
+                          _vm.entity,
+                          "notify_by_mail",
+                          $$a.concat([$$v])
+                        )
+                    } else {
+                      $$i > -1 &&
+                        _vm.$set(
+                          _vm.entity,
+                          "notify_by_mail",
+                          $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                        )
+                    }
+                  } else {
+                    _vm.$set(_vm.entity, "notify_by_mail", $$c)
+                  }
+                }
+              }
+            }),
+            _vm._v(" Notify by mail\n            ")
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "form-group" }, [
+          _c(
+            "button",
+            {
+              staticClass: "button button--secondary",
+              attrs: { type: "submit" }
+            },
+            [_vm._v("Update preferences")]
+          )
+        ])
+      ]
+    )
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -42041,7 +42271,76 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div")
+  return _c(
+    "fragment",
+    [
+      _c("h2", [_vm._v("Notifications preferences")]),
+      _vm._v(" "),
+      _c("hr", { staticClass: "my-2" }),
+      _vm._v(" "),
+      _vm.folders.length > 0
+        ? _vm._l(_vm.folders, function(folder, index) {
+            return _c(
+              "div",
+              {
+                key: folder.id,
+                staticClass: "border-b border-gray-1 py-4 flex items-center"
+              },
+              [
+                _c("div", [
+                  _c("p", { staticClass: "mb-0" }, [
+                    _c("u", [_vm._v(_vm._s(folder.name))])
+                  ]),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "mb-0" }, [
+                    _vm._v(
+                      "files uploaded: " +
+                        _vm._s(folder.files.length) +
+                        " files"
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "mb-0 text-gray-700 text-sm" }, [
+                    _vm._v("shared on: " + _vm._s(folder.shared_at))
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "ml-auto pl-2 flex flex-col" }, [
+                  _c("button", { staticClass: "button px-3 py-1 mb-2" }, [
+                    _vm._v("Change password")
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "hover:underline",
+                      on: {
+                        click: function($event) {
+                          return _vm.revokeAccess(folder.id, index)
+                        }
+                      }
+                    },
+                    [_vm._v("revoke access")]
+                  )
+                ])
+              ]
+            )
+          })
+        : [
+            _c("h2", { staticClass: "text-gray-700 mb-0" }, [
+              _vm._v("You don't have a shared folders.")
+            ]),
+            _vm._v(" "),
+            _c("p", { staticClass: "text-sm" }, [
+              _vm._v("Create and share folder withing your "),
+              _c("a", { attrs: { href: _vm.routes.bucket } }, [
+                _vm._v("Bucket")
+              ])
+            ])
+          ]
+    ],
+    2
+  )
 }
 var staticRenderFns = []
 render._withStripped = true

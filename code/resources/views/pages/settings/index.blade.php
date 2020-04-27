@@ -25,6 +25,7 @@
                     sharedFolders: {
                         revoke:  '{{route('folders.revoke', ['folder' => '__id'])}}',
                         changePassword:  '{{route('folders.changePassword', ['folder' => '__id'])}}',
+                        bucket: '{{route('home')}}',
                     },
                 }"
 
@@ -41,11 +42,11 @@
                     },
 
                     notifications: {
-                        fill: '{{Auth::user()->notificationPrefs->toJson()}}',
+                        fill: {{Auth::user()->notificationPrefs->toJson()}},
                     },
 
                     sharedFolders: {
-                        folders: '{{Auth::user()->shared->toJson()}}',
+                        folders: {{Auth::user()->shared->toJson()}},
                     },
                 }"
             >

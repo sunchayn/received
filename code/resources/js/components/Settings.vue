@@ -27,6 +27,7 @@
 
             <SharedFolders
                 :routes="this.routes.sharedFolders"
+                :folders="this.data.sharedFolders.folders"
                 v-if="current === 'shared-folders'"
             />
         </div>

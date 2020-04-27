@@ -81,6 +81,7 @@ class Folder extends Model
         $data = parent::toArray();
         $data['size'] = $this->getFolderSize('mb');
         $data['is_shared'] = $this->isShared();
+        $data['shared_at'] = $this->shared_at ? $this->shared_at->diffForHumans() : null;
 
         return $data;
     }
