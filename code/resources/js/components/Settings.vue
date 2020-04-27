@@ -56,6 +56,27 @@
             return {
                 current: 'profile',
             }
+        },
+
+        created() {
+            // Load default component from hash
+            // --
+
+            let hash = window.location.hash;
+
+            if (! hash) {
+                return;
+            }
+
+            hash = hash.replace('#', '');
+
+            const component = ['profile', 'notifications', 'account', 'shared-folders'].find(ele => {
+                return ele === hash;
+            });
+
+            if (component) {
+                this.current = component;
+            }
         }
     }
 </script>

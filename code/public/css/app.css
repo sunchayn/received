@@ -1241,6 +1241,11 @@ input[type=number] {
   font-size: 0.75rem;
 }
 
+.badge.badge--gray {
+  background-color: #f7fafc;
+  color: #1a202c;
+}
+
 /**
 * Dropdown module
  */

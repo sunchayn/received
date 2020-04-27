@@ -3247,6 +3247,24 @@ __webpack_require__.r(__webpack_exports__);
     return {
       current: 'profile'
     };
+  },
+  created: function created() {
+    // Load default component from hash
+    // --
+    var hash = window.location.hash;
+
+    if (!hash) {
+      return;
+    }
+
+    hash = hash.replace('#', '');
+    var component = ['profile', 'notifications', 'account', 'shared-folders'].find(function (ele) {
+      return ele === hash;
+    });
+
+    if (component) {
+      this.current = component;
+    }
   }
 });
 

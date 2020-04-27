@@ -5,3 +5,7 @@
 .badge {
     @apply inline-flex items-center py-1 px-2 leading-none rounded-full bg-teal-100 text-teal-900 font-medium text-xs;
 }
+
+.badge.badge--gray {
+    @apply bg-gray-100 text-gray-900;
+}
