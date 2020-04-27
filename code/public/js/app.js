@@ -40950,7 +40950,7 @@ var render = function() {
                         ? _c(
                             "button",
                             {
-                              staticClass: "button button--outline",
+                              staticClass: "button button--outline py-1 px-3",
                               on: {
                                 click: function($event) {
                                   _vm.sharing = !_vm.sharing
@@ -40991,7 +40991,7 @@ var render = function() {
                         : _c(
                             "button",
                             {
-                              staticClass: "button button--outline",
+                              staticClass: "button button--outline py-1 px-3",
                               on: { click: _vm.revokeAccess }
                             },
                             [
@@ -41127,7 +41127,7 @@ var render = function() {
                                     "button",
                                     {
                                       staticClass:
-                                        "button button--outline flex-1",
+                                        "button button--outline py-1 px-3 flex-1",
                                       attrs: { type: "submit" },
                                       on: {
                                         click: function($event) {
@@ -41194,7 +41194,7 @@ var render = function() {
                                     "button",
                                     {
                                       staticClass:
-                                        "button button--outline w-full",
+                                        "button button--outline py-1 px-3 w-full",
                                       attrs: { type: "submit" },
                                       on: {
                                         click: function($event) {
@@ -41213,7 +41213,7 @@ var render = function() {
                     _vm._v(" "),
                     _c(
                       "button",
-                      { staticClass: "button button--outline mr-2" },
+                      { staticClass: "button button--outline py-1 px-3 mr-2" },
                       [
                         _c(
                           "svg",
@@ -41249,7 +41249,8 @@ var render = function() {
                     _c(
                       "button",
                       {
-                        staticClass: "button button--outline button--red",
+                        staticClass:
+                          "button button--outline py-1 px-3 button--red",
                         on: {
                           click: function($event) {
                             _vm.deleted = true

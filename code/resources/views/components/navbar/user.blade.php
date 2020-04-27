@@ -8,6 +8,7 @@
                 </button>
 
                 <div class="dropdown_menu is-left js-dropdown-menu">
+                    <a href="{{route('home')}}" class="dropdown_menu_item">Bucket</a>
                     <a href="{{route('settings.index')}}" class="dropdown_menu_item">Settings</a>
                     <a href="{{route('auth.logout')}}" class="dropdown_menu_item">Logout</a>
                 </div>
