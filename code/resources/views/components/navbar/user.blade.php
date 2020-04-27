@@ -1,8 +1,9 @@
 <header class="py-2 px-5 relative z-50{{ !isset($border) || $border !== false ? ' bg-white border-b border-gray-300' : '' }}">
     <nav class="flex items-center">
 
-        <h1 class="font-black text-xl">received;</h1>
-
+        <h1 class="font-black text-xl">
+            <a href="{{route('landing_page')}}" class="text-black hover:no-underline">received;</a>
+        </h1>
         <div class="ml-auto flex">
             <div class="flex items-center mr-4">
                 <span class="badge badge--gray" title="your public bucket">{{route('send.index', ['username' => Auth::user()->username])}}</span>
