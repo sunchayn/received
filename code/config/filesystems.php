@@ -53,6 +53,11 @@ return [
             'root' => storage_path('app/buckets'),
         ],
 
+        'download' => [
+            'driver' => 'local',
+            'root' => storage_path('app/download'),
+        ],
+
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),

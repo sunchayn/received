@@ -5,6 +5,7 @@ namespace App\Repositories;
 use App\Models\Folder;
 use App\Models\Subscription;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Str;
 use Storage;
@@ -147,5 +148,37 @@ class FoldersRepository
         }
 
         return $entities;
+    }
+
+    public function zip(Folder $folder)
+    {
+        // Zipped folder are stored in folder organized by dates to delete them later after a specific period
+        // todo: create a cron job to delete old zipped folders.
+        $downloadFolder = Carbon::today()->toDateString();
+
+        if (Storage::disk('download')->missing($downloadFolder)) {
+            Storage::disk('download')->makeDirectory($downloadFolder);
+        }
+
+        chdir(Storage::disk('download')->path($downloadFolder));
+
+        $filename = $folder->slug . '.zip';
+
+        $zip = new \ZipArchive();
+        $zip->open($filename, \ZipArchive::CREATE | \ZipArchive::OVERWRITE);
+
+        $folderPath = Storage::disk('buckets')->path($folder->getPath());
+        $files = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($folderPath));
+
+        foreach ($files as $name => $file) {
+            if (! $file->isDir()) {
+                $filePath = $file->getRealPath();
+                $relativePath = './' . basename($filePath);
+                $zip->addFile($filePath, $relativePath);
+            }
+        }
+
+        $zip->close();
+        return Storage::disk('download')->path($downloadFolder . '/' . $filename);
     }
 }

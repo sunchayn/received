@@ -126,9 +126,14 @@ Route::middleware(['auth', 'clean_session'])->group(function () {
             'as' => 'edit',
         ]);
 
-        Route::delete('/delete/{folder}', [
+        Route::delete('/{folder}', [
             'uses' =>  'Folders@delete',
             'as' => 'delete',
+        ]);
+
+        Route::get('/download/{folder}', [
+            'uses' =>  'Folders@download',
+            'as' => 'download',
         ]);
     });
 

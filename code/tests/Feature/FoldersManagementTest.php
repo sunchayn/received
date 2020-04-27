@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Models\User;
 use App\Models\Folder;
 use Carbon\Carbon;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 use Auth;
@@ -18,6 +19,7 @@ class FoldersManagementTest extends TestCase
     {
         parent::setUp();
         Storage::fake('buckets');
+        Storage::fake('download');
     }
 
     /**
@@ -224,7 +226,8 @@ class FoldersManagementTest extends TestCase
     /**
      * @test
      */
-    public function user_cant_use_the_same_password_with_two_folders() {
+    public function user_cant_use_the_same_password_with_two_folders()
+    {
         $this->signin();
 
         $password = '123456';
@@ -410,6 +413,43 @@ class FoldersManagementTest extends TestCase
         ;
 
         $this->assertTrue(Storage::disk('buckets')->has($anotherUser->getBucket() . '/' . $folder->slug));
+    }
+
+    /**
+     * @test
+     */
+    public function user_can_download_his_folder()
+    {
+        $this->signin();
+
+        // Downloading his folder is Allowed
+        // --
+        $folder = factory(Folder::class)->state('shared')->create([
+            'user_id' => Auth::id(),
+        ]);
+
+        Storage::disk('buckets')->makeDirectory(Auth::user()->getBucket() . '/' . $folder->slug);
+        UploadedFile::fake()
+            ->create('file.data', 2000)
+            ->storeAs($folder->getPath(), "file.data", 'buckets')
+        ;
+
+        $this
+            ->get(route('folders.download', ['folder'=> $folder->id]))
+            ->assertHeader('Content-Disposition', 'attachment; filename='. $folder->slug .'.zip')
+        ;
+
+        // Downloading another user folder is Forbidden
+        // --
+        $anotherUser = factory(User::class)->create();
+        $folder = factory(Folder::class)->state('shared')->create([
+            'user_id' => $anotherUser->id,
+        ]);
+
+        $this
+            ->get(route('folders.download', ['folder'=> $folder->id]))
+            ->assertForbidden()
+        ;
     }
 
     // Data providers

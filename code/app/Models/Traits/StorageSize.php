@@ -36,7 +36,8 @@ trait StorageSize
      * @param int $size Size in Kb
      * @return string
      */
-    public function getSuitableSizeUnit(int $size) {
+    public function getSuitableSizeUnit(int $size)
+    {
         return $this->cycleTroughUnits($size * 1024, 0);
     }
 
@@ -46,7 +47,8 @@ trait StorageSize
      * @param $size
      * @return int|string
      */
-    private function formatSize($size) {
+    private function formatSize($size)
+    {
         return number_format((float)$size, 2, '.', '') + 0;
     }
 
@@ -57,7 +59,8 @@ trait StorageSize
      * @param $index
      * @return string
      */
-    private function cycleTroughUnits($size, $index) {
+    private function cycleTroughUnits($size, $index)
+    {
         if ($size < 1024) {
             return $this->formatSize($size) . ' ' . $this->units[$index];
         }

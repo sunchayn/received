@@ -3494,6 +3494,9 @@ __webpack_require__.r(__webpack_exports__);
           message: message
         });
       });
+    },
+    download: function download() {
+      window.open(this.routes.download.replace('__id', this.folder.id));
     }
   },
   notifications: {
@@ -41208,7 +41211,8 @@ var render = function() {
                         ? _c(
                             "button",
                             {
-                              staticClass: "button button--outline py-1 px-3",
+                              staticClass:
+                                "button button--outline button--slim",
                               on: {
                                 click: function($event) {
                                   _vm.sharing = !_vm.sharing
@@ -41249,7 +41253,8 @@ var render = function() {
                         : _c(
                             "button",
                             {
-                              staticClass: "button button--outline py-1 px-3",
+                              staticClass:
+                                "button button--outline button--slim",
                               on: { click: _vm.revokeAccess }
                             },
                             [
@@ -41385,7 +41390,7 @@ var render = function() {
                                     "button",
                                     {
                                       staticClass:
-                                        "button button--outline py-1 px-3 flex-1",
+                                        "button button--outline button--slim flex-1",
                                       attrs: { type: "submit" },
                                       on: {
                                         click: function($event) {
@@ -41452,7 +41457,7 @@ var render = function() {
                                     "button",
                                     {
                                       staticClass:
-                                        "button button--outline py-1 px-3 w-full",
+                                        "button button--outline button--slim w-full",
                                       attrs: { type: "submit" },
                                       on: {
                                         click: function($event) {
@@ -41471,7 +41476,10 @@ var render = function() {
                     _vm._v(" "),
                     _c(
                       "button",
-                      { staticClass: "button button--outline py-1 px-3 mr-2" },
+                      {
+                        staticClass: "button button--outline button--slim mr-2",
+                        on: { click: _vm.download }
+                      },
                       [
                         _c(
                           "svg",
@@ -41508,7 +41516,7 @@ var render = function() {
                       "button",
                       {
                         staticClass:
-                          "button button--outline py-1 px-3 button--red",
+                          "button button--outline button--slim button--red",
                         on: {
                           click: function($event) {
                             _vm.deleted = true

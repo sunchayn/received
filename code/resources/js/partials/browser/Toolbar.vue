@@ -28,12 +28,12 @@
 
                     <div class="mr-2 relative">
 
-                        <button class="button button--outline py-1 px-3" @click="sharing = !sharing" v-if="folder.is_shared === false">
+                        <button class="button button--outline button--slim" @click="sharing = !sharing" v-if="folder.is_shared === false">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="icon-inbox-upload w-6 mr-2"><path class="primary" d="M8 4a1 1 0 0 1-1 1H5v10h2a2 2 0 0 1 2 2c0 1.1.9 2 2 2h2a2 2 0 0 0 2-2c0-1.1.9-2 2-2h2V5h-2a1 1 0 0 1 0-2h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5c0-1.1.9-2 2-2h2a1 1 0 0 1 1 1z"/><path class="secondary" d="M11 6.41V13a1 1 0 0 0 2 0V6.41l1.3 1.3a1 1 0 0 0 1.4-1.42l-3-3a1 1 0 0 0-1.4 0l-3 3a1 1 0 0 0 1.4 1.42L11 6.4z"/></svg>
                             <div>Share folder</div>
                         </button>
 
-                        <button class="button button--outline py-1 px-3" @click="revokeAccess" v-else>
+                        <button class="button button--outline button--slim" @click="revokeAccess" v-else>
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-6 mr-2 icon-lock"><g><path class="secondary" d="M12 10v3a2 2 0 0 0-1 3.73V18a1 1 0 0 0 1 1v3H5a2 2 0 0 1-2-2v-8c0-1.1.9-2 2-2h7z"/><path class="primary" d="M12 19a1 1 0 0 0 1-1v-1.27A2 2 0 0 0 12 13v-3h3V7a3 3 0 0 0-6 0v3H7V7a5 5 0 1 1 10 0v3h2a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-7v-3z"/></g></svg>
                             Revoke access
                         </button>
@@ -54,7 +54,7 @@
 
                                 <div class="flex">
                                     <button ref="shareButton" type="submit" class="button mr-2 flex-1" @click="shareFolder">Share</button>
-                                    <button type="submit" class="button button--outline py-1 px-3 flex-1" @click="sharing = false">Dismiss</button>
+                                    <button type="submit" class="button button--outline button--slim flex-1" @click="sharing = false">Dismiss</button>
                                 </div>
                             </template>
 
@@ -66,18 +66,18 @@
                                     </svg>
                                     <h2 class="text-gray-700 leading-snug my-2">Public access created!</h2>
                                     <p class="text-gray-700 text-sm leading-snug">In order to start receiving files forward your public bucket URL and this folder password to the interested parties.</p>
-                                    <button type="submit" class="button button--outline py-1 px-3 w-full" @click="sharing = false">Dismiss</button>
+                                    <button type="submit" class="button button--outline button--slim w-full" @click="sharing = false">Dismiss</button>
                                 </div>
                             </template>
                         </div>
                     </div>
 
-                    <button class="button button--outline py-1 px-3 mr-2">
+                    <button class="button button--outline button--slim mr-2" @click="download">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="icon-cloud-download w-6 mr-2"><path class="primary" d="M15 15v-3a3 3 0 0 0-6 0v3H6a4 4 0 0 1-.99-7.88 5.5 5.5 0 0 1 10.86-.82A4.49 4.49 0 0 1 22 10.5a4.5 4.5 0 0 1-4.5 4.5H15z"/><path class="secondary" d="M11 18.59V12a1 1 0 0 1 2 0v6.59l1.3-1.3a1 1 0 0 1 1.4 1.42l-3 3a1 1 0 0 1-1.4 0l-3-3a1 1 0 0 1 1.4-1.42l1.3 1.3z"/></svg>
                         <div>Download</div>
                     </button>
 
-                    <button class="button button--outline py-1 px-3 button--red" @click="deleted=true">
+                    <button class="button button--outline button--slim button--red" @click="deleted=true">
                         <span class="h-6"></span>Delete
                     </button>
                 </div>
@@ -158,6 +158,10 @@
                         this.error({message: message});
                     })
                 ;
+            },
+
+            download() {
+                window.open(this.routes.download.replace('__id', this.folder.id));
             }
         },
 

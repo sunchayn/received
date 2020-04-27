@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Folders\CreateRequest;
 use App\Http\Requests\Folders\DeleteRequest;
+use App\Http\Requests\Folders\DownloadRequest;
 use App\Http\Requests\Folders\PasswordChangingRequest;
 use App\Http\Requests\Folders\RevokeRequest;
 use App\Http\Requests\Folders\ShareRequest;
@@ -128,5 +129,21 @@ class Folders extends Controller
         //todo: Update folder storage after deleting folder
         $folders->delete($folder);
         return $this->empty();
+    }
+
+    /**
+     * GET /folders/download/{folder}
+     *
+     * Download a given folder
+     *
+     * @param DownloadRequest $request
+     * @param FoldersRepository $folders
+     * @param Folder $folder
+     * @return \Symfony\Component\HttpFoundation\BinaryFileResponse
+     */
+    public function download(DownloadRequest $request, FoldersRepository $folders, Folder $folder)
+    {
+        $zip = $folders->zip($folder);
+        return response()->download($zip);
     }
 }

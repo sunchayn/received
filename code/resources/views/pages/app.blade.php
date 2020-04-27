@@ -13,6 +13,7 @@
                 share: '{{route('folders.share', ['folder' => '__id'])}}',
                 revoke: '{{route('folders.revoke', ['folder' => '__id'])}}',
                 edit: '{{route('folders.edit', ['folder' => '__id'])}}',
+                download: '{{route('folders.download', ['folder' => '__id'])}}',
                 storage_info: '{{route('me.storage_info')}}',
             }"
         >

@@ -24,7 +24,8 @@
         "laravel/framework": "^7.0",
         "laravel/tinker": "^2.0",
         "twilio/sdk": "^6.3",
-      "ext-json": "*"
+      "ext-json": "*",
+      "ext-zip": "*"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.6",
