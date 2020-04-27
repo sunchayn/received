@@ -40,7 +40,7 @@ class Folders extends \App\Http\Controllers\Controller
 
         if (! $folder) {
             return $this->validationErrors([
-                'password' => 'Invalid password.',
+                'password' => ['Invalid password.'],
             ]);
         }
 
@@ -52,7 +52,7 @@ class Folders extends \App\Http\Controllers\Controller
         // It does not allow uploading files to users without subscription
         if (!$folder->user->subscription) {
             return $this->validationErrors([
-                'size' => 'This bucket does not have enough storage space to accept more files.',
+                'size' => ['This bucket does not have enough storage space to accept more files.'],
             ]);
         }
 
@@ -92,23 +92,26 @@ class Folders extends \App\Http\Controllers\Controller
 
         if (! $folder) {
             return $this->validationErrors([
-                'password' => 'Invalid password.',
+                'password' => ['Invalid password.'],
             ]);
         }
 
         // It does not allow uploading files to users without subscription
         if (! $user->subscription) {
             return $this->validationErrors([
-                'size' => 'This bucket does not have enough storage space to accept more files.',
+                'size' => ['This bucket does not have enough storage space to accept more files.'],
+            ], [
+                'code' => 1
             ]);
         }
 
         // It does not allow uploading files to invalid folders
         if (! $folders->canUploadFiles($data['files'], $user->subscription)) {
             return $this->validationErrors([
-                'size' => 'This bucket does not have enough storage space to accept more files.',
+                'size' => ['This bucket does not have enough storage space to accept more files.'],
             ], [
                 'remaining_storage' => $user->subscription->remainingStorage(),
+                'code' => 2
             ]);
         }
 

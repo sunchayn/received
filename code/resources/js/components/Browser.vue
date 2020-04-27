@@ -74,13 +74,15 @@
 
             axios.get(this.routes.storage_info)
                 .then(response => {
-                    if (!isNaN(response.data.total_storage)) {
+                    if (response.data.total_storage !== null) {
                         this.storage.data.total_storage = response.data.total_storage;
                     }
 
-                    if (!isNaN(response.data.used_storage)) {
+                    if (response.data.used_storage !== null) {
                         this.storage.data.used_storage = response.data.used_storage;
                     }
+
+                    this.storage.data.percentage = response.data.percentage;
                 })
                 .catch(error => {})
                 .finally(() => {

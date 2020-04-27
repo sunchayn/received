@@ -808,12 +808,13 @@ form {
   padding-left: 0.5rem;
   padding-right: 0.5rem;
   flex-grow: 1;
-  display: flex;
-  align-items: center;
+  display: inline-block;
   font-size: 0.875rem;
-  min-width: 100px;
-  word-break: keep-all;
+  min-width: 160px;
+  max-width: 300px;
   white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /**

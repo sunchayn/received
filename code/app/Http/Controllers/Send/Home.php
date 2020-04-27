@@ -11,6 +11,6 @@ class Home extends Controller
     public function index($username)
     {
         $user = User::where('username', $username)->firstOrFail();
-        return view('pages.send.index');
+        return view('pages.send.index', ['username' => $username]);
     }
 }

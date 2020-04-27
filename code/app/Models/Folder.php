@@ -72,7 +72,7 @@ class Folder extends Model
             return $carry;
         });
 
-        return $size ? $this->getSizeIn($size, $unit) : 0;
+        return $size ? $this->getSuitableSizeUnit($size) : 0;
     }
 
     // Exporting

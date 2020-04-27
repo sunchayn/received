@@ -33,5 +33,9 @@
         "vue-tel-input": "^4.4.0",
         "vue-template-compiler": "^2.6.10"
     },
-    "dependencies": {}
+    "dependencies": {
+        "filepond": "^4.13.4",
+        "filepond-plugin-file-validate-size": "^2.2.1",
+        "vue-filepond": "^6.0.2"
+    }
 }

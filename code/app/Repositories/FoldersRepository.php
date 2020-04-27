@@ -118,7 +118,7 @@ class FoldersRepository
     public function canUploadFiles($files, Subscription $subscription)
     {
         $size = $this->getUploadedFilesSize($files);
-        return $subscription->remainingStorage() > $size;
+        return $subscription->remainingStorageRaw() > $size;
     }
 
     public function getUploadedFilesSize($files)

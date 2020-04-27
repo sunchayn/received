@@ -38,7 +38,7 @@ class File extends Model
     {
         $data = parent::toArray();
         $data['sent_on'] = $this->created_at->diffForHumans();
-        $data['size'] = $this->getSizeIn($this->size, 'mb');
+        $data['size'] = $this->getSuitableSizeUnit($this->size);
 
         return $data;
     }

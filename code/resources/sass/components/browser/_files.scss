@@ -31,8 +31,10 @@
 }
 
 .files_column {
-    @apply px-2 flex-grow flex items-center text-sm;
-    min-width: 100px;
-    word-break: keep-all;
+    @apply px-2 flex-grow inline-block text-sm;
+    min-width: 160px;
+    max-width: 300px;
     white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }

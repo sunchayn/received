@@ -139,7 +139,6 @@
                             this.shareData.error = error.response.data.errors.password[0];
                         } else {
                             let message = error.response.data.message || 'Unable to create a new folder.';
-                            // Show an error notification is exists
                             this.error({message: message});
                         }
                     })

@@ -40,7 +40,7 @@
                         :class="{'is-active' : current && current.id === folder.id}"
                     >
                         <span>{{folder.name}}</span>
-                        <small class="text-gray-500">{{folder.size}} Mb</small>
+                        <small class="text-gray-500">{{folder.size}}</small>
                     </li>
 
                     <li v-if="folders.length === 0">
@@ -51,9 +51,9 @@
 
             <footer class="py-4 px-5 text-sm" v-if="storage.loaded">
                 <strong class="block leading-none">used storage</strong>
-                <small class="leading-none">{{this.storage.data.used_storage}}Go / {{this.storage.data.total_storage}}Go</small>
+                <small class="leading-none">{{this.storage.data.used_storage}} / {{this.storage.data.total_storage}}</small>
                 <div class="meter_bg">
-                    <span class="meter_fg" :style="'width: ' + storagePercentage + '%;'"></span>
+                    <span class="meter_fg" :style="'width: ' + this.storage.data.percentage + '%;'"></span>
                 </div>
             </footer>
 
@@ -75,12 +75,6 @@
             return {
                 showCreationForm: false,
                 newFolderName: '',
-            }
-        },
-
-        computed: {
-            storagePercentage() {
-                return this.storage.data.used_storage * 100 / this.storage.data.total_storage;
             }
         },
 
@@ -108,7 +102,6 @@
                             message = error.response.data.errors.name[0];
                         }
 
-                        // Show an error notification is exists
                         this.error({message: message});
                     })
                     .finally(() => {

@@ -15,12 +15,14 @@ class UserData extends Controller
     {
         $subscription = Auth::user()->subscription;
 
-        $usedStorage = $subscription ? $subscription->getSizeIn($subscription->used_storage, 'gb') : null;
-        $total_storage = $subscription ? $subscription->plan->getSizeIn($subscription->plan->storage_limit, 'gb') : null;
+        $usedStorage = $subscription ? $subscription->getSuitableSizeUnit($subscription->used_storage) : null;
+        $total_storage = $subscription ? $subscription->plan->getSuitableSizeUnit($subscription->plan->storage_limit) : null;
+        $percentage = $subscription ? floor($subscription->used_storage * 100 / $subscription->plan->storage_limit): 0;
 
         $data = [
-            'used_storage' => (float)$usedStorage,
-            'total_storage' =>(float)$total_storage,
+            'used_storage' => $usedStorage,
+            'total_storage' => $total_storage,
+            'percentage' => $percentage,
         ];
 
         return $this->jsonData($data);

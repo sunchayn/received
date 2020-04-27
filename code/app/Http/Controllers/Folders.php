@@ -125,6 +125,7 @@ class Folders extends Controller
      */
     public function delete(DeleteRequest $request, FoldersRepository $folders, Folder $folder)
     {
+        //todo: Update folder storage after deleting folder
         $folders->delete($folder);
         return $this->empty();
     }

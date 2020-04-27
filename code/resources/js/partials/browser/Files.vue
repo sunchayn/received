@@ -3,10 +3,11 @@
         <div class="absolute bg-white opacity-75 top-0 right-0 left-0 bottom-0 z-20"
              v-if="!folder"></div>
         <header class="files_header" ref="table-header">
-            <span class="files_column w-3/12">File</span>
-            <span class="files_column w-2/12">Size</span>
+            <span class="files_column w-4/12">File</span>
+            <span class="files_column w-1/12">Extension</span>
+            <span class="files_column w-1/12">Size</span>
             <span class="files_column w-2/12">Type</span>
-            <span class="files_column w-3/12">Sent on</span>
+            <span class="files_column w-2/12">Sent on</span>
             <span class="files_column w-2/12">Action</span>
         </header>
         <div class="files_content" @scroll="moveTableHeader">
@@ -15,10 +16,11 @@
                      v-for="file in folder.files"
                      :key="file.id"
                 >
-                    <span class="files_column w-3/12">{{file.filename + file.extension}}</span>
-                    <span class="files_column w-2/12">{{file.size}} Mb</span>
+                    <span class="files_column w-4/12">{{file.filename}}</span>
+                    <span class="files_column w-1/12">{{file.extension}}</span>
+                    <span class="files_column w-1/12">{{file.size}}</span>
                     <span class="files_column w-2/12">{{file.type}}</span>
-                    <span class="files_column w-3/12">{{file.sent_on}}</span>
+                    <span class="files_column w-2/12">{{file.sent_on}}</span>
                     <span class="files_column w-2/12">
                     <button class="mr-2 hover:underline" @click="$emit('download', file)">download</button>
                     <button class="hover:underline" @click="$emit('delete', file)">delete</button>

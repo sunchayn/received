@@ -27,6 +27,12 @@ class Subscription extends Model
 
     public function remainingStorage()
     {
+        $size = max($this->plan->storage_limit - $this->used_storage, 0);
+        return $this->getSuitableSizeUnit($size);
+    }
+
+    public function remainingStorageRaw()
+    {
         return max($this->plan->storage_limit - $this->used_storage, 0);
     }
 }

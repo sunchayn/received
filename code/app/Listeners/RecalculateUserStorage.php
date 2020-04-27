@@ -33,7 +33,8 @@ class RecalculateUserStorage
             $files = Storage::disk('buckets')->files($event->user->getBucket(), true);
 
             foreach ($files as $file) {
-                $size += Storage::disk('buckets')->size($file);
+                // Add size in Kb
+                $size += Storage::disk('buckets')->size($file) / 1024;
             }
 
             $event->user->subscription->update([
