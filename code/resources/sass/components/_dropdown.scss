@@ -1,0 +1,43 @@
+/**
+* Dropdown module
+ */
+.dropdown {
+    @apply relative;
+    line-height: 0;
+}
+
+.dropdown_menu {
+    @apply absolute bg-white z-50 py-2 left-0 border border-gray-300 rounded shadow-md;
+
+    min-width: 160px;
+    transform: translateY(8px);
+    background-clip: padding-box;
+
+    // Cover the events withing the top space caused by the Y axis transformation.
+    &::before {
+        content: "";
+        position: absolute;
+        right: 0;
+        left: 0;
+        top: -8px;
+        height: 8px;
+        background-color: transparent;
+    }
+
+    &.is-left {
+        left: unset;
+        right: 0;
+    }
+}
+
+.dropdown:not(.is-active) .dropdown_menu {
+    display: none;
+}
+
+.dropdown_menu_item {
+    @apply block py-4 px-4 select-none cursor-pointer text-black;
+
+    &:hover {
+        @apply bg-teal-100;
+    }
+}

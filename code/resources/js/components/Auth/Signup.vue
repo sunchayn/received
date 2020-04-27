@@ -1,6 +1,5 @@
 <template>
     <fragment>
-
         <form @submit.prevent="submitHandler" id="js-form-hook" v-show="! verification">
             <div class="form-group" id="css-overpower">
                 <div class="js-input" data-name="phone_number">
@@ -35,7 +34,6 @@
             v-show="verification"
             :routes="this.routes"
         />
-
     </fragment>
 </template>
 

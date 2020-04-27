@@ -20,3 +20,10 @@ files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(
 const app = new Vue({
     el: '#app',
 });
+
+// Register modules
+// --
+
+import Dropdown from "./utils/Dropdown";
+
+new Dropdown('.js-dropdown');

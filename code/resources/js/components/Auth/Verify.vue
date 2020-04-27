@@ -19,8 +19,8 @@
                 <div class="input-error"></div>
             </div>
 
-            <div class="form-group mb-0">
-                <input type="submit" value="Verify" class="button w-full uppercase">
+            <div class="form-group flex mb-0">
+                <input type="submit" value="Verify" class="button w-full uppercase shadow-none">
             </div>
         </div>
 
@@ -52,6 +52,10 @@
                     return true;
                 }
             },
+
+            successCallback() {
+                this.$emit('verified', true);
+            }
         }
     }
 </script>

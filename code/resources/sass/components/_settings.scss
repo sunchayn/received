@@ -1,0 +1,19 @@
+/**
+* Settings module
+ */
+
+.settings-sidebar {
+    @apply mr-5 border border-gray-200 p-5;
+}
+
+.settings-sidebar_item {
+    @apply flex items-center py-2 text-gray-700;
+
+    &:hover, &.is-active {
+        @apply text-gray-900;
+
+        & .secondary {
+            @apply text-blue-500;
+        }
+    }
+}

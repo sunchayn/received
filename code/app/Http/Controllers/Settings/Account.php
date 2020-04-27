@@ -37,7 +37,7 @@ class Account extends Controller
         // Send verification code
         $phoneNumber = $phoneNumber = '+' . $data['country_code'] . $data['phone_number'];
         $user->sendVerificationCode($phoneNumber);
-        
+
         $user->ongoingNewPhoneVerification()->create($data);
 
         return $this->jsonData([
@@ -67,7 +67,7 @@ class Account extends Controller
 
         if (! $user->checkVerificationCode($code)) {
             return $this->validationErrors([
-                'code' => 'Invalid verification code.',
+                'code' => ['Invalid verification code.'],
             ]);
         }
 

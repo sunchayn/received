@@ -1,7 +1,11 @@
 <!--suppress CheckTagEmptyBody -->
 <template>
     <fragment>
-        <label class="label" :for="$data._id" v-if="label !== false">{{ $data._label | capitalize }}</label>
+        <label class="label"
+               :class="{'mb-0': description}"
+               :for="$data._id" v-if="label !== false">{{ $data._label | capitalize }}</label>
+
+        <p class="text-xs text-gray-700 leading-snug" v-if="description">{{description}}</p>
 
         <input
             v-if="type != 'textarea'"
@@ -34,11 +38,16 @@
     export default {
         props: {
             name: String,
+
             value: {
                 required: true,
             },
 
             label: {
+                required: false,
+            },
+
+            description: {
                 required: false,
             },
 

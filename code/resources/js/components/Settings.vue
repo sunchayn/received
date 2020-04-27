@@ -1,0 +1,60 @@
+<template>
+    <div class="flex mb-5">
+        <Sidebar
+            :current.sync="current"
+        />
+        <div class="card mb-0 p-5 flex-1">
+            <Profile
+                :fill="this.data.profile.fill"
+                :username="this.data.profile.username"
+                :url="this.data.profile.url"
+                :routes="this.routes.profile"
+                v-if="current === 'profile'"
+            />
+
+            <Account
+                :phone="this.data.account.phone"
+                :country_code="this.data.account.country_code"
+                :routes="this.routes.account"
+                v-if="current === 'account'"
+            />
+
+            <Notifications
+                :fill="this.data.notifications.fill"
+                :routes="this.routes.notifications"
+                v-if="current === 'notifications'"
+            />
+
+            <SharedFolders
+                :routes="this.routes.sharedFolders"
+                v-if="current === 'shared-folders'"
+            />
+        </div>
+    </div>
+</template>
+
+<script>
+    import Sidebar from '@/partials/settings/Sidebar';
+    import Profile from '@/partials/settings/Profile';
+    import Account from '@/partials/settings/Account';
+    import Notifications from '@/partials/settings/Notifications';
+    import SharedFolders from '@/partials/settings/SharedFolders';
+
+    export default {
+        props: ['data', 'routes'],
+
+        components: {
+            Sidebar,
+            Profile,
+            Account,
+            Notifications,
+            SharedFolders
+        },
+
+        data() {
+            return {
+                current: 'profile',
+            }
+        }
+    }
+</script>

@@ -42,7 +42,7 @@
                             const carry = error.response.data.errors.password || error.response.data.errors.size;
                             this.error = carry[0];
                         } else {
-                            let message = error.response.data.message || 'Something went wrong';
+                            const message = error.response.data.message || 'Something went wrong';
                             this.errorNotification({message: message});
                         }
                     })
