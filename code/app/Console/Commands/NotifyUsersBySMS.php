@@ -3,6 +3,9 @@
 namespace App\Console\Commands;
 
 use App\Models\Notification;
+use App\Models\User;
+use App\Notifications\NotifMailDelivery;
+use App\Repositories\NotificationRepository;
 use App\Services\SMS\ProviderInterface as SMSProviderInterface;
 use Illuminate\Console\Command;
 use Illuminate\Support\Collection;
@@ -42,38 +45,24 @@ class NotifyUsersBySMS extends Command
     {
         $this->line('Notifying...');
 
-        $userNotifs = Notification::notNotified()->with('user')->get()->groupBy('user_id');
+        /**
+         * @var SMSProviderInterface $smsProvider
+         */
+        $smsProvider = app()->make('SMS');
 
-        foreach ($userNotifs as $notifications) {
-            /**
-             * @var Collection $notifications
-             * @var Notification $notification
-             */
-            $notification = $notifications->last();
+        NotificationRepository::deliveryNotifications(Notification::SMS,
+            function(User $user) {
+                return $user->notificationPrefs->notify_by_sms;
+            },
 
-            if (! $notification->user->notificationPrefs->notify_by_sms) {
-                continue;
+            function (string $content, User $user) use($smsProvider) {
+                if ($smsProvider->sendSMS($user, $content)) {
+                    $user->unreadNotifications()->update([
+                        'is_notified_by_sms' => true,
+                    ]);
+                }
             }
-
-            $content = '';
-
-            if ($notifications->count() > 1) {
-                $content .= 'You have ' . $notifications->count() . ' new updates. Last update: ';
-            }
-
-            $content .= $notification->content;
-
-            /**
-             * @var SMSProviderInterface $smsProvider
-             */
-            $smsProvider = app()->make('SMS');
-
-            if ($smsProvider->sendSMS($notification->user, $content)) {
-                $notification->user->unreadNotifications()->update([
-                    'is_notified' => true,
-                ]);
-            }
-        }
+        );
 
         $this->info('Done!');
     }

@@ -17,6 +17,8 @@ use Carbon\Carbon;
 class Notification extends Model
 {
     public const TYPE_RECEIVED_FILES = 'RECEIVED_FILES';
+    public const EMAIL = 'is_notified_by_mail';
+    public const SMS = 'is_notified_by_sms';
 
     /**
      * @var array
@@ -28,12 +30,15 @@ class Notification extends Model
      */
     protected $casts = [
         'is_seen' => 'boolean',
-        'is_notified' => 'boolean',
+        'is_notified_by_sms' => 'boolean',
+        'is_notified_by_mail' => 'boolean',
     ];
 
-    public static function notNotified()
+    public static function notNotified(string $channel)
     {
-        return self::where('is_seen', false)->where('is_notified', false);
+        return self::where('is_seen', false)
+            ->where($channel, false)
+        ;
     }
 
     /**

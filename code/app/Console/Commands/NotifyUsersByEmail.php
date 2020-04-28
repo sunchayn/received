@@ -2,7 +2,13 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Notification;
+use App\Models\User;
+use App\Notifications\NotifMailDelivery;
+use App\Repositories\NotificationRepository;
+use App\Services\SMS\ProviderInterface as SMSProviderInterface;
 use Illuminate\Console\Command;
+use Illuminate\Support\Collection;
 
 class NotifyUsersByEmail extends Command
 {
@@ -37,9 +43,21 @@ class NotifyUsersByEmail extends Command
      */
     public function handle()
     {
-        // TODO: Implement handle() method.
         $this->line('Notifying...');
 
+        NotificationRepository::deliveryNotifications(Notification::EMAIL,
+            function(User $user) {
+                return $user->notificationPrefs->notify_by_mail && $user->email;
+            },
+
+            function (string $content, User $user) {
+                $user->notify(new NotifMailDelivery($content));
+                $user->unreadNotifications()->update(['is_notified_by_mail' => true]);
+            }
+        );
+
         $this->info('Done!');
+
+        return true;
     }
 }

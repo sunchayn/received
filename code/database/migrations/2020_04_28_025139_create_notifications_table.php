@@ -21,7 +21,8 @@ class CreateNotificationsTable extends Migration
             $table->enum('type', ['RECEIVED_FILES'])->default('RECEIVED_FILES');
             $table->json('data')->nullable();
             $table->boolean('is_seen')->default(false);
-            $table->boolean('is_notified')->default(false)->comment('Determine if this notification has been sent to user via SMS or Email channels.');
+            $table->boolean('is_notified_by_mail')->default(false);
+            $table->boolean('is_notified_by_sms')->default(false);
 
             $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
 

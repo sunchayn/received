@@ -2,11 +2,14 @@
 
 namespace App\Repositories;
 
+use App\Models\Notification;
 use App\Models\User;
 use App\Models\Folder;
+use Illuminate\Support\Collection;
 
 class NotificationRepository
 {
+
     /**
      * Create a new notification for RECEIVED_FILES type
      *
@@ -54,5 +57,33 @@ class NotificationRepository
     {
         $wordCountability  = $numberOfFiles > 0 ? 'files' : 'file';
         return 'You\'ve received ' . $numberOfFiles . ' new '. $wordCountability .' into "' . $folderName . '" folder.';
+    }
+
+    public static function deliveryNotifications(string $channel, \Closure $shouldSend, \Closure $delivery) {
+        $notificationsByUser = Notification::notNotified($channel)->with('user')->get()->groupBy('user_id');
+
+        foreach ($notificationsByUser as $notifications) {
+            /**
+             * @var Collection $notifications
+             * @var Notification $notification
+             * @var User $user
+             */
+            $notification = $notifications->last();
+            $user = $notification->user;
+
+            if (! $shouldSend($user)) {
+                continue;
+            }
+
+            $content = '';
+
+            if ($notifications->count() > 1) {
+                $content .= 'You have ' . $notifications->count() . ' new updates. Last update: ';
+            }
+
+            $content .= $notification->content;
+
+            $delivery($content, $user);
+        }
     }
 }
