@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Events\BucketUpdated;
 use App\Models\Folder;
 use App\Models\Subscription;
 use App\Models\User;
@@ -66,8 +67,13 @@ class FoldersRepository
 
     public function delete(Folder $folder)
     {
-        $this->deleteDirectory($folder);
-        $folder->delete();
+        if ($this->deleteDirectory($folder)) {
+            $folder->delete();
+            event(new BucketUpdated(Auth::user()));
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public function getFolderByPassword(User $user, string $password)
@@ -113,7 +119,7 @@ class FoldersRepository
 
     private function deleteDirectory(Folder $folder)
     {
-        Storage::disk('buckets')->deleteDirectory(Auth::user()->getBucket() . '/' . $folder->slug);
+        return Storage::disk('buckets')->deleteDirectory(Auth::user()->getBucket() . '/' . $folder->slug);
     }
 
     public function canUploadFiles($files, Subscription $subscription)

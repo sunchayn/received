@@ -21,6 +21,10 @@ class EventServiceProvider extends ServiceProvider
             'App\Listeners\SendUploadedFilesNotification',
             'App\Listeners\RecalculateUserStorage',
         ],
+
+        'App\Events\BucketUpdated' => [
+            'App\Listeners\RecalculateUserStorage',
+        ],
     ];
 
     /**

@@ -3454,6 +3454,25 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['folder', 'index', 'routes'],
   data: function data() {
@@ -3464,7 +3483,8 @@ __webpack_require__.r(__webpack_exports__);
         password: '',
         shared: false,
         error: null
-      }
+      },
+      editingFolderName: false
     };
   },
   watch: {
@@ -3524,6 +3544,33 @@ __webpack_require__.r(__webpack_exports__);
     },
     download: function download() {
       window.open(this.routes.download.replace('__id', this.folder.id));
+    },
+    editFolderName: function editFolderName() {
+      var _this4 = this;
+
+      this.editingFolderName = true;
+      this.$nextTick(function () {
+        _this4.$refs.folderName.focus();
+      });
+    },
+    updateFolderName: function updateFolderName() {
+      var _this5 = this;
+
+      var name = this.$refs.folderName.textContent;
+      axios.patch(this.routes.edit.replace('__id', this.folder.id), {
+        name: name
+      }).then(function (response) {
+        _this5.folder.name = name;
+        _this5.editingFolderName = false;
+
+        _this5.$refs.folderName.blur();
+      })["catch"](function (error) {
+        var message = error.response.data.message || 'We were unable to update the folder name.';
+
+        _this5.error({
+          message: message
+        });
+      });
     }
   },
   notifications: {
@@ -41044,7 +41091,9 @@ var render = function() {
       _vm._v(" "),
       _c("span", { staticClass: "files_column w-2/12" }, [_vm._v("Type")]),
       _vm._v(" "),
-      _c("span", { staticClass: "files_column w-2/12" }, [_vm._v("Sent on")]),
+      _c("span", { staticClass: "files_column w-2/12" }, [
+        _vm._v("Received at")
+      ]),
       _vm._v(" "),
       _c("span", { staticClass: "files_column w-2/12" }, [_vm._v("Action")])
     ]),
@@ -41168,7 +41217,7 @@ var render = function() {
                 "button",
                 {
                   staticClass:
-                    "text-sm outline-none text-gray-600 hover:text-gray-800",
+                    "text-sm outline-none active:outline-none focus:outline-none text-gray-600 hover:text-gray-800",
                   attrs: { type: "button" },
                   on: {
                     click: function($event) {
@@ -41183,57 +41232,110 @@ var render = function() {
         : [
             _vm.folder
               ? _c("header", { staticClass: "browser_toolbar" }, [
-                  _c("div", { staticClass: "flex items-center" }, [
-                    _c(
-                      "svg",
-                      {
-                        staticClass: "w-12 mr-2 icon-folder",
-                        attrs: {
-                          xmlns: "http://www.w3.org/2000/svg",
-                          viewBox: "0 0 24 24"
-                        }
-                      },
-                      [
-                        _c("g", [
-                          _c("path", {
-                            staticClass: "secondary",
-                            attrs: {
-                              d:
-                                "M22 10H2V6c0-1.1.9-2 2-2h7l2 2h7a2 2 0 0 1 2 2v2z"
-                            }
-                          }),
-                          _c("rect", {
-                            staticClass: "primary",
-                            attrs: {
-                              width: "20",
-                              height: "12",
-                              x: "2",
-                              y: "8",
-                              rx: "2"
-                            }
-                          })
-                        ])
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c("div", [
-                      _c("h1", { staticClass: "mb-1" }, [
-                        _vm._v(_vm._s(_vm.folder.name) + " "),
+                  _c(
+                    "div",
+                    {
+                      staticClass: "flex items-center",
+                      staticStyle: { "max-width": "50%" }
+                    },
+                    [
+                      _c(
+                        "svg",
+                        {
+                          staticClass: "w-12 mr-2 icon-folder",
+                          attrs: {
+                            xmlns: "http://www.w3.org/2000/svg",
+                            viewBox: "0 0 24 24"
+                          }
+                        },
+                        [
+                          _c("g", [
+                            _c("path", {
+                              staticClass: "secondary",
+                              attrs: {
+                                d:
+                                  "M22 10H2V6c0-1.1.9-2 2-2h7l2 2h7a2 2 0 0 1 2 2v2z"
+                              }
+                            }),
+                            _c("rect", {
+                              staticClass: "primary",
+                              attrs: {
+                                width: "20",
+                                height: "12",
+                                x: "2",
+                                y: "8",
+                                rx: "2"
+                              }
+                            })
+                          ])
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "flex items-start" }, [
+                        _c("div", { staticClass: "mr-2" }, [
+                          !_vm.editingFolderName
+                            ? _c(
+                                "h1",
+                                {
+                                  key: 1,
+                                  staticClass: "mb-1 select-none",
+                                  attrs: { title: "Edit folder name." },
+                                  on: { click: _vm.editFolderName }
+                                },
+                                [_vm._v(_vm._s(_vm.folder.name))]
+                              )
+                            : _vm._e(),
+                          _vm._v(" "),
+                          _vm.editingFolderName
+                            ? _c(
+                                "h1",
+                                {
+                                  key: 2,
+                                  ref: "folderName",
+                                  staticClass: "mb-1 outline-none",
+                                  attrs: { contenteditable: "" },
+                                  on: {
+                                    blur: function($event) {
+                                      _vm.editingFolderName = false
+                                    },
+                                    keydown: function($event) {
+                                      if (
+                                        !$event.type.indexOf("key") &&
+                                        _vm._k(
+                                          $event.keyCode,
+                                          "enter",
+                                          13,
+                                          $event.key,
+                                          "Enter"
+                                        )
+                                      ) {
+                                        return null
+                                      }
+                                      $event.preventDefault()
+                                      return _vm.updateFolderName($event)
+                                    }
+                                  }
+                                },
+                                [_vm._v(_vm._s(_vm.folder.name))]
+                              )
+                            : _vm._e(),
+                          _vm._v(" "),
+                          _c("small", { staticClass: "text-gray-700" }, [
+                            _vm._v(
+                              _vm._s(_vm.folder.files.length) +
+                                " files in this folder"
+                            )
+                          ])
+                        ]),
+                        _vm._v(" "),
                         _vm.folder.is_shared
                           ? _c("span", { staticClass: "badge" }, [
                               _vm._v("shared")
                             ])
                           : _vm._e()
-                      ]),
-                      _vm._v(" "),
-                      _c("small", { staticClass: "text-gray-700" }, [
-                        _vm._v(
-                          _vm._s(_vm.folder.files.length) +
-                            " files in this folder"
-                        )
                       ])
-                    ])
-                  ]),
+                    ]
+                  ),
                   _vm._v(" "),
                   _c("div", { staticClass: "ml-auto flex items-center" }, [
                     _c("div", { staticClass: "mr-2 relative" }, [

@@ -2,8 +2,10 @@
 
 namespace Tests;
 
+use App\Models\File;
 use App\Models\Folder;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Testing\TestResponse;
 use App\Models\User;
 use Auth;
@@ -79,5 +81,48 @@ abstract class TestCase extends BaseTestCase
             'password' => bcrypt($password),
             'shared_at' => now(),
         ]);
+    }
+
+    /**
+     * Create a folder in storage for the specified user.
+     *
+     * @param $user
+     * @return Folder
+     */
+    protected function createFolderForUser($user) {
+        /**
+         * @var Folder $folder
+         */
+        $folder = factory(Folder::class)->create([
+            'user_id' => $user->id,
+        ]);
+
+        Storage::disk('buckets')->makeDirectory($folder->getPath());
+
+        return $folder;
+    }
+
+    /**
+     * Create a file in storage for the specified user.
+     *
+     * @param $user
+     * @return File
+     */
+    protected function createFileForUser($user) {
+        $folder = $this->createFolderForUser($user);
+
+        /**
+         * @var File $file
+         */
+        $file = factory(File::class)->create([
+            'folder_id' => $folder->id,
+        ]);
+
+        UploadedFile::fake()
+            ->create($file->getQualifiedFilename(), 2000)
+            ->storeAs($folder->getPath(), $file->getQualifiedFilename(), 'buckets')
+        ;
+
+        return $file;
     }
 }

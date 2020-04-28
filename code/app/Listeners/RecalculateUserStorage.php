@@ -2,6 +2,7 @@
 
 namespace App\Listeners;
 
+use App\Events\BucketUpdated;
 use App\Events\FilesUploaded;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
@@ -22,11 +23,15 @@ class RecalculateUserStorage
     /**
      * Handle the event.
      *
-     * @param  FilesUploaded  $event
+     * @param $event
      * @return void
      */
-    public function handle(FilesUploaded $event)
+    public function handle($event)
     {
+        if (!($event instanceof BucketUpdated || $event instanceof FilesUploaded)) {
+            return;
+        }
+
         if ($event->user->subscription) {
             $size = 0;
 

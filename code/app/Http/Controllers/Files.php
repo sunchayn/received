@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\BucketUpdated;
 use App\Http\Requests\Files\DeleteRequest;
 use App\Http\Requests\Files\DownloadRequest;
 use App\Models\File;
 use Storage;
+use Auth;
 
 class Files extends Controller
 {
@@ -40,6 +42,9 @@ class Files extends Controller
         }
 
         $file->delete();
+
+        event(new BucketUpdated(Auth::user()));
+
         return $this->empty();
     }
 }
