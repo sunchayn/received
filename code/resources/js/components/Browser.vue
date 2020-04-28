@@ -131,6 +131,7 @@
                             let message = error.response.data.message || 'We were unable to delete the file.';
                             this.error({message: message});
                         })
+                    ;
                 }
             }
         },

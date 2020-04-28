@@ -11,24 +11,40 @@
 
             <button
                 type="button"
-                class="text-sm outline-none text-gray-600 hover:text-gray-800"
+                class="text-sm outline-none active:outline-none focus:outline-none text-gray-600 hover:text-gray-800"
                 @click="deleted=false">undo</button>
         </header>
 
         <template v-else>
             <header class="browser_toolbar" v-if="folder">
-                <div class="flex items-center">
+                <div class="flex items-center" style="max-width: 50%;">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-12 mr-2 icon-folder"><g><path class="secondary" d="M22 10H2V6c0-1.1.9-2 2-2h7l2 2h7a2 2 0 0 1 2 2v2z"/><rect width="20" height="12" x="2" y="8" class="primary" rx="2"/></g></svg>
                     <div class="flex items-start">
                         <div class="mr-2">
-                            <h1 class="mb-1">{{folder.name}}</h1>
+                            <h1
+                                :key="1"
+                                v-if="! editingFolderName"
+                                class="mb-1 select-none"
+                                @click="editFolderName"
+                                title="Edit folder name."
+                            >{{folder.name}}</h1>
+
+                            <h1
+                                v-if="editingFolderName"
+                                :key="2"
+                                ref="folderName"
+                                contenteditable
+                                class="mb-1 outline-none"
+                                @blur="editingFolderName = false"
+                                @keydown.enter.prevent="updateFolderName"
+                            >{{folder.name}}</h1>
+
                             <small class="text-gray-700">{{folder.files.length}} files in this folder</small>
                         </div>
                         <span class="badge" v-if="folder.is_shared">shared</span>
                     </div>
                 </div>
                 <div class="ml-auto flex items-center">
-
                     <div class="mr-2 relative">
 
                         <button class="button button--outline button--slim" @click="sharing = !sharing" v-if="folder.is_shared === false">
@@ -106,12 +122,13 @@
                     password: '',
                     shared: false,
                     error: null,
-                }
+                },
+                editingFolderName: false,
             }
         },
 
         watch: {
-          sharing: function() {
+            sharing: function() {
               this.shareData.shared = false;
               this.shareData.error = null;
               this.shareData.password = '';
@@ -121,7 +138,7 @@
                       this.$refs['share-input'].focus();
                   });
               }
-          }
+            },
         },
 
         methods: {
@@ -164,6 +181,28 @@
 
             download() {
                 window.open(this.routes.download.replace('__id', this.folder.id));
+            },
+
+            editFolderName() {
+                this.editingFolderName = true;
+                this.$nextTick(() => {
+                    this.$refs.folderName.focus();
+                });
+            },
+
+            updateFolderName() {
+                const name = this.$refs.folderName.textContent;
+                axios.patch(this.routes.edit.replace('__id', this.folder.id), {name})
+                    .then(response => {
+                        this.folder.name = name;
+                        this.editingFolderName = false;
+                        this.$refs.folderName.blur();
+                    })
+                    .catch(error => {
+                        let message = error.response.data.message || 'We were unable to update the folder name.';
+                        this.error({message: message});
+                    })
+                ;
             }
         },
 
