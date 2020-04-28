@@ -50,12 +50,12 @@ class NotifyUsersBySMS extends Command
          */
         $smsProvider = app()->make('SMS');
 
-        NotificationRepository::deliveryNotifications(Notification::SMS,
-            function(User $user) {
+        NotificationRepository::deliveryNotifications(
+            Notification::SMS,
+            function (User $user) {
                 return $user->notificationPrefs->notify_by_sms;
             },
-
-            function (string $content, User $user) use($smsProvider) {
+            function (string $content, User $user) use ($smsProvider) {
                 if ($smsProvider->sendSMS($user, $content)) {
                     $user->unreadNotifications()->update([
                         'is_notified_by_sms' => true,

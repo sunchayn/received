@@ -59,7 +59,8 @@ class NotificationRepository
         return 'You\'ve received ' . $numberOfFiles . ' new '. $wordCountability .' into "' . $folderName . '" folder.';
     }
 
-    public static function deliveryNotifications(string $channel, \Closure $shouldSend, \Closure $delivery) {
+    public static function deliveryNotifications(string $channel, \Closure $shouldSend, \Closure $delivery)
+    {
         $notificationsByUser = Notification::notNotified($channel)->with('user')->get()->groupBy('user_id');
 
         foreach ($notificationsByUser as $notifications) {

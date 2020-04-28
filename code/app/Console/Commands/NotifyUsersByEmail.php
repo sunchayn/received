@@ -45,11 +45,11 @@ class NotifyUsersByEmail extends Command
     {
         $this->line('Notifying...');
 
-        NotificationRepository::deliveryNotifications(Notification::EMAIL,
-            function(User $user) {
+        NotificationRepository::deliveryNotifications(
+            Notification::EMAIL,
+            function (User $user) {
                 return $user->notificationPrefs->notify_by_mail && $user->email;
             },
-
             function (string $content, User $user) {
                 $user->notify(new NotifMailDelivery($content));
                 $user->unreadNotifications()->update(['is_notified_by_mail' => true]);
