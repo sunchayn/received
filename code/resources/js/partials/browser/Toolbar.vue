@@ -19,9 +19,12 @@
             <header class="browser_toolbar" v-if="folder">
                 <div class="flex items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-12 mr-2 icon-folder"><g><path class="secondary" d="M22 10H2V6c0-1.1.9-2 2-2h7l2 2h7a2 2 0 0 1 2 2v2z"/><rect width="20" height="12" x="2" y="8" class="primary" rx="2"/></g></svg>
-                    <div>
-                        <h1 class="mb-1">{{folder.name}} <span class="badge" v-if="folder.is_shared">shared</span></h1>
-                        <small class="text-gray-700">{{folder.files.length}} files in this folder</small>
+                    <div class="flex items-start">
+                        <div class="mr-2">
+                            <h1 class="mb-1">{{folder.name}}</h1>
+                            <small class="text-gray-700">{{folder.files.length}} files in this folder</small>
+                        </div>
+                        <span class="badge" v-if="folder.is_shared">shared</span>
                     </div>
                 </div>
                 <div class="ml-auto flex items-center">
