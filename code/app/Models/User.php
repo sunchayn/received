@@ -91,6 +91,11 @@ class User extends Authenticatable implements SmsServiceContract
         return $this->hasMany(Notification::class, 'user_id')->where('is_seen', false)->latest();
     }
 
+    public function unreadNotificationsByType($type)
+    {
+        return $this->hasMany(Notification::class, 'user_id')->where('is_seen', false)->where('type', $type)->latest();
+    }
+
     public function isVerified()
     {
         return $this->verified_at != null;

@@ -34,6 +34,7 @@ return [
         'service' => env('SMS_SERVICE', 'TWILIO'),
         'key' => env('SMS_SERVICE_KEY'),
         'secret' => env('SMS_SERVICE_SECRET'),
+        'phone_number' => env('SMS_PHONE_NUMBER'),
     ],
 
     'twilio' => [

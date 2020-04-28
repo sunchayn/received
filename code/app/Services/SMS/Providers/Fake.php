@@ -55,4 +55,13 @@ class Fake implements ProviderInterface
         $shouldSucceed = $this->config['two_factor_verification_should_succeed'] ?? true;
         return $shouldSucceed ? $shouldSucceed === true : false;
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function sendSMS(SmsServiceContract $user, string $content): bool
+    {
+        $shouldSucceed = $this->config['sms_sending_should_succeed'] ?? true;
+        return $shouldSucceed ? $shouldSucceed === true : false;
+    }
 }

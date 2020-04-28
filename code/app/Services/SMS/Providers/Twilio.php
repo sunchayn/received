@@ -56,7 +56,7 @@ class Twilio implements ProviderInterface
     public function verify(SmsServiceContract $user, string $code): bool
     {
         $phoneNumber = '+' . $user->getCountryCode() . $user->getPhoneNumber();
-        $verification = null;
+
         try {
             $verification = $this->client->verify->v2
                 ->services(config('services.twilio.verify_service_id'))
@@ -77,9 +77,7 @@ class Twilio implements ProviderInterface
     public function sendTwoFactorCode(SmsServiceContract $user): bool
     {
         $authy = new AuthyApi(config('services.twilio.authy_api_key'));
-
         $authyId = $user->getAuthyAppId();
-
 
         if (is_null($authyId)) {
             $authyUser = $authy->registerUser(
@@ -113,6 +111,29 @@ class Twilio implements ProviderInterface
 
             return $response->ok();
         } catch (\Exception $e) {
+            \Log::channel('sms')->debug($e->getCode() . ' ' . $e->getMessage());
+            return false;
+        }
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function sendSMS(SmsServiceContract $user, string $content): bool
+    {
+        $phoneNumber = '+' . $user->getCountryCode() . $user->getPhoneNumber();
+
+        try {
+            $this->client->messages->create(
+                $phoneNumber,
+                [
+                    'from' => config('services.sms.phone_number'),
+                    'body' => $content
+                ]
+            );
+
+            return true;
+        } catch (TwilioException $e) {
             \Log::channel('sms')->debug($e->getCode() . ' ' . $e->getMessage());
             return false;
         }

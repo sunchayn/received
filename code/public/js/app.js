@@ -3191,6 +3191,19 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['routes'],
   data: function data() {
@@ -41035,31 +41048,47 @@ var render = function() {
           "absolute right-0 border-gray-200 border border-b-0 shadow mt-2 bg-white z-20",
         staticStyle: { width: "260px" }
       },
-      _vm._l(_vm.notifications, function(notification) {
-        return _c(
-          "div",
-          {
-            key: notification.id,
-            staticClass: "py-2 px-4 hover:bg-teal-100 border-b border-gray-200"
-          },
-          [
-            _c("h2", { staticClass: "mb-0 text-sm" }, [
-              _vm._v(_vm._s(notification.title))
-            ]),
-            _vm._v(" "),
-            _c("p", { staticClass: "mb-0 text-sm text-gray-700" }, [
-              _vm._v(_vm._s(notification.content))
-            ]),
-            _vm._v(" "),
-            _c("small", [_vm._v(_vm._s(notification.created_at))])
-          ]
-        )
-      }),
-      0
+      [
+        _vm.notifications.length > 0
+          ? _vm._l(_vm.notifications, function(notification) {
+              return _c(
+                "div",
+                {
+                  key: notification.id,
+                  staticClass:
+                    "py-2 px-4 hover:bg-teal-100 border-b border-gray-200"
+                },
+                [
+                  _c("h2", { staticClass: "mb-0 text-sm" }, [
+                    _vm._v(_vm._s(notification.title))
+                  ]),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "mb-0 text-sm text-gray-700" }, [
+                    _vm._v(_vm._s(notification.content))
+                  ]),
+                  _vm._v(" "),
+                  _c("small", [_vm._v(_vm._s(notification.created_at))])
+                ]
+              )
+            })
+          : [_vm._m(0)]
+      ],
+      2
     )
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "p-4" }, [
+      _c("h1", { staticClass: "text-center text-gray-700 mb-0 text-sm" }, [
+        _vm._v("There's no new notification.")
+      ])
+    ])
+  }
+]
 render._withStripped = true
 
 

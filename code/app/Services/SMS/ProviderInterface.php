@@ -44,4 +44,13 @@ interface ProviderInterface
      * @return bool
      */
     public function verifyTwoFactorCode(SmsServiceContract $user, string $code): bool;
+
+    /**
+     * Send an SMS with the given content to the user
+     *
+     * @param SmsServiceContract $user
+     * @param string $content
+     * @return bool
+     */
+    public function sendSMS(SmsServiceContract $user, string $content): bool;
 }

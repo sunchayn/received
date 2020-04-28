@@ -11,10 +11,13 @@ use Carbon\Carbon;
  * @property bool is_seen
  * @property bool is_notified
  * @property Carbon created_at
+ * @property User $user
  * @mixin \Illuminate\Database\Eloquent\Builder
  */
 class Notification extends Model
 {
+    public const TYPE_RECEIVED_FILES = 'RECEIVED_FILES';
+
     /**
      * @var array
      */
@@ -28,6 +31,11 @@ class Notification extends Model
         'is_notified' => 'boolean',
     ];
 
+    public static function notNotified()
+    {
+        return self::where('is_seen', false)->where('is_notified', false);
+    }
+
     /**
      * Determine whether the notification is seen or not.
      * @return bool
@@ -40,6 +48,16 @@ class Notification extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function setDataAttribute($data):void
+    {
+        $this->attributes['data'] = json_encode($data);
+    }
+
+    public function getDataAttribute($value)
+    {
+        return json_decode($value);
     }
 
     // Exporter
