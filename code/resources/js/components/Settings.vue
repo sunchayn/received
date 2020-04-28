@@ -30,6 +30,11 @@
                 :folders="this.data.sharedFolders.folders"
                 v-if="current === 'shared-folders'"
             />
+
+            <Subscription
+                :subscription="this.data.subscription.data"
+                v-if="current === 'subscription'"
+            />
         </div>
     </div>
 </template>
@@ -40,6 +45,7 @@
     import Account from '@/partials/settings/Account';
     import Notifications from '@/partials/settings/Notifications';
     import SharedFolders from '@/partials/settings/SharedFolders';
+    import Subscription from '@/partials/settings/Subscription';
 
     export default {
         props: ['data', 'routes'],
@@ -49,7 +55,8 @@
             Profile,
             Account,
             Notifications,
-            SharedFolders
+            SharedFolders,
+            Subscription,
         },
 
         data() {
@@ -70,7 +77,7 @@
 
             hash = hash.replace('#', '');
 
-            const component = ['profile', 'notifications', 'account', 'shared-folders'].find(ele => {
+            const component = ['profile', 'notifications', 'account', 'shared-folders', 'subscription'].find(ele => {
                 return ele === hash;
             });
 

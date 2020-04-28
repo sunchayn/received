@@ -50,6 +50,9 @@
                     sharedFolders: {
                         folders: {{Auth::user()->shared->toJson()}},
                     },
+                    subscription: {
+                        data: {{Auth::user()->subscription ? Auth::user()->subscription->load('plan')->toJson() : null}},
+                    },
                 }"
             >
                 <aside class="w-1/4 settings-sidebar">
