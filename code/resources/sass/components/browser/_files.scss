@@ -22,8 +22,13 @@
 }
 
 .files_row {
-    @apply flex select-none relative;
+    @apply flex items-center select-none relative;
     height: 25px;
+    background-color: #ffffff;
+
+    &:nth-child(even) {
+        background-color: #f5f5f5;
+    }
 
     &:hover {
         background-color: #E6F7FF;
