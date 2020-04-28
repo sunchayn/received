@@ -23,7 +23,8 @@ class FilesManagementTest extends TestCase
     /**
      * @test
      */
-    public function user_can_download_his_files() {
+    public function user_can_download_his_files()
+    {
         $this->signin();
 
         // Downloading his file is Allowed
@@ -55,7 +56,8 @@ class FilesManagementTest extends TestCase
     /**
      * @test
      */
-    public function user_can_delete_his_files() {
+    public function user_can_delete_his_files()
+    {
         $this->signin();
 
         // Deleting his file is Allowed

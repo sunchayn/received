@@ -20,7 +20,8 @@ class Files extends Controller
      * @param File $file
      * @return \Symfony\Component\HttpFoundation\StreamedResponse
      */
-    public function download(DownloadRequest $request, File $file) {
+    public function download(DownloadRequest $request, File $file)
+    {
         return Storage::disk('buckets')->download($file->getPath());
     }
 
@@ -34,7 +35,8 @@ class Files extends Controller
      * @return \Illuminate\Http\JsonResponse
      * @throws \Exception
      */
-    public function delete(DeleteRequest $request, File $file) {
+    public function delete(DeleteRequest $request, File $file)
+    {
         $deleted = Storage::disk('buckets')->delete($file->getPath());
 
         if (! $deleted) {

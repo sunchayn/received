@@ -89,7 +89,8 @@ abstract class TestCase extends BaseTestCase
      * @param $user
      * @return Folder
      */
-    protected function createFolderForUser($user) {
+    protected function createFolderForUser($user)
+    {
         /**
          * @var Folder $folder
          */
@@ -108,7 +109,8 @@ abstract class TestCase extends BaseTestCase
      * @param $user
      * @return File
      */
-    protected function createFileForUser($user) {
+    protected function createFileForUser($user)
+    {
         $folder = $this->createFolderForUser($user);
 
         /**

@@ -70,7 +70,8 @@ class EventsPropagationTest extends TestCase
     /**
      * @test
      */
-    public function it_fire_an_event_upon_folder_deletion() {
+    public function it_fire_an_event_upon_folder_deletion()
+    {
         Event::fake();
 
         $this->signin();
@@ -88,7 +89,8 @@ class EventsPropagationTest extends TestCase
     /**
      * @test
      */
-    public function it_fire_an_event_upon_files_deletion() {
+    public function it_fire_an_event_upon_files_deletion()
+    {
         Event::fake();
 
         $this->signin();

@@ -148,23 +148,24 @@ class FilesUploadTest extends TestCase
     // --
     public function file_uploading_data_provider()
     {
+        $content = 'ccc'; // 3 Bytes
         return [
             [
                 [
-                    UploadedFile::fake()->createWithContent('image.jpg', 'n\a'),
-                    UploadedFile::fake()->createWithContent('document.pdf', 'n\a'),
-                    UploadedFile::fake()->createWithContent('video.mp4', 'n\a'),
-                    UploadedFile::fake()->createWithContent('text.txt', 'n\a'),
+                    UploadedFile::fake()->createWithContent('image.jpg', $content),
+                    UploadedFile::fake()->createWithContent('document.pdf', $content),
+                    UploadedFile::fake()->createWithContent('video.mp4', $content),
+                    UploadedFile::fake()->createWithContent('text.txt', $content),
                 ],
-                12
+                12 / 1024 // Size in Kb
             ],
 
             [
                 [
-                    UploadedFile::fake()->createWithContent('image.jpg', 'n\a'),
-                    UploadedFile::fake()->createWithContent('other.psd', 'n\a'),
+                    UploadedFile::fake()->createWithContent('image.jpg', $content),
+                    UploadedFile::fake()->createWithContent('other.psd', $content),
                 ],
-                6
+                6 / 1024 // Size in Kb
             ]
         ];
     }

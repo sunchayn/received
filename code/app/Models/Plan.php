@@ -31,7 +31,8 @@ class Plan extends Model
     }
 
     // Exporter
-    public function toArray() {
+    public function toArray()
+    {
         $data = parent::toArray();
         $data['created_at'] = $this->created_at->diffForHumans();
         $data['storage_limit'] = $this->getSuitableSizeUnit($this->storage_limit);

@@ -32,6 +32,8 @@ use Illuminate\Support\Collection;
  * @property OngoingNewPhoneVerification|null $ongoingNewPhoneVerification
  * @property NotificationPrefs $notificationPrefs
  * @property Subscription $subscription
+ * @property  Collection|null $notifications
+ * @property  Collection|null unreadNotifications
  * @property Plan $plan
  * @mixin Builder
  */
@@ -77,6 +79,16 @@ class User extends Authenticatable implements SmsServiceContract
     public function subscription()
     {
         return $this->hasOne(Subscription::class);
+    }
+
+    public function notifications()
+    {
+        return $this->hasMany(Notification::class, 'user_id')->latest();
+    }
+
+    public function unreadNotifications()
+    {
+        return $this->hasMany(Notification::class, 'user_id')->where('is_seen', false)->latest();
     }
 
     public function isVerified()

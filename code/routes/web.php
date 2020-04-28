@@ -150,6 +150,24 @@ Route::middleware(['auth', 'clean_session'])->group(function () {
         ]);
     });
 
+    // Notifications
+    Route::prefix('notifications')->name('notifications.')->group(function () {
+        Route::get('/', [
+            'uses' => 'Notifications@all',
+            'as' => 'all'
+        ]);
+
+        Route::get('/pull', [
+            'uses' => 'Notifications@pull',
+            'as' => 'pull'
+        ]);
+
+        Route::patch('/read', [
+            'uses' => 'Notifications@read',
+            'as' => 'read'
+        ]);
+    });
+
     // Settings
     Route::prefix('settings')->name('settings.')->group(function () {
         // Settings default page

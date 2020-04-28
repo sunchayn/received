@@ -27,7 +27,8 @@ class File extends Model
         return $this->belongsTo(Folder::class);
     }
 
-    public function getQualifiedFilename() {
+    public function getQualifiedFilename()
+    {
         return $this->filename . '.' . $this->extension;
     }
 

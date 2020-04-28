@@ -4,9 +4,23 @@
         <h1 class="font-black text-xl">
             <a href="{{route('landing_page')}}" class="text-black hover:no-underline">received;</a>
         </h1>
-        <div class="ml-auto flex">
+        <div class="ml-auto flex items-center">
             <div class="flex items-center mr-4">
                 <span class="badge badge--gray" title="your public bucket">{{route('send.index', ['username' => Auth::user()->username])}}</span>
+            </div>
+
+            <div class="mr-4 pl-3 border-l border-gray-300">
+                <notifications
+                    :routes="{
+                        pull: '{{route('notifications.pull')}}',
+                        read: '{{route('notifications.read')}}',
+                    }"
+                >
+                    <button class="flex items-center select-none outline-none active:outline-none focus:outline-none">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="icon-notification w-6 mr-2"><circle cx="12" cy="19" r="3" class="secondary"/><path class="primary" d="M10.02 4.28L10 4a2 2 0 1 1 3.98.28A7 7 0 0 1 19 11v5a1 1 0 0 0 1 1 1 1 0 0 1 0 2H4a1 1 0 0 1 0-2 1 1 0 0 0 1-1v-5a7 7 0 0 1 5.02-6.72z"/></svg>
+                        <span class="bg-gray-300 p-1 rounded inline-block leading-none text-xs">0</span>
+                    </button>
+                </notifications>
             </div>
 
             <div class="js-dropdown dropdown">

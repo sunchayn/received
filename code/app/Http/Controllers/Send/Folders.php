@@ -117,7 +117,7 @@ class Folders extends \App\Http\Controllers\Controller
 
         $files = $folders->uploadFiles($data['files'], $folder);
 
-        event(new FilesUploaded($files, $user));
+        event(new FilesUploaded($user, $folder, $files));
 
         return $this->jsonSuccess('The files has been successfully uploaded.');
     }
