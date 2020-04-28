@@ -20,28 +20,32 @@
                 <div class="flex items-center" style="max-width: 50%;">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-12 mr-2 icon-folder"><g><path class="secondary" d="M22 10H2V6c0-1.1.9-2 2-2h7l2 2h7a2 2 0 0 1 2 2v2z"/><rect width="20" height="12" x="2" y="8" class="primary" rx="2"/></g></svg>
                     <div class="flex items-start">
-                        <div class="mr-2">
-                            <h1
-                                :key="1"
-                                v-if="! editingFolderName"
-                                class="mb-1 select-none"
-                                @click="editFolderName"
-                                title="Edit folder name."
-                            >{{folder.name}}</h1>
+                        <div class="flex flex-col items-start">
+                            <div class="relative">
+                                <h1
+                                    :key="1"
+                                    v-if="! editingFolderName"
+                                    class="mb-1 select-none inline-block mr-2"
+                                    @click="editFolderName"
+                                    title="Edit folder name."
+                                >{{folder.name}}</h1>
 
-                            <h1
-                                v-if="editingFolderName"
-                                :key="2"
-                                ref="folderName"
-                                contenteditable
-                                class="mb-1 outline-none"
-                                @blur="editingFolderName = false"
-                                @keydown.enter.prevent="updateFolderName"
-                            >{{folder.name}}</h1>
+                                <h1
+                                    v-if="editingFolderName"
+                                    :key="2"
+                                    ref="folderName"
+                                    contenteditable
+                                    class="mb-1 outline-none inline-block mr-2"
+                                    @blur="editingFolderName = false"
+                                    @keydown.enter.prevent="updateFolderName"
+                                >{{folder.name}}</h1>
+
+                                <span class="badge absolute right-0 transform translate-x-full" v-if="folder.is_shared">shared</span>
+                            </div>
+
 
                             <small class="text-gray-700">{{folder.files.length}} files in this folder</small>
                         </div>
-                        <span class="badge" v-if="folder.is_shared">shared</span>
                     </div>
                 </div>
                 <div class="ml-auto flex items-center">
