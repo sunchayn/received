@@ -204,6 +204,11 @@
                     })
                     .catch(error => {
                         let message = error.response.data.message || 'We were unable to update the folder name.';
+
+                        if (error.response.status === 422) {
+                            message = error.response.data.errors.name[0];
+                        }
+
                         this.error({message: message});
                     })
                 ;

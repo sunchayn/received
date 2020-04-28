@@ -113,6 +113,10 @@ class FoldersRepository
 
     private function renameFolder($old, $new)
     {
+        if ($old === $new) {
+            return;
+        }
+
         $bucket = Auth::user()->getBucket();
         Storage::disk('buckets')->move($bucket . '/' . $old, $bucket . '/' . $new);
     }
