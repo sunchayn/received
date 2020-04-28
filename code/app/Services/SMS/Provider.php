@@ -2,6 +2,7 @@
 
 namespace App\Services\SMS;
 
+use App\Services\SMS\Exceptions\ServiceNotSupportedException;
 use App\Services\SMS\Providers\Fake;
 use App\Services\SMS\Providers\Twilio;
 
@@ -24,6 +25,7 @@ class Provider
 
     /**
      * Provider constructor.
+     * @throws ServiceNotSupportedException
      */
     public function __construct()
     {
@@ -31,9 +33,15 @@ class Provider
             return;
         }
 
-        self::$service = new Twilio();
+        $service = config('services.sms.service');
+        if ($service === 'TWILIO') {
+            self::$service = new Twilio();
+        } else if ($service === 'FAKE') {
+            self::$service = new FAKE();
+        } else {
+            throw new ServiceNotSupportedException('SMS service not supported "'. $service .'".');
+        }
     }
-
 
     /**
      * Get the initialized SMS service.
