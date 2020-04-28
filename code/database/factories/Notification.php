@@ -10,6 +10,7 @@ $factory->define(Notification::class, function (Faker $faker) {
         'title' => $faker->sentence,
         'content' => $faker->text,
         'is_seen' => false,
-        'is_notified' => false,
+        'is_notified_by_sms' => false,
+        'is_notified_by_mail' => false,
     ];
 });
