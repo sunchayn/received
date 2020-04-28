@@ -48,7 +48,7 @@ class Folder extends Model
 
     public function files()
     {
-        return $this->hasMany(File::class);
+        return $this->hasMany(File::class)->latest();
     }
 
     public function isOwnedBy(User $user)
