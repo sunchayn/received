@@ -61,7 +61,7 @@ class Folder extends Model
         return $this->user->getBucket() . '/' . $this->slug;
     }
 
-    public function getFolderSize($unit = 'kb')
+    public function getFolderSize()
     {
         $size = $this->files->reduce(function ($carry, $file) {
             /**
@@ -72,14 +72,14 @@ class Folder extends Model
             return $carry;
         });
 
-        return $size ? $this->getSuitableSizeUnit($size) : 0;
+        return $size ? $this->getSuitableSizeUnit($size) : '0 Bytes';
     }
 
     // Exporting
     public function toArray()
     {
         $data = parent::toArray();
-        $data['size'] = $this->getFolderSize('mb');
+        $data['size'] = $this->getFolderSize();
         $data['is_shared'] = $this->isShared();
         $data['shared_at'] = $this->shared_at ? $this->shared_at->diffForHumans() : null;
 
