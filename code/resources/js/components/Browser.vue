@@ -100,6 +100,7 @@
             },
 
             addNewFolder(folder) {
+                folder.files = [];
                 this.folders.data.unshift(folder);
             },
 
