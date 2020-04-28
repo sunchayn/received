@@ -35,7 +35,7 @@
 }
 
 .dropdown_menu_item {
-    @apply block py-4 px-4 select-none cursor-pointer text-black;
+    @apply flex items-center py-1 px-4 select-none cursor-pointer text-black leading-snug;
 
     &:hover {
         @apply bg-teal-100;
