@@ -7,7 +7,7 @@
             <span class="files_column w-1/12">Extension</span>
             <span class="files_column w-1/12">Size</span>
             <span class="files_column w-2/12">Type</span>
-            <span class="files_column w-2/12">Sent on</span>
+            <span class="files_column w-2/12">Received at</span>
             <span class="files_column w-2/12">Action</span>
         </header>
         <div class="files_content" @scroll="moveTableHeader">
