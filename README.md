@@ -101,6 +101,18 @@ For production use, two command line has been established to push the unread not
 
 All set up!
 
+## Available Composer scripts
+```
+# Run tests with coverage.
+composer run test
+
+# Run PHPCodeSniffer to identify unstyled files.
+composer run check
+
+# Fix all fixable stylying issues
+composer run fix
+```
+
 ## Related blog posts
 
 [Received; Public bucket for receiving files](https://dev.to/mazentouati/received-public-bucket-for-receiving-files-24kb)
