@@ -14,10 +14,12 @@ class UsersRepository
     {
         $user = User::create([
             'password' => bcrypt($data['password']),
-            'username' => Str::uuid(),
+            'username' => Str::random(8),
             'phone_number' => $data['phone_number'],
             'country_code' => str_replace('+', '', $data['country_code']),
         ]);
+
+        $user->update(['username' => $user->id . '_' . $user->username]);
 
         // Dispatch event
         event(new UserCreated($user));
