@@ -32,7 +32,9 @@ class EventsPropagationTest extends TestCase
     {
         Event::fake();
 
-        $data = factory(User::class)->make();
+        $data = factory(User::class)->make([
+            'password' => '123456',
+        ]);
 
         $this
             ->ajax('post', route('auth.signup'), $data->toArray())

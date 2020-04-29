@@ -10,9 +10,9 @@ $factory->define(User::class, function (Faker $faker) {
     return [
         'name' => $faker->firstName . ' ' . $faker->lastName,
         'username' => $faker->uuid,
-        'email' => $faker->email,
-        'password' => bcrypt($faker->password),
-        'phone_number' => $faker->unique()->randomNumber(6),
+        'email' => $faker->unique()->email,
+        'password' => bcrypt($faker->word),
+        'phone_number' => $faker->unique()->randomNumber(9),
         'country_code' => 216,
         'verification_id' => null,
         'ongoing_two_fa' => false,
