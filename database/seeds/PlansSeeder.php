@@ -14,7 +14,7 @@ class PlansSeeder extends Seeder
         \App\Models\Plan::create([
             'title' => 'Freemium (demo)',
             'description' => 'A very limited demo plan for received; app.',
-            'storage_limit' => 20480,
+            'storage_limit' => 200 * 1024,
             'is_default' => true,
         ]);
     }
