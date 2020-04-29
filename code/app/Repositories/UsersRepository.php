@@ -27,7 +27,7 @@ class UsersRepository
 
     public function getByVerificationId($verification_id)
     {
-        return User::where('verification_id', $verification_id)->firstOrFail();
+        return User::where('verification_id', $verification_id)->first();
     }
 
     public function markAsVerified(User $user)

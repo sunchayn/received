@@ -19,6 +19,7 @@
                     <verify
                         :routes="{
                             submit: '{{route('auth.verify', ['verification_id' => Auth::user()->verification_id])}}',
+                            resend: '{{route('auth.resend_verification_code')}}',
                         }"
                     >Loading...</verify>
                 </div>

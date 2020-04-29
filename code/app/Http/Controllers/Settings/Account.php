@@ -59,7 +59,7 @@ class Account extends Controller
     {
         $code = $request->validated()['code'];
 
-        $user = $users->getByVerificationId($verification_id);
+        $user = $users->getByVerificationId($verification_id) ?? abort(404, 'Invalid verification request.');
 
         if (! $user->ongoingNewPhoneVerification) {
             return $this->forbidden();
