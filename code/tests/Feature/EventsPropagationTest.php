@@ -36,6 +36,7 @@ class EventsPropagationTest extends TestCase
 
         $this
             ->ajax('post', route('auth.signup'), $data->toArray())
+            ->assertOk()
         ;
 
         Event::assertDispatched(UserCreated::class);
