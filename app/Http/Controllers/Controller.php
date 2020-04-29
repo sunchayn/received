@@ -27,13 +27,12 @@ class Controller extends BaseController
             return redirect()
                 ->route($route)
                 ->withErrors(['error' => $error])
-                ->withInput()
-            ;
+                ->withInput();
         }
     }
 
     /**
-     * Return a JSON error
+     * Return a JSON error.
      *
      * @param $error
      * @param int $status
@@ -47,7 +46,7 @@ class Controller extends BaseController
     }
 
     /**
-     * Return JSON success message
+     * Return JSON success message.
      *
      * @param $message
      * @param int $status
@@ -106,7 +105,7 @@ class Controller extends BaseController
     }
 
     /**
-     * Return JSON data
+     * Return JSON data.
      *
      * @param $data
      * @param int $status

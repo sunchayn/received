@@ -6,13 +6,13 @@ use App\Events\BucketUpdated;
 use App\Http\Requests\Files\DeleteRequest;
 use App\Http\Requests\Files\DownloadRequest;
 use App\Models\File;
-use Storage;
 use Auth;
+use Storage;
 
 class Files extends Controller
 {
     /**
-     * GET /files/download/{file}
+     * GET /files/download/{file}.
      *
      * Download a given file.
      *
@@ -26,7 +26,7 @@ class Files extends Controller
     }
 
     /**
-     * DELETE /files/{file}
+     * DELETE /files/{file}.
      *
      * Delete a given file.
      *

@@ -20,6 +20,7 @@ class FilesRepository
     private function getType(UploadedFile $file)
     {
         $mime = $file->getMimeType();
+
         return $mime ? explode('/', $mime)[0] : 'n/a';
     }
 
@@ -28,6 +29,6 @@ class FilesRepository
         $filename = pathinfo($file->getClientOriginalName())['filename'];
         $existentFile = $folder->files()->where('filename', $filename)->count() > 0;
 
-        return !$existentFile ? $filename : $filename . '_' . time();
+        return ! $existentFile ? $filename : $filename.'_'.time();
     }
 }

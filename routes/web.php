@@ -1,4 +1,5 @@
 <?php
+
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -12,7 +13,7 @@ Route::prefix('/auth')->name('auth.')->middleware('guest')->group(function () {
     // --
     Route::get('/signup', [
         'uses' =>  'Auth\Signup@signup',
-        'as' => 'signup'
+        'as' => 'signup',
     ]);
 
     Route::post('/signup', [
@@ -23,7 +24,7 @@ Route::prefix('/auth')->name('auth.')->middleware('guest')->group(function () {
     // --
     Route::get('/signin', [
         'uses' =>  'Auth\Signin@signin',
-        'as' => 'signin'
+        'as' => 'signin',
     ]);
 
     Route::post('/signin', [
@@ -38,14 +39,14 @@ Route::middleware('auth')->prefix('auth')->name('auth.')->group(function () {
     // --
     Route::get('/logout', [
         'uses' =>  'Auth\Logout@logout',
-        'as' => 'logout'
+        'as' => 'logout',
     ]);
 
     // Verify
     // --
     Route::get('/verify/{verification_id}', [
         'uses' =>  'Auth\Security@verification',
-        'as' => 'verify'
+        'as' => 'verify',
     ]);
 
     Route::post('/verify/{verification_id}', [
@@ -56,7 +57,7 @@ Route::middleware('auth')->prefix('auth')->name('auth.')->group(function () {
     // --
     Route::get('/two_factor_auth', [
         'uses' =>  'Auth\Security@twoFaPage',
-        'as' => '2fa'
+        'as' => '2fa',
     ]);
 
     Route::post('/two_factor_auth', [
@@ -67,12 +68,12 @@ Route::middleware('auth')->prefix('auth')->name('auth.')->group(function () {
     // --
     Route::post('/resend_verification_code', [
         'uses' =>  'Auth\Security@resendVerificationCode',
-        'as' => 'resend_verification_code'
+        'as' => 'resend_verification_code',
     ]);
 
     Route::post('/resend_2fa_code', [
         'uses' =>  'Auth\Security@resendTwoFaCode',
-        'as' => 'resend_2fa_code'
+        'as' => 'resend_2fa_code',
     ]);
 });
 
@@ -82,20 +83,19 @@ Route::middleware(['auth', 'clean_session'])->group(function () {
     // App main entry point
     Route::get('/app', [
         'uses' => 'App@index',
-        'as' => 'home'
+        'as' => 'home',
     ]);
 
     // User data
     Route::prefix('me')->group(function () {
         Route::get('/storage_info', [
             'uses' => 'UserData@storageInfo',
-            'as' => 'me.storage_info'
+            'as' => 'me.storage_info',
         ]);
     });
 
     // Folders
     Route::prefix('folders')->name('folders.')->group(function () {
-
         Route::get('/all', [
             'uses' =>  'Folders@all',
             'as' => 'all',
@@ -141,12 +141,12 @@ Route::middleware(['auth', 'clean_session'])->group(function () {
     Route::prefix('files')->name('files.')->group(function () {
         Route::delete('/{file}', [
             'uses' => 'Files@delete',
-            'as' => 'delete'
+            'as' => 'delete',
         ]);
 
         Route::get('/download/{file}', [
             'uses' => 'Files@download',
-            'as' => 'download'
+            'as' => 'download',
         ]);
     });
 
@@ -154,17 +154,17 @@ Route::middleware(['auth', 'clean_session'])->group(function () {
     Route::prefix('notifications')->name('notifications.')->group(function () {
         Route::get('/', [
             'uses' => 'Notifications@all',
-            'as' => 'all'
+            'as' => 'all',
         ]);
 
         Route::get('/pull', [
             'uses' => 'Notifications@pull',
-            'as' => 'pull'
+            'as' => 'pull',
         ]);
 
         Route::patch('/read', [
             'uses' => 'Notifications@read',
-            'as' => 'read'
+            'as' => 'read',
         ]);
     });
 

@@ -1,9 +1,7 @@
 <?php
 
-
 namespace App\Models\Traits;
 
-use App\Services\SMS\Exceptions\TwoFactorCodeNotSentException;
 use App\Services\SMS\Exceptions\UserNotCreatedException;
 use App\Services\SMS\Exceptions\VerificationCodeNotSentException;
 use App\Services\SMS\Exceptions\VerificationNotAchievedException;
@@ -14,8 +12,6 @@ use Illuminate\Contracts\Container\BindingResolutionException;
 /**
  * Trait Verification
  * Manage communication with SMS service to send and check verification & 2FA codes.
- *
- * @package App\Models\Traits
  */
 trait Verification
 {
@@ -44,7 +40,7 @@ trait Verification
      */
     public function canReceiveCode()
     {
-        if (!$this->{$this->smsDeliveryTimeField}) {
+        if (! $this->{$this->smsDeliveryTimeField}) {
             return true;
         }
 
@@ -66,7 +62,7 @@ trait Verification
             $smsProvider = app()->make('SMS');
 
             if (is_null($phoneNumber)) {
-                $phoneNumber = '+' . $this->getCountryCode() . $this->getPhoneNumber();
+                $phoneNumber = '+'.$this->getCountryCode().$this->getPhoneNumber();
             }
 
             $verificationRequestId = $smsProvider->sendVerificationCode($phoneNumber);
@@ -77,6 +73,7 @@ trait Verification
             return $verificationRequestId;
         } catch (BindingResolutionException $e) {
             abort(500, 'Unable to resolve SMS service');
+
             return false;
         } catch (VerificationCodeNotSentException $e) {
             return false;
@@ -86,10 +83,10 @@ trait Verification
     /**
      * Check the integrity of the given code.
      *
-     * @param String $code
+     * @param string $code
      * @return bool
      */
-    public function checkVerificationCode(String $code)
+    public function checkVerificationCode(string $code)
     {
         try {
             /**
@@ -102,6 +99,7 @@ trait Verification
             return false;
         } catch (BindingResolutionException $e) {
             abort(500, 'Unable to resolve SMS service');
+
             return false;
         }
     }
@@ -118,7 +116,7 @@ trait Verification
              */
             $smsProvider = app()->make('SMS');
 
-            $this->{$this->ongoing2FaField}  = true;
+            $this->{$this->ongoing2FaField} = true;
             $this->save();
 
             $delivered = $smsProvider->sendTwoFactorCode($this);
@@ -132,6 +130,7 @@ trait Verification
             return false;
         } catch (BindingResolutionException $e) {
             abort(500, 'Unable to resolve SMS service');
+
             return false;
         }
     }
@@ -139,19 +138,21 @@ trait Verification
     /**
      * Check the integrity of the given 2FA code.
      *
-     * @param String $code
+     * @param string $code
      * @return bool
      */
-    public function check2FaCode(String $code)
+    public function check2FaCode(string $code)
     {
         try {
             /**
              * @var SMSProviderInterface $smsProvider
              */
             $smsProvider = app()->make('SMS');
+
             return $smsProvider->verifyTwoFactorCode($this, $code);
         } catch (BindingResolutionException $e) {
             abort(500, 'Unable to resolve SMS service');
+
             return false;
         }
     }

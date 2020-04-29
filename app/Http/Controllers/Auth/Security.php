@@ -4,15 +4,14 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Requests\Auth\TwoFactorAuthRequest;
 use App\Http\Requests\Auth\VerificationRequest;
-use App\Repositories\UsersRepository;
 use App\Models\User;
+use App\Repositories\UsersRepository;
 use Auth;
 
 class Security extends \App\Http\Controllers\Controller
 {
-
     /**
-     * GET /auth/verify/{verification_id}
+     * GET /auth/verify/{verification_id}.
      *
      * Return the verification code form page.
      *
@@ -28,12 +27,11 @@ class Security extends \App\Http\Controllers\Controller
 
         $user = $users->getByVerificationId($verification_id) ?? abort(404, 'Invalid verification id.');
 
-
         return view('pages.auth.verify');
     }
 
     /**
-     * POST /auth/verify/{verification_id}
+     * POST /auth/verify/{verification_id}.
      *
      * Check the integrity of the entered code.
      *
@@ -60,7 +58,7 @@ class Security extends \App\Http\Controllers\Controller
     }
 
     /**
-     * GET /auth/two_factor_auth
+     * GET /auth/two_factor_auth.
      *
      * Return the two factor authentication form page.
      *
@@ -76,7 +74,7 @@ class Security extends \App\Http\Controllers\Controller
     }
 
     /**
-     * POST /auth/two_factor_auth
+     * POST /auth/two_factor_auth.
      *
      * Check the integrity of the entered 2fa code.
      *
@@ -95,7 +93,7 @@ class Security extends \App\Http\Controllers\Controller
 
         if (! $user->check2FaCode($code)) {
             return $this->validationErrors([
-                'code' => 'Invalid 2FA code.'
+                'code' => 'Invalid 2FA code.',
             ]);
         }
 
@@ -105,7 +103,7 @@ class Security extends \App\Http\Controllers\Controller
     }
 
     /**
-     * POST /auth/resend_verification_code
+     * POST /auth/resend_verification_code.
      *
      * Send another verification code for the user if possible.
      *
@@ -115,7 +113,7 @@ class Security extends \App\Http\Controllers\Controller
     {
         if (! Auth::user()->canReceiveCode()) {
             return $this->validationErrors([
-                'sms_rate' => 'We\'ve already sent an SMS for you.'
+                'sms_rate' => 'We\'ve already sent an SMS for you.',
             ]);
         }
 
@@ -132,7 +130,7 @@ class Security extends \App\Http\Controllers\Controller
     }
 
     /**
-     * POST /auth/auth/resend_2fa_code
+     * POST /auth/auth/resend_2fa_code.
      *
      * Send another 2fa code for the user if possible.
      *
@@ -142,7 +140,7 @@ class Security extends \App\Http\Controllers\Controller
     {
         if (! Auth::user()->canReceiveCode()) {
             return $this->validationErrors([
-                'sms_rate' => 'We\'ve already sent an SMS for you.'
+                'sms_rate' => 'We\'ve already sent an SMS for you.',
             ]);
         }
 

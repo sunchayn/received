@@ -3,12 +3,11 @@
 namespace App\Http\Controllers\Settings;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 
 class Home extends Controller
 {
     /**
-     * GET /settings
+     * GET /settings.
      *
      * Settings home page where all the interaction is handled.
      *

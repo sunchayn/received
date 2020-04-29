@@ -2,9 +2,9 @@
 
 namespace App\Http\Requests\Folders;
 
+use Auth;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
-use Auth;
 
 class CreateRequest extends FormRequest
 {
@@ -30,7 +30,7 @@ class CreateRequest extends FormRequest
                 'required',
                 Rule::unique('folders')->where(function ($query) {
                     $query->where('user_id', Auth::id());
-                })
+                }),
             ],
         ];
     }

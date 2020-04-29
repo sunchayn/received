@@ -2,17 +2,15 @@
 
 namespace Tests\Feature;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Tests\TestCase;
-use App\Services\SMS\Provider as SMSProvider;
-use App\Models\User;
 use App\Models\NotificationPrefs;
+use App\Models\User;
+use App\Services\SMS\Provider as SMSProvider;
 use Auth;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class UserNotificationPreferencesTest extends TestCase
 {
-
     use RefreshDatabase;
 
     public function setUp(): void
@@ -29,8 +27,7 @@ class UserNotificationPreferencesTest extends TestCase
         $data = factory(User::class)->make();
 
         $this
-            ->post(route('auth.signup'), $data->toArray())
-        ;
+            ->post(route('auth.signup'), $data->toArray());
 
         $user = User::first();
         $this->assertNotNull($user->notificationPrefs);
@@ -53,8 +50,7 @@ class UserNotificationPreferencesTest extends TestCase
 
         $this
             ->json('patch', route('settings.notifications'), $data)
-            ->assertOk()
-        ;
+            ->assertOk();
 
         $this->assertNewDataIsPersisted($data, Auth::user()->notificationPrefs);
     }

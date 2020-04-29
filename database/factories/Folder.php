@@ -7,7 +7,7 @@ use Faker\Generator as Faker;
 
 $factory->define(Folder::class, function (Faker $faker) {
     return [
-        'name' => $faker->firstName . ' ' . $faker->lastName,
+        'name' => $faker->firstName.' '.$faker->lastName,
         'slug' => $faker->uuid,
         'password' => null,
         'shared_at' => null,

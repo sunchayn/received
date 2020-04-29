@@ -2,15 +2,12 @@
 
 namespace App\Models\Traits;
 
-use App\Models\File;
-use Illuminate\Support\Collection;
-
 trait StorageSize
 {
     private $units = ['Bytes', 'Kb', 'Mb', 'Gb', 'Tb'];
 
     /**
-     * Get size in the given unit
+     * Get size in the given unit.
      *
      * @param int $size Size in Kb
      * @param string $unit
@@ -27,7 +24,7 @@ trait StorageSize
                 break;
         }
 
-        return number_format((float)$size, 3, '.', '');
+        return number_format((float) $size, 3, '.', '');
     }
 
     /**
@@ -42,14 +39,14 @@ trait StorageSize
     }
 
     /**
-     * Format the size
+     * Format the size.
      *
      * @param $size
      * @return int|string
      */
     private function formatSize($size)
     {
-        return number_format((float)$size, 2, '.', '') + 0;
+        return number_format((float) $size, 2, '.', '') + 0;
     }
 
     /**
@@ -62,7 +59,7 @@ trait StorageSize
     private function cycleTroughUnits($size, $index)
     {
         if ($size < 1024) {
-            return $this->formatSize($size) . ' ' . $this->units[$index];
+            return $this->formatSize($size).' '.$this->units[$index];
         }
 
         $index++;
@@ -70,6 +67,6 @@ trait StorageSize
             return $this->cycleTroughUnits($size / 1024, $index);
         }
 
-        return $this->formatSize($size)  . ' ' . $this->units[$index - 1];
+        return $this->formatSize($size).' '.$this->units[$index - 1];
     }
 }

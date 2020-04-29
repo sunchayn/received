@@ -9,7 +9,7 @@ use Auth;
 class Notifications extends Controller
 {
     /**
-     * PATCH settings/notifications
+     * PATCH settings/notifications.
      *
      *  Update user notifications preferences
      *

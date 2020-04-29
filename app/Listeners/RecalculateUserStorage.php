@@ -4,8 +4,6 @@ namespace App\Listeners;
 
 use App\Events\BucketUpdated;
 use App\Events\FilesUploaded;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Storage;
 
 class RecalculateUserStorage
@@ -28,7 +26,7 @@ class RecalculateUserStorage
      */
     public function handle($event)
     {
-        if (!($event instanceof BucketUpdated || $event instanceof FilesUploaded)) {
+        if (! ($event instanceof BucketUpdated || $event instanceof FilesUploaded)) {
             return;
         }
 

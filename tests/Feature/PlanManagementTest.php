@@ -4,13 +4,12 @@ namespace Tests\Feature;
 
 use App\Models\Plan;
 use App\Models\User;
+use App\Services\SMS\Provider as SMSProvider;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
-use App\Services\SMS\Provider as SMSProvider;
 
 class PlanManagementTest extends TestCase
 {
-
     use RefreshDatabase;
 
     public function setUp(): void
@@ -34,8 +33,7 @@ class PlanManagementTest extends TestCase
 
         $this
             ->ajax('post', route('auth.signup'), $data->toArray())
-            ->assertOk()
-        ;
+            ->assertOk();
 
         $user = User::first();
         $this->assertEquals($plan->id, $user->subscription->plan->id);

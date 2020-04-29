@@ -3,10 +3,10 @@
 namespace Tests\Feature;
 
 use App\Models\Notification;
+use App\Models\User;
+use Auth;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
-use Auth;
-use App\Models\User;
 
 class NotificationsTest extends TestCase
 {
@@ -30,8 +30,7 @@ class NotificationsTest extends TestCase
 
         $this->ajax('get', route('notifications.all'))
             ->assertOk()
-            ->assertJsonCount($notificationsCount)
-        ;
+            ->assertJsonCount($notificationsCount);
     }
 
     /**
@@ -56,8 +55,7 @@ class NotificationsTest extends TestCase
         $this
             ->json('get', route('notifications.pull'))
             ->assertOk()
-            ->assertJsonCount($notificationsCount)
-        ;
+            ->assertJsonCount($notificationsCount);
     }
 
     /**
@@ -76,8 +74,7 @@ class NotificationsTest extends TestCase
 
         $this
             ->ajax('patch', route('notifications.read'), ['ids' => $ids])
-            ->assertStatus(204)
-        ;
+            ->assertStatus(204);
 
         /**
          * @var Notification $notification

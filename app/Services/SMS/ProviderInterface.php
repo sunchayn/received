@@ -2,14 +2,14 @@
 
 namespace App\Services\SMS;
 
+use App\Services\SMS\Exceptions\UserNotCreatedException;
 use App\Services\SMS\Exceptions\VerificationCodeNotSentException;
 use App\Services\SMS\Exceptions\VerificationNotAchievedException;
-use App\Services\SMS\Exceptions\UserNotCreatedException;
 
 interface ProviderInterface
 {
     /**
-     * Send a verification code to the given user
+     * Send a verification code to the given user.
      *
      * @param string $phoneNumber
      * @throws VerificationCodeNotSentException
@@ -28,7 +28,7 @@ interface ProviderInterface
     public function verify(SmsServiceContract $user, string $code): bool;
 
     /**
-     * Send a 2FA code to the given user
+     * Send a 2FA code to the given user.
      *
      * @param SmsServiceContract $user
      * @throws UserNotCreatedException
@@ -46,7 +46,7 @@ interface ProviderInterface
     public function verifyTwoFactorCode(SmsServiceContract $user, string $code): bool;
 
     /**
-     * Send an SMS with the given content to the user
+     * Send an SMS with the given content to the user.
      *
      * @param SmsServiceContract $user
      * @param string $content

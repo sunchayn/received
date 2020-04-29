@@ -3,13 +3,12 @@
 namespace App\Models;
 
 use App\Models\Traits\StorageSize;
-use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Collection;
 
 /**
- * App\Models\Folder
+ * App\Models\Folder.
  *
  * @property int $id
  * @property int $user_id
@@ -58,7 +57,7 @@ class Folder extends Model
 
     public function getPath()
     {
-        return $this->user->getBucket() . '/' . $this->slug;
+        return $this->user->getBucket().'/'.$this->slug;
     }
 
     public function getFolderSize()
@@ -67,8 +66,8 @@ class Folder extends Model
             /**
              * @var File $file
              */
-
             $carry += $file->size;
+
             return $carry;
         });
 

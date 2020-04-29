@@ -41,6 +41,6 @@ return [
         'verify_service_id' => env('TWILIO_VERIFICATION_SERVICE_ID'),
         'authy_api_key' => env('TWILIO_AUTHY_API_KEY'),
         'authy_email' => env('TWILIO_AUTHY_EMAIL'),
-    ]
+    ],
 
 ];

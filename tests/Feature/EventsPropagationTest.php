@@ -5,14 +5,14 @@ namespace Tests\Feature;
 use App\Events\BucketUpdated;
 use App\Events\FilesUploaded;
 use App\Events\UserCreated;
-use Illuminate\Http\UploadedFile;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\Event;
-use Tests\TestCase;
 use App\Models\User;
 use App\Services\SMS\Provider as SMSProvider;
-use Storage;
 use Auth;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Event;
+use Storage;
+use Tests\TestCase;
 
 class EventsPropagationTest extends TestCase
 {
@@ -38,8 +38,7 @@ class EventsPropagationTest extends TestCase
 
         $this
             ->ajax('post', route('auth.signup'), $data->toArray())
-            ->assertOk()
-        ;
+            ->assertOk();
 
         Event::assertDispatched(UserCreated::class);
     }
@@ -83,8 +82,7 @@ class EventsPropagationTest extends TestCase
 
         $this
             ->delete(route('folders.delete', ['folder'=> $folder->id]))
-            ->assertNoContent()
-        ;
+            ->assertNoContent();
 
         Event::assertDispatched(BucketUpdated::class);
     }
@@ -102,8 +100,7 @@ class EventsPropagationTest extends TestCase
 
         $this
             ->delete(route('files.delete', ['file'=> $file->id]))
-            ->assertNoContent()
-        ;
+            ->assertNoContent();
 
         Event::assertDispatched(BucketUpdated::class);
     }

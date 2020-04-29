@@ -2,8 +2,8 @@
 
 namespace App\Http\Rules;
 
-use Illuminate\Contracts\Validation\Rule;
 use Auth;
+use Illuminate\Contracts\Validation\Rule;
 
 class CurrentPasswordMatch implements Rule
 {

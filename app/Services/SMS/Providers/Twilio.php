@@ -2,12 +2,11 @@
 
 namespace App\Services\SMS\Providers;
 
-use App\Services\SMS\SmsServiceContract;
-use App\Services\SMS\ProviderInterface;
 use App\Services\SMS\Exceptions\UserNotCreatedException;
-use App\Services\SMS\Exceptions\TwoFactorCodeNotSentException;
 use App\Services\SMS\Exceptions\VerificationCodeNotSentException;
 use App\Services\SMS\Exceptions\VerificationNotAchievedException;
+use App\Services\SMS\ProviderInterface;
+use App\Services\SMS\SmsServiceContract;
 use Authy\AuthyApi;
 use Twilio\Exceptions\ConfigurationException;
 use Twilio\Exceptions\TwilioException;
@@ -28,12 +27,12 @@ class Twilio implements ProviderInterface
         try {
             $this->client = new Client(config('services.sms.key'), config('services.sms.secret'));
         } catch (ConfigurationException $e) {
-            abort(500, "Invalid SMS configuration.");
+            abort(500, 'Invalid SMS configuration.');
         }
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function sendVerificationCode(string $phoneNumber): string
     {
@@ -41,38 +40,36 @@ class Twilio implements ProviderInterface
             return $this->client->verify->v2
                 ->services(config('services.twilio.verify_service_id'))
                 ->verifications
-                ->create($phoneNumber, "sms")
-                ->sid
-            ;
+                ->create($phoneNumber, 'sms')
+                ->sid;
         } catch (TwilioException $e) {
-            \Log::channel('sms')->debug($e->getCode() . ' ' . $e->getMessage());
-            throw new VerificationCodeNotSentException("Unable to send verification code.");
+            \Log::channel('sms')->debug($e->getCode().' '.$e->getMessage());
+            throw new VerificationCodeNotSentException('Unable to send verification code.');
         }
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function verify(SmsServiceContract $user, string $code): bool
     {
-        $phoneNumber = '+' . $user->getCountryCode() . $user->getPhoneNumber();
+        $phoneNumber = '+'.$user->getCountryCode().$user->getPhoneNumber();
 
         try {
             $verification = $this->client->verify->v2
                 ->services(config('services.twilio.verify_service_id'))
                 ->verificationChecks
-                ->create($code, ['to' => $phoneNumber])
-            ;
+                ->create($code, ['to' => $phoneNumber]);
 
             return $verification->status === 'approved';
         } catch (TwilioException $e) {
-            \Log::channel('sms')->debug($e->getCode() . ' ' . $e->getMessage());
-            throw new VerificationNotAchievedException("Unable to verify the code.");
+            \Log::channel('sms')->debug($e->getCode().' '.$e->getMessage());
+            throw new VerificationNotAchievedException('Unable to verify the code.');
         }
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function sendTwoFactorCode(SmsServiceContract $user): bool
     {
@@ -91,7 +88,7 @@ class Twilio implements ProviderInterface
                 $authyId = $authyUser->id();
                 $user->setAuthyAppId($authyId);
             } else {
-                throw new UserNotCreatedException("Unable to create an authy user.");
+                throw new UserNotCreatedException('Unable to create an authy user.');
             }
         }
 
@@ -101,7 +98,7 @@ class Twilio implements ProviderInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function verifyTwoFactorCode(SmsServiceContract $user, string $code): bool
     {
@@ -111,30 +108,32 @@ class Twilio implements ProviderInterface
 
             return $response->ok();
         } catch (\Exception $e) {
-            \Log::channel('sms')->debug($e->getCode() . ' ' . $e->getMessage());
+            \Log::channel('sms')->debug($e->getCode().' '.$e->getMessage());
+
             return false;
         }
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function sendSMS(SmsServiceContract $user, string $content): bool
     {
-        $phoneNumber = '+' . $user->getCountryCode() . $user->getPhoneNumber();
+        $phoneNumber = '+'.$user->getCountryCode().$user->getPhoneNumber();
 
         try {
             $this->client->messages->create(
                 $phoneNumber,
                 [
                     'from' => config('services.sms.phone_number'),
-                    'body' => $content
+                    'body' => $content,
                 ]
             );
 
             return true;
         } catch (TwilioException $e) {
-            \Log::channel('sms')->debug($e->getCode() . ' ' . $e->getMessage());
+            \Log::channel('sms')->debug($e->getCode().' '.$e->getMessage());
+
             return false;
         }
     }

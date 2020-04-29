@@ -2,8 +2,8 @@
 
 namespace App\Http\Requests\Folders;
 
-use Illuminate\Foundation\Http\FormRequest;
 use Auth;
+use Illuminate\Foundation\Http\FormRequest;
 
 class PasswordChangingRequest extends FormRequest
 {

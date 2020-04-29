@@ -10,7 +10,6 @@ class SendUploadedFilesNotification
 {
     /**
      * Create the event listener.
-     *
      */
     public function __construct()
     {
