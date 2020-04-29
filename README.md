@@ -56,7 +56,7 @@ php artisan key:generate --ansi
 ```
 
 **5/ Configure .env values**
-Beside the straightforward values like app name, URL and database connection. There's extra values to configure in order to start working with the app. For more details about these values and how to get them check this [Guide](https://github.com/sunchayn/received/blob/master/guide/SERVICES.md).
+Beside the straightforward values like app name, URL and database connection. There's extra values to configure in order to start working with the app. For more details about these values and how to get them check this [Guide](https://github.com/sunchayn/received/blob/master/__guide/SERVICES.md).
 
 ```dotenv
 # Pick which SMS service to use by the app from this list ( FAKE, TWILIO ).
