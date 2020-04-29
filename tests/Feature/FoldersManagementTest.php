@@ -2,14 +2,14 @@
 
 namespace Tests\Feature;
 
-use App\Models\User;
 use App\Models\Folder;
-use Carbon\Carbon;
-use Illuminate\Http\UploadedFile;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
+use App\Models\User;
 use Auth;
+use Carbon\Carbon;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\UploadedFile;
 use Storage;
+use Tests\TestCase;
 
 class FoldersManagementTest extends TestCase
 {
@@ -44,8 +44,7 @@ class FoldersManagementTest extends TestCase
         $this
             ->json('get', route('folders.all'))
             ->assertStatus(200)
-            ->assertJsonCount($foldersCount)
-        ;
+            ->assertJsonCount($foldersCount);
     }
 
     /**
@@ -59,8 +58,7 @@ class FoldersManagementTest extends TestCase
 
         $this
             ->post(route('folders.create'), $data)
-            ->assertStatus(201)
-        ;
+            ->assertStatus(201);
 
         $this->assertTrue(Auth::user()->folders->isNotEmpty());
 
@@ -68,9 +66,8 @@ class FoldersManagementTest extends TestCase
         // --
         $bucket = Auth::user()->getBucket();
         $folder = Auth::user()->folders->first();
-        $this->assertTrue(Storage::disk('buckets')->has($bucket . '/' . $folder->slug));
+        $this->assertTrue(Storage::disk('buckets')->has($bucket.'/'.$folder->slug));
     }
-
 
     /**
      * @dataProvider folder_valid_data
@@ -84,8 +81,7 @@ class FoldersManagementTest extends TestCase
         $this->assertFalse(Storage::disk('buckets')->has(Auth::user()->getBucket()));
 
         $this
-            ->post(route('folders.create'), $data)
-        ;
+            ->post(route('folders.create'), $data);
 
         $this->assertTrue(Storage::disk('buckets')->has(Auth::user()->getBucket()));
     }
@@ -100,13 +96,12 @@ class FoldersManagementTest extends TestCase
         $this->signin();
 
         $this
-            ->post(route('folders.create'), $data)
-        ;
+            ->post(route('folders.create'), $data);
 
         $bucket = Auth::user()->getBucket();
         $folder = Auth::user()->folders->first();
 
-        $this->assertTrue(Storage::disk('buckets')->has($bucket . '/' . $folder->slug));
+        $this->assertTrue(Storage::disk('buckets')->has($bucket.'/'.$folder->slug));
     }
 
     /**
@@ -121,8 +116,7 @@ class FoldersManagementTest extends TestCase
 
         $this
             ->post(route('folders.create'), $data)
-            ->assertStatus(302)
-        ;
+            ->assertStatus(302);
 
         $this->assertTrue(Auth::user()->folders->isEmpty());
     }
@@ -140,8 +134,7 @@ class FoldersManagementTest extends TestCase
         $this
             ->json('post', route('folders.create'), $data)
             ->assertStatus(422)
-            ->assertJsonValidationErrors($expectedErrors)
-        ;
+            ->assertJsonValidationErrors($expectedErrors);
     }
 
     /**
@@ -166,13 +159,12 @@ class FoldersManagementTest extends TestCase
             ->assertStatus(422)
             ->assertJsonValidationErrors([
                 'name',
-            ])
-        ;
+            ]);
 
         // Folder with the same name for another user
         // --
 
-        # Delete the previously deleted folder
+        // Delete the previously deleted folder
         Auth::user()->folders()->first()->delete();
 
         factory(Folder::class)->create([
@@ -182,8 +174,7 @@ class FoldersManagementTest extends TestCase
 
         $this
             ->post(route('folders.create'), $data)
-            ->assertCreated()
-        ;
+            ->assertCreated();
     }
 
     /**
@@ -205,8 +196,7 @@ class FoldersManagementTest extends TestCase
 
         $this
             ->ajax('patch', route('folders.share', ['folder' => $folder->id]), $data)
-            ->assertOk()
-        ;
+            ->assertOk();
 
         $this->assertTrue($folder->refresh()->isShared());
 
@@ -219,8 +209,7 @@ class FoldersManagementTest extends TestCase
 
         $this
             ->ajax('patch', route('folders.share', ['folder' => $folder->id]), $data)
-            ->assertForbidden()
-        ;
+            ->assertForbidden();
     }
 
     /**
@@ -252,9 +241,8 @@ class FoldersManagementTest extends TestCase
             ->ajax('patch', route('folders.share', ['folder' => $folder->id]), $data)
             ->assertStatus(422)
             ->assertJsonValidationErrors([
-                'password'
-            ])
-        ;
+                'password',
+            ]);
     }
 
     /**
@@ -276,8 +264,7 @@ class FoldersManagementTest extends TestCase
 
         $this
             ->ajax('patch', route('folders.changePassword', ['folder' => $folder->id]), $data)
-            ->assertOk()
-        ;
+            ->assertOk();
 
         $this->assertTrue(\Hash::check($data['password'], $folder->refresh()->password));
 
@@ -290,8 +277,7 @@ class FoldersManagementTest extends TestCase
 
         $this
             ->ajax('patch', route('folders.changePassword', ['folder' => $folder->id]), $data)
-            ->assertForbidden()
-        ;
+            ->assertForbidden();
     }
 
     /**
@@ -311,20 +297,19 @@ class FoldersManagementTest extends TestCase
         ]);
 
         $oldSlug = $folder->slug;
-        Storage::disk('buckets')->makeDirectory($bucket . '/' . $oldSlug);
+        Storage::disk('buckets')->makeDirectory($bucket.'/'.$oldSlug);
 
         $this
             ->ajax('patch', route('folders.edit', ['folder' => $folder->id]), $data)
-            ->assertOk()
-        ;
+            ->assertOk();
 
         $folder->refresh();
 
         $this->assertNewDataIsPersisted($data, $folder);
 
-        # Folder is renamed
-        $this->assertfalse(Storage::disk('buckets')->has($bucket . '/' . $oldSlug));
-        $this->assertTrue(Storage::disk('buckets')->has($bucket . '/' . $folder->slug));
+        // Folder is renamed
+        $this->assertfalse(Storage::disk('buckets')->has($bucket.'/'.$oldSlug));
+        $this->assertTrue(Storage::disk('buckets')->has($bucket.'/'.$folder->slug));
 
         // Sharing another user folder is Forbidden
         // --
@@ -335,8 +320,7 @@ class FoldersManagementTest extends TestCase
 
         $this
             ->ajax('patch', route('folders.edit', ['folder' => $folder->id]), $data)
-            ->assertForbidden()
-        ;
+            ->assertForbidden();
     }
 
     /**
@@ -354,8 +338,7 @@ class FoldersManagementTest extends TestCase
 
         $this
             ->ajax('patch', route('folders.revoke', ['folder'=> $folder->id]))
-            ->assertOk()
-        ;
+            ->assertOk();
 
         $this->assertFalse($folder->refresh()->isShared());
 
@@ -368,8 +351,7 @@ class FoldersManagementTest extends TestCase
 
         $this
             ->ajax('patch', route('folders.revoke', ['folder'=> $folder->id]))
-            ->assertForbidden()
-        ;
+            ->assertForbidden();
 
         $this->assertTrue($folder->refresh()->isShared());
     }
@@ -387,16 +369,15 @@ class FoldersManagementTest extends TestCase
             'user_id' => Auth::id(),
         ]);
 
-        Storage::disk('buckets')->makeDirectory(Auth::user()->getBucket() . '/' . $folder->slug);
+        Storage::disk('buckets')->makeDirectory(Auth::user()->getBucket().'/'.$folder->slug);
 
         $this
             ->ajax('delete', route('folders.delete', ['folder'=> $folder->id]))
-            ->assertNoContent()
-        ;
+            ->assertNoContent();
 
-        ## Folder is deleted from storage
-        ## --
-        $this->assertFalse(Storage::disk('buckets')->has(Auth::user()->getBucket() . '/' . $folder->slug));
+        //# Folder is deleted from storage
+        //# --
+        $this->assertFalse(Storage::disk('buckets')->has(Auth::user()->getBucket().'/'.$folder->slug));
 
         // Deleting another user's folder is Forbidden
         // --
@@ -405,14 +386,13 @@ class FoldersManagementTest extends TestCase
             'user_id' => $anotherUser->id,
         ]);
 
-        Storage::disk('buckets')->makeDirectory($anotherUser->getBucket() . '/' . $folder->slug);
+        Storage::disk('buckets')->makeDirectory($anotherUser->getBucket().'/'.$folder->slug);
 
         $this
             ->ajax('delete', route('folders.delete', ['folder'=> $folder->id]))
-            ->assertForbidden()
-        ;
+            ->assertForbidden();
 
-        $this->assertTrue(Storage::disk('buckets')->has($anotherUser->getBucket() . '/' . $folder->slug));
+        $this->assertTrue(Storage::disk('buckets')->has($anotherUser->getBucket().'/'.$folder->slug));
     }
 
     /**
@@ -428,16 +408,14 @@ class FoldersManagementTest extends TestCase
             'user_id' => Auth::id(),
         ]);
 
-        Storage::disk('buckets')->makeDirectory(Auth::user()->getBucket() . '/' . $folder->slug);
+        Storage::disk('buckets')->makeDirectory(Auth::user()->getBucket().'/'.$folder->slug);
         UploadedFile::fake()
             ->create('file.data', 2000)
-            ->storeAs($folder->getPath(), "file.data", 'buckets')
-        ;
+            ->storeAs($folder->getPath(), 'file.data', 'buckets');
 
         $this
             ->get(route('folders.download', ['folder'=> $folder->id]))
-            ->assertHeader('Content-Disposition', 'attachment; filename='. $folder->slug .'.zip')
-        ;
+            ->assertHeader('Content-Disposition', 'attachment; filename='.$folder->slug.'.zip');
 
         // Downloading another user folder is Forbidden
         // --
@@ -448,8 +426,7 @@ class FoldersManagementTest extends TestCase
 
         $this
             ->get(route('folders.download', ['folder'=> $folder->id]))
-            ->assertForbidden()
-        ;
+            ->assertForbidden();
     }
 
     // Data providers
@@ -461,8 +438,8 @@ class FoldersManagementTest extends TestCase
             [
                 [
                     'name' => 'Folder 1',
-                ]
-            ]
+                ],
+            ],
         ];
     }
 
@@ -476,8 +453,8 @@ class FoldersManagementTest extends TestCase
 
                 [
                     'name',
-                ]
-            ]
+                ],
+            ],
         ];
     }
 }

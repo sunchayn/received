@@ -5,8 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Class NotificationPrefs
- * @package App\Models
+ * Class NotificationPrefs.
  * @property bool $notify_by_sms
  * @property bool $notify_by_mail
  */

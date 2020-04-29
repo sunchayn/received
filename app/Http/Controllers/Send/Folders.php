@@ -5,16 +5,15 @@ namespace App\Http\Controllers\Send;
 use App\Events\FilesUploaded;
 use App\Http\Requests\Send\FilesUploadRequest;
 use App\Http\Requests\Send\FolderUnlockRequest;
-use App\Models\User;
 use App\Models\Folder;
+use App\Models\User;
 use App\Repositories\FoldersRepository;
 use App\Repositories\UsersRepository;
 
 class Folders extends \App\Http\Controllers\Controller
 {
-
     /**
-     * POST /send/{username}/unlock
+     * POST /send/{username}/unlock.
      *
      * Check folder availability for upload
      *
@@ -50,7 +49,7 @@ class Folders extends \App\Http\Controllers\Controller
         }
 
         // It does not allow uploading files to users without subscription
-        if (!$folder->user->subscription) {
+        if (! $folder->user->subscription) {
             return $this->validationErrors([
                 'size' => ['This bucket does not have enough storage space to accept more files.'],
             ]);
@@ -62,7 +61,7 @@ class Folders extends \App\Http\Controllers\Controller
     }
 
     /**
-     * POST /send/{username}/upload
+     * POST /send/{username}/upload.
      *
      * Upload files to the specified folder by password.
      *
@@ -101,7 +100,7 @@ class Folders extends \App\Http\Controllers\Controller
             return $this->validationErrors([
                 'size' => ['This bucket does not have enough storage space to accept more files.'],
             ], [
-                'code' => 1
+                'code' => 1,
             ]);
         }
 
@@ -111,7 +110,7 @@ class Folders extends \App\Http\Controllers\Controller
                 'size' => ['This bucket does not have enough storage space to accept more files.'],
             ], [
                 'remaining_storage' => $user->subscription->remainingStorage(),
-                'code' => 2
+                'code' => 2,
             ]);
         }
 

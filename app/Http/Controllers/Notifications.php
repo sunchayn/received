@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Auth;
+use Illuminate\Http\Request;
 
 class Notifications extends Controller
 {
     /**
-     * GET /notifications
+     * GET /notifications.
      *
      * Get all notification.
      *
@@ -20,7 +20,7 @@ class Notifications extends Controller
     }
 
     /**
-     * GET /notifications/pull
+     * GET /notifications/pull.
      *
      * Get unread notifications.
      *
@@ -32,7 +32,7 @@ class Notifications extends Controller
     }
 
     /**
-     * PATCH /notifications/read
+     * PATCH /notifications/read.
      *
      * Mark the given notifications as read.
      *
@@ -41,7 +41,7 @@ class Notifications extends Controller
     public function read()
     {
         $ids = request()->get('ids');
-        Auth::user()->notifications()->whereIn('id', $ids)->update([ 'is_seen' => true ]);
+        Auth::user()->notifications()->whereIn('id', $ids)->update(['is_seen' => true]);
 
         return $this->empty();
     }

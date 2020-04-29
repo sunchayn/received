@@ -2,8 +2,8 @@
 
 namespace App\Services\SMS\Providers;
 
-use App\Services\SMS\SmsServiceContract;
 use App\Services\SMS\ProviderInterface;
+use App\Services\SMS\SmsServiceContract;
 use Illuminate\Support\Str;
 
 class Fake implements ProviderInterface
@@ -23,7 +23,7 @@ class Fake implements ProviderInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function sendVerificationCode(string $phoneNumber): string
     {
@@ -31,16 +31,17 @@ class Fake implements ProviderInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function verify(SmsServiceContract $user, string $code): bool
     {
         $shouldSucceed = $this->config['verification_should_succeed'] ?? true;
+
         return $shouldSucceed ? $shouldSucceed === true : false;
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function sendTwoFactorCode(SmsServiceContract $user): bool
     {
@@ -48,20 +49,22 @@ class Fake implements ProviderInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function verifyTwoFactorCode(SmsServiceContract $user, string $code): bool
     {
         $shouldSucceed = $this->config['two_factor_verification_should_succeed'] ?? true;
+
         return $shouldSucceed ? $shouldSucceed === true : false;
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function sendSMS(SmsServiceContract $user, string $content): bool
     {
         $shouldSucceed = $this->config['sms_sending_should_succeed'] ?? true;
+
         return $shouldSucceed ? $shouldSucceed === true : false;
     }
 }

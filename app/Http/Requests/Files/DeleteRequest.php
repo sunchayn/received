@@ -2,8 +2,8 @@
 
 namespace App\Http\Requests\Files;
 
-use Illuminate\Foundation\Http\FormRequest;
 use Auth;
+use Illuminate\Foundation\Http\FormRequest;
 
 class DeleteRequest extends FormRequest
 {

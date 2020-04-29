@@ -4,7 +4,6 @@ namespace App\Http\Requests\Settings;
 
 use App\Http\Rules\CurrentPasswordMatch;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
 class ChangingPasswordRequest extends FormRequest
 {

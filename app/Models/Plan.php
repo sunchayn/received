@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * App\Models\Plan
+ * App\Models\Plan.
  *
  * @property int $id
  * @property int $storage_limit

@@ -7,13 +7,13 @@ use Illuminate\Support\Facades\Validator;
 class SignupRequest
 {
     /**
-     * The validated data
+     * The validated data.
      * @var array
      */
     protected $data = [];
 
     /**
-     * The validation errors
+     * The validation errors.
      * @var array
      */
     protected $errors = [];
@@ -34,7 +34,7 @@ class SignupRequest
     }
 
     /**
-     * Redirect the user to the right route with the validation errors
+     * Redirect the user to the right route with the validation errors.
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
     public function sendBackErrors()
@@ -47,8 +47,7 @@ class SignupRequest
             return redirect()
                 ->route('auth.signup')
                 ->withErrors($this->errors)
-                ->withInput()
-            ;
+                ->withInput();
         }
     }
 
@@ -62,6 +61,7 @@ class SignupRequest
 
         if ($validator->fails()) {
             $this->errors = $validator->errors();
+
             return;
         }
 
@@ -74,7 +74,7 @@ class SignupRequest
      */
     public function fails()
     {
-        return !empty($this->errors);
+        return ! empty($this->errors);
     }
 
     /**

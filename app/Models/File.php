@@ -7,8 +7,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Class File
- * @package App\Models
+ * Class File.
  *
  * @property string $filename
  * @property string $extension
@@ -29,14 +28,13 @@ class File extends Model
 
     public function getQualifiedFilename()
     {
-        return $this->filename . '.' . $this->extension;
+        return $this->filename.'.'.$this->extension;
     }
 
     public function getPath()
     {
-        return $this->folder->getPath() . '/' . $this->getQualifiedFilename();
+        return $this->folder->getPath().'/'.$this->getQualifiedFilename();
     }
-
 
     // Exporting
     public function toArray()

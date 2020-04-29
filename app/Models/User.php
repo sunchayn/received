@@ -2,16 +2,16 @@
 
 namespace App\Models;
 
+use App\Models\Traits\Verification;
+use App\Services\SMS\SmsServiceContract;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
-use App\Services\SMS\SmsServiceContract;
-use App\Models\Traits\Verification;
 use Illuminate\Support\Collection;
 
 /**
- * App\Models\User
+ * App\Models\User.
  *
  * @property int $id
  * @property string|null $name
@@ -21,8 +21,8 @@ use Illuminate\Support\Collection;
  * @property string $phone_number
  * @property string|null $verification_id
  * @property string|null $authy_id
- * @property boolean $ongoing_two_fa
- * @property integer $country_code
+ * @property bool $ongoing_two_fa
+ * @property int $country_code
  * @property Carbon|null $verified_at
  * @property Carbon|null $last_code_sent_at
  * @property Carbon|null $created_at
@@ -63,8 +63,7 @@ class User extends Authenticatable implements SmsServiceContract
         return $this
             ->hasMany(Folder::class)
             ->whereNotNull('password')
-            ->whereNotNull('shared_at')
-        ;
+            ->whereNotNull('shared_at');
     }
 
     public function ongoingNewPhoneVerification()
@@ -109,12 +108,12 @@ class User extends Authenticatable implements SmsServiceContract
 
     public function getBucket()
     {
-        return 'bucket_' . $this->id;
+        return 'bucket_'.$this->id;
     }
 
     /**
      * AuthyContract for double factor authentication
-     * --
+     * --.
      */
     public function getAuthyAppId()
     {

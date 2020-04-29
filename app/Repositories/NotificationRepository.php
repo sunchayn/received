@@ -2,16 +2,15 @@
 
 namespace App\Repositories;
 
+use App\Models\Folder;
 use App\Models\Notification;
 use App\Models\User;
-use App\Models\Folder;
 use Illuminate\Support\Collection;
 
 class NotificationRepository
 {
-
     /**
-     * Create a new notification for RECEIVED_FILES type
+     * Create a new notification for RECEIVED_FILES type.
      *
      * @param User $user
      * @param Folder $folder
@@ -55,8 +54,9 @@ class NotificationRepository
 
     public static function craftContentForFiles(int $numberOfFiles, string $folderName)
     {
-        $wordCountability  = $numberOfFiles > 0 ? 'files' : 'file';
-        return 'You\'ve received ' . $numberOfFiles . ' new '. $wordCountability .' into "' . $folderName . '" folder.';
+        $wordCountability = $numberOfFiles > 0 ? 'files' : 'file';
+
+        return 'You\'ve received '.$numberOfFiles.' new '.$wordCountability.' into "'.$folderName.'" folder.';
     }
 
     public static function deliveryNotifications(string $channel, \Closure $shouldSend, \Closure $delivery)
@@ -79,7 +79,7 @@ class NotificationRepository
             $content = '';
 
             if ($notifications->count() > 1) {
-                $content .= 'You have ' . $notifications->count() . ' new updates. Last update: ';
+                $content .= 'You have '.$notifications->count().' new updates. Last update: ';
             }
 
             $content .= $notification->content;

@@ -2,14 +2,13 @@
 
 namespace App\Repositories;
 
+use App\Events\UserCreated;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
-use App\Events\UserCreated;
 
 class UsersRepository
 {
-
     public function create($data)
     {
         $user = User::create([
@@ -19,7 +18,7 @@ class UsersRepository
             'country_code' => str_replace('+', '', $data['country_code']),
         ]);
 
-        $user->update(['username' => $user->id . '_' . $user->username]);
+        $user->update(['username' => $user->id.'_'.$user->username]);
 
         // Dispatch event
         event(new UserCreated($user));

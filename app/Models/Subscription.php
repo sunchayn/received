@@ -6,7 +6,7 @@ use App\Models\Traits\StorageSize;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * App\Models\Subscription
+ * App\Models\Subscription.
  *
  * @property int $id
  * @property int $used_storage
@@ -28,6 +28,7 @@ class Subscription extends Model
     public function remainingStorage()
     {
         $size = max($this->plan->storage_limit - $this->used_storage, 0);
+
         return $this->getSuitableSizeUnit($size);
     }
 

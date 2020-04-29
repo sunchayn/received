@@ -6,11 +6,11 @@ use App\Events\BucketUpdated;
 use App\Models\Folder;
 use App\Models\Subscription;
 use App\Models\User;
+use Auth;
 use Carbon\Carbon;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Str;
 use Storage;
-use Auth;
 
 class FoldersRepository
 {
@@ -70,6 +70,7 @@ class FoldersRepository
         if ($this->deleteDirectory($folder)) {
             $folder->delete();
             event(new BucketUpdated(Auth::user()));
+
             return true;
         } else {
             return false;
@@ -108,7 +109,7 @@ class FoldersRepository
 
     private function createFolderStorageEndpoint(string $bucket, Folder $folder)
     {
-        Storage::disk('buckets')->makeDirectory($bucket . '/' . $folder->slug);
+        Storage::disk('buckets')->makeDirectory($bucket.'/'.$folder->slug);
     }
 
     private function renameFolder($old, $new)
@@ -118,17 +119,18 @@ class FoldersRepository
         }
 
         $bucket = Auth::user()->getBucket();
-        Storage::disk('buckets')->move($bucket . '/' . $old, $bucket . '/' . $new);
+        Storage::disk('buckets')->move($bucket.'/'.$old, $bucket.'/'.$new);
     }
 
     private function deleteDirectory(Folder $folder)
     {
-        return Storage::disk('buckets')->deleteDirectory(Auth::user()->getBucket() . '/' . $folder->slug);
+        return Storage::disk('buckets')->deleteDirectory(Auth::user()->getBucket().'/'.$folder->slug);
     }
 
     public function canUploadFiles($files, Subscription $subscription)
     {
         $size = $this->getUploadedFilesSize($files);
+
         return $subscription->remainingStorageRaw() > $size;
     }
 
@@ -172,7 +174,7 @@ class FoldersRepository
 
         chdir(Storage::disk('download')->path($downloadFolder));
 
-        $filename = $folder->slug . '.zip';
+        $filename = $folder->slug.'.zip';
 
         $zip = new \ZipArchive();
         $zip->open($filename, \ZipArchive::CREATE | \ZipArchive::OVERWRITE);
@@ -183,12 +185,13 @@ class FoldersRepository
         foreach ($files as $name => $file) {
             if (! $file->isDir()) {
                 $filePath = $file->getRealPath();
-                $relativePath = './' . basename($filePath);
+                $relativePath = './'.basename($filePath);
                 $zip->addFile($filePath, $relativePath);
             }
         }
 
         $zip->close();
-        return Storage::disk('download')->path($downloadFolder . '/' . $filename);
+
+        return Storage::disk('download')->path($downloadFolder.'/'.$filename);
     }
 }

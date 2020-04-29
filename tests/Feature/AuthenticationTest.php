@@ -1,10 +1,11 @@
 <?php
+
 namespace Tests\Feature;
 
-use App\Services\SMS\Provider as SMSProvider;
 use App;
-use Auth;
 use App\Models\User;
+use App\Services\SMS\Provider as SMSProvider;
+use Auth;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -28,8 +29,7 @@ class AuthenticationTest extends TestCase
     {
         $this
             ->post(route('auth.signup'), $data)
-            ->assertStatus(302)
-        ;
+            ->assertStatus(302);
 
         // Session is created
         $this->assertTrue(Auth::check());
@@ -44,8 +44,7 @@ class AuthenticationTest extends TestCase
     {
         $response = $this
             ->post(route('auth.signup'), $data)
-            ->assertStatus(302)
-        ;
+            ->assertStatus(302);
 
         $redirectRoute = route('auth.verify', ['verification_id' => Auth::user()->verification_id]);
         $response->assertRedirect($redirectRoute);
@@ -64,15 +63,13 @@ class AuthenticationTest extends TestCase
         $this
             ->post(route('auth.signup'), $data)
             ->assertRedirect(route('auth.signup'))
-            ->assertSessionHasErrors($expectedErrors)
-        ;
+            ->assertSessionHasErrors($expectedErrors);
 
         // When it's AJAX request
         // it should return errors in JSON format.
         $this
             ->ajax('post', route('auth.signup'), $data)
-            ->assertJsonValidationErrors($expectedErrors)
-        ;
+            ->assertJsonValidationErrors($expectedErrors);
     }
 
     /**
@@ -92,8 +89,7 @@ class AuthenticationTest extends TestCase
             ->ajax('post', route('auth.signup'), $data)
             ->assertJsonValidationErrors([
                 'phone_number',
-            ])
-        ;
+            ]);
     }
 
     /**
@@ -115,8 +111,7 @@ class AuthenticationTest extends TestCase
         ];
 
         $response = $this
-            ->ajax('post', route('auth.signin'), $data)
-        ;
+            ->ajax('post', route('auth.signin'), $data);
 
         $redirectRoute = route('auth.verify', ['verification_id' => Auth::user()->verification_id]);
         $response->assertJsonFragment([
@@ -137,8 +132,7 @@ class AuthenticationTest extends TestCase
             ->ajax('post', route('auth.signin'), $data)
             ->assertJsonFragment([
                 'redirect' => route('auth.2fa'),
-            ])
-        ;
+            ]);
 
         // Session is created
         $this->assertTrue(Auth::check());
@@ -153,8 +147,7 @@ class AuthenticationTest extends TestCase
     {
         $this
             ->ajax('post', route('auth.signin'), $data)
-            ->assertStatus(422)
-        ;
+            ->assertStatus(422);
     }
 
     /**
@@ -166,8 +159,7 @@ class AuthenticationTest extends TestCase
 
         $this
             ->get(route('auth.logout'))
-            ->assertRedirect(route('landing_page'))
-        ;
+            ->assertRedirect(route('landing_page'));
 
         // Session is destroyed
         $this->assertFalse(Auth::check());
@@ -192,16 +184,14 @@ class AuthenticationTest extends TestCase
 
         $this
             ->get(route('home'))
-            ->assertRedirect($verificationRoute)
-        ;
+            ->assertRedirect($verificationRoute);
 
         // A verified user
         // --
         $this->signin();
         $this
             ->get(route('home'))
-            ->assertOk()
-        ;
+            ->assertOk();
     }
 
     /**
@@ -221,16 +211,14 @@ class AuthenticationTest extends TestCase
 
         $this
             ->get(route('home'))
-            ->assertRedirect(route('auth.2fa'))
-        ;
+            ->assertRedirect(route('auth.2fa'));
 
         // A valid user session.
         // --
         $this->signin();
         $this
             ->get(route('home'))
-            ->assertOk()
-        ;
+            ->assertOk();
     }
 
     /**
@@ -259,8 +247,7 @@ class AuthenticationTest extends TestCase
             ->json('post', $verificationRoute, $data)
             ->assertJsonValidationErrors([
                 'code',
-            ])
-        ;
+            ]);
 
         // It properly handle valid verification codes
         // --
@@ -276,8 +263,7 @@ class AuthenticationTest extends TestCase
 
         $this
             ->json('post', $verificationRoute, $data)
-            ->assertRedirect(route('home'))
-        ;
+            ->assertRedirect(route('home'));
 
         $user->refresh();
 
@@ -310,8 +296,7 @@ class AuthenticationTest extends TestCase
             ->json('post', route('auth.2fa'), $data)
             ->assertJsonValidationErrors([
                 'code',
-            ])
-        ;
+            ]);
 
         // It properly handle valid verification IDs
         // --
@@ -326,8 +311,7 @@ class AuthenticationTest extends TestCase
 
         $this
             ->json('post', route('auth.2fa'), $data)
-            ->assertRedirect(route('home'))
-        ;
+            ->assertRedirect(route('home'));
 
         $user->refresh();
         $this->assertFalse($user->needsTwoFa());
@@ -339,7 +323,7 @@ class AuthenticationTest extends TestCase
     public function user_can_request_another_verification_code()
     {
         $user = factory(User::class)->state('not_verified')->create([
-            'last_code_sent_at' => now()->subMinutes(5)
+            'last_code_sent_at' => now()->subMinutes(5),
         ]);
 
         $this->signin($user);
@@ -348,8 +332,7 @@ class AuthenticationTest extends TestCase
 
         $this
             ->json('post', route('auth.resend_verification_code'))
-            ->assertOk()
-        ;
+            ->assertOk();
 
         $this->assertNotEquals($previousVerificationId, $user->refresh()->verification_id);
         $this->assertTrue($user->last_code_sent_at->diffInMinutes(Carbon::now()) <= 1);
@@ -361,15 +344,14 @@ class AuthenticationTest extends TestCase
     public function user_can_request_another_two_fa_code()
     {
         $user = factory(User::class)->state('needs_2fa')->create([
-            'last_code_sent_at' => now()->subMinutes(5)
+            'last_code_sent_at' => now()->subMinutes(5),
         ]);
 
         $this->signin($user);
 
         $this
             ->json('post', route('auth.resend_2fa_code'))
-            ->assertOk()
-        ;
+            ->assertOk();
 
         $this->assertTrue($user->last_code_sent_at->diffInMinutes(Carbon::now()) <= 1);
     }
@@ -387,16 +369,14 @@ class AuthenticationTest extends TestCase
 
         // First SMS
         $this
-            ->json('post', route('auth.resend_verification_code'))
-        ;
+            ->json('post', route('auth.resend_verification_code'));
 
         // Second
         $this
             ->json('post', route('auth.resend_verification_code'))
             ->assertJsonValidationErrors([
                 'sms_rate',
-            ])
-        ;
+            ]);
 
         // Two factor authentication
         // --
@@ -405,16 +385,14 @@ class AuthenticationTest extends TestCase
 
         // First SMS
         $this
-            ->json('post', route('auth.resend_2fa_code'))
-        ;
+            ->json('post', route('auth.resend_2fa_code'));
 
         // Second
         $this
             ->json('post', route('auth.resend_2fa_code'))
             ->assertJsonValidationErrors([
                 'sms_rate',
-            ])
-        ;
+            ]);
     }
 
     // Data providers
@@ -431,7 +409,7 @@ class AuthenticationTest extends TestCase
                 [
                     'phone_number',
                     'country_code',
-                ]
+                ],
             ],
 
             [
@@ -443,7 +421,7 @@ class AuthenticationTest extends TestCase
                 [
                     'phone_number',
                     'password',
-                ]
+                ],
             ],
         ];
     }
@@ -462,7 +440,7 @@ class AuthenticationTest extends TestCase
                     'phone_number' => '99999999',
                     'country_code' => '+216',
                     'password' => '123456',
-                ]
+                ],
             ],
         ];
     }

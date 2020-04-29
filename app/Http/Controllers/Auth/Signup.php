@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Http\Requests\Auth\SignupRequest;
 use App\Repositories\UsersRepository;
 use Auth;
-use App\Http\Requests\Auth\SignupRequest;
 use Illuminate\Http\RedirectResponse;
 
 class Signup extends \App\Http\Controllers\Controller
 {
     /**
-     * GET /auth/signup
+     * GET /auth/signup.
      *
      * Return signup form
      *
@@ -22,7 +22,7 @@ class Signup extends \App\Http\Controllers\Controller
     }
 
     /**
-     * POST /auth/signup
+     * POST /auth/signup.
      *
      * Attempt to create a user, send a verification code with the given data.
      *

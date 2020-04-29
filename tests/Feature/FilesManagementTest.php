@@ -2,13 +2,13 @@
 
 namespace Tests\Feature;
 
-use App\Models\User;
-use App\Models\Folder;
 use App\Models\File;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
-use Storage;
+use App\Models\Folder;
+use App\Models\User;
 use Auth;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Storage;
+use Tests\TestCase;
 
 class FilesManagementTest extends TestCase
 {
@@ -33,8 +33,7 @@ class FilesManagementTest extends TestCase
 
         $this
             ->get(route('files.download', ['file'=> $file->id]))
-            ->assertHeader('Content-Disposition', 'attachment; filename='. $file->getQualifiedFilename())
-        ;
+            ->assertHeader('Content-Disposition', 'attachment; filename='.$file->getQualifiedFilename());
 
         // Downloading another user file is Forbidden
         // --
@@ -49,8 +48,7 @@ class FilesManagementTest extends TestCase
 
         $this
             ->get(route('files.download', ['file'=> $file->id]))
-            ->assertForbidden()
-        ;
+            ->assertForbidden();
     }
 
     /**
@@ -66,8 +64,7 @@ class FilesManagementTest extends TestCase
 
         $this
             ->delete(route('files.delete', ['file'=> $file->id]))
-            ->assertNoContent()
-        ;
+            ->assertNoContent();
 
         Storage::disk('buckets')->assertMissing($file->getPath());
 
@@ -84,7 +81,6 @@ class FilesManagementTest extends TestCase
 
         $this
             ->delete(route('files.delete', ['file'=> $file->id]))
-            ->assertForbidden()
-        ;
+            ->assertForbidden();
     }
 }

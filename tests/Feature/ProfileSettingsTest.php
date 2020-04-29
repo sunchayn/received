@@ -2,18 +2,16 @@
 
 namespace Tests\Feature;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Tests\TestCase;
-use Auth;
 use App\Models\User;
+use Auth;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class ProfileSettingsTest extends TestCase
 {
     use RefreshDatabase;
 
     /**
-     *
      * @test
      */
     public function user_can_change_his_username()
@@ -28,8 +26,7 @@ class ProfileSettingsTest extends TestCase
 
         $this
             ->patch(route('settings.username'), $data)
-            ->assertOk()
-        ;
+            ->assertOk();
 
         $this->assertEquals($username, Auth::user()->refresh()->username);
     }
@@ -56,12 +53,10 @@ class ProfileSettingsTest extends TestCase
             ->assertStatus(422)
             ->assertJsonValidationErrors([
                 'username',
-            ])
-        ;
+            ]);
     }
 
     /**
-     *
      * @dataProvider valid_profile_data_provider
      * @test
      * @param $data
@@ -72,8 +67,7 @@ class ProfileSettingsTest extends TestCase
 
         $this
             ->patch(route('settings.profile'), $data)
-            ->assertOk()
-        ;
+            ->assertOk();
 
         $this->assertNewDataIsPersisted($data, Auth::user()->refresh());
     }
@@ -91,8 +85,7 @@ class ProfileSettingsTest extends TestCase
         $this
             ->json('patch', route('settings.profile'), $data)
             ->assertStatus(422)
-            ->assertJsonValidationErrors($expectedErrors)
-        ;
+            ->assertJsonValidationErrors($expectedErrors);
     }
 
     /**
@@ -117,8 +110,7 @@ class ProfileSettingsTest extends TestCase
             ->assertStatus(422)
             ->assertJsonValidationErrors([
                 'email',
-            ])
-        ;
+            ]);
     }
 
     // Data Providers
@@ -159,7 +151,7 @@ class ProfileSettingsTest extends TestCase
 
                 [
                     'email',
-                ]
+                ],
             ],
 
             [
@@ -170,7 +162,7 @@ class ProfileSettingsTest extends TestCase
 
                 [
                     'name',
-                ]
+                ],
             ],
         ];
     }

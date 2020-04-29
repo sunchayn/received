@@ -2,12 +2,12 @@
 
 namespace Tests\Feature;
 
-use App\Services\SMS\Provider as SMSProvider;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
-use Auth;
 use App;
 use App\Models\User;
+use App\Services\SMS\Provider as SMSProvider;
+use Auth;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class AccountSettingsTest extends TestCase
 {
@@ -32,11 +32,10 @@ class AccountSettingsTest extends TestCase
         // --
         $response = $this
             ->ajax('post', route('settings.change_phone'), $data)
-            ->assertOk()
-        ;
+            ->assertOk();
 
         $verificationRoute = route('settings.verify_phone', [
-            'verification_id' => Auth::user()->verification_id
+            'verification_id' => Auth::user()->verification_id,
         ]);
 
         // It returns a proper verification route
@@ -59,8 +58,7 @@ class AccountSettingsTest extends TestCase
         $this
             ->ajax('post', $verificationRoute, $code)
             ->assertStatus(422)
-            ->assertJsonValidationErrors(['code'])
-        ;
+            ->assertJsonValidationErrors(['code']);
 
         // It properly updates the new phone number upon verification
         // --
@@ -76,8 +74,7 @@ class AccountSettingsTest extends TestCase
 
         $this
             ->ajax('post', $verificationRoute, $code)
-            ->assertOk()
-        ;
+            ->assertOk();
 
         $this->assertNull(Auth::user()->refresh()->ongoingNewPhoneVerification);
         $this->assertNewDataIsPersisted($data, Auth::user());
@@ -100,13 +97,11 @@ class AccountSettingsTest extends TestCase
             ->ajax('post', route('settings.change_phone'), $data)
             ->assertStatus(422)
             ->assertJsonValidationErrors([
-                'phone_number'
-            ])
-        ;
+                'phone_number',
+            ]);
     }
 
     /**
-     *
      * @param $data
      * @return void
      * @dataProvider valid_password_data_provider
@@ -122,15 +117,13 @@ class AccountSettingsTest extends TestCase
 
         $this
             ->json('patch', route('settings.password'), $data)
-            ->assertStatus(200)
-        ;
+            ->assertStatus(200);
 
         Auth::user()->refresh();
         $this->assertTrue(\Hash::check($data['password'], Auth::user()->getAuthPassword()));
     }
 
     /**
-     *
      * @param $isCurrentValid
      * @param $data
      * @param $fields
@@ -142,10 +135,10 @@ class AccountSettingsTest extends TestCase
     {
         $this->signin();
 
-        $currentPassword = $data['password'] . '.salt';
+        $currentPassword = $data['password'].'.salt';
 
         Auth::user()->update([
-            'password' => bcrypt($isCurrentValid ? $data['current'] : $data['current'] . 'salt'),
+            'password' => bcrypt($isCurrentValid ? $data['current'] : $data['current'].'salt'),
         ]);
 
         $response = $this->json('patch', route('settings.password'), $data);
@@ -163,9 +156,9 @@ class AccountSettingsTest extends TestCase
             [
                 [
                     'phone_number' => '99999999',
-                    'country_code' => 216
-                ]
-            ]
+                    'country_code' => 216,
+                ],
+            ],
         ];
     }
 
@@ -174,11 +167,11 @@ class AccountSettingsTest extends TestCase
         return [
             [
                 [
-                    'current' => "321654",
-                    'password' => "123456",
-                    'password_confirmation' => "123456",
-                ]
-            ]
+                    'current' => '321654',
+                    'password' => '123456',
+                    'password_confirmation' => '123456',
+                ],
+            ],
         ];
     }
 
@@ -188,25 +181,25 @@ class AccountSettingsTest extends TestCase
             [
                 true, // Is current password valid?
                 [
-                    'current' => "321654",
-                    'password' => "123456",
-                    'password_confirmation' => "12",
+                    'current' => '321654',
+                    'password' => '123456',
+                    'password_confirmation' => '12',
                 ],
                 [
                     'password_confirmation',
-                ]
+                ],
             ],
-                [
+            [
                 false, // Is current password valid?
                 [
-                    'current' => "321654",
-                    'password' => "123456",
-                    'password_confirmation' => "12",
+                    'current' => '321654',
+                    'password' => '123456',
+                    'password_confirmation' => '12',
                 ],
                 [
                     'current', // It returns immediately when current is wrong.
-                ]
-            ]
+                ],
+            ],
         ];
     }
 }

@@ -4,9 +4,6 @@ namespace App\Listeners;
 
 use App\Events\UserCreated;
 use App\Models\Plan;
-use App\Models\Subscription;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
 
 class CreateUserDefaultPlan
 {

@@ -2,13 +2,13 @@
 
 namespace Tests\Feature;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
-use App\Models\User;
-use App\Models\Folder;
 use App\Models\File;
+use App\Models\Folder;
+use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Storage;
+use Tests\TestCase;
 
 class FilesUploadTest extends TestCase
 {
@@ -35,14 +35,13 @@ class FilesUploadTest extends TestCase
             'shared_at' => now(),
         ]);
 
-        $data = [ 'password' => $password ];
+        $data = ['password' => $password];
 
         $route = route('send.unlock', ['username' => $user->username]);
 
         $this
             ->ajax('post', $route, $data)
-            ->assertOk()
-        ;
+            ->assertOk();
     }
 
     /**
@@ -60,7 +59,7 @@ class FilesUploadTest extends TestCase
             'shared_at' => now(),
         ]);
 
-        $data = [ 'password' => $password ];
+        $data = ['password' => $password];
 
         $route = route('send.unlock', ['username' => $user->username]);
 
@@ -69,8 +68,7 @@ class FilesUploadTest extends TestCase
             ->assertStatus(422)
             ->assertJsonValidationErrors([
                 'password',
-            ])
-        ;
+            ]);
     }
 
     /**
@@ -96,17 +94,16 @@ class FilesUploadTest extends TestCase
         $route = route('send.upload', ['username' => $user->username]);
         $this
             ->ajax('post', $route, $data)
-            ->assertOk()
-        ;
+            ->assertOk();
 
-        # Size is properly calculated
+        // Size is properly calculated
         $this->assertEquals($expectedSize, $user->subscription->refresh()->used_storage);
 
         /**
          * @var File $file
          */
 
-        # Files do exists
+        // Files do exists
         $this->assertEquals(count($files), $folder->files->count());
         foreach ($folder->files as $file) {
             Storage::disk('buckets')->assertExists($file->getPath());
@@ -140,8 +137,7 @@ class FilesUploadTest extends TestCase
             ->assertStatus(422)
             ->assertJsonValidationErrors([
                 'size',
-            ])
-        ;
+            ]);
     }
 
     // Data providers
@@ -157,7 +153,7 @@ class FilesUploadTest extends TestCase
                     UploadedFile::fake()->createWithContent('video.mp4', $content),
                     UploadedFile::fake()->createWithContent('text.txt', $content),
                 ],
-                12 / 1024 // Size in Kb
+                12 / 1024, // Size in Kb
             ],
 
             [
@@ -165,8 +161,8 @@ class FilesUploadTest extends TestCase
                     UploadedFile::fake()->createWithContent('image.jpg', $content),
                     UploadedFile::fake()->createWithContent('other.psd', $content),
                 ],
-                6 / 1024 // Size in Kb
-            ]
+                6 / 1024, // Size in Kb
+            ],
         ];
     }
 }

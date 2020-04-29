@@ -2,15 +2,14 @@
 
 namespace App\Http\Middleware;
 
-use Closure;
 use Auth;
-use Illuminate\Support\Str;
+use Closure;
 
 class UserSessionVerification
 {
     /**
      * It redirect the authenticated users to the proper route if they need
-     * verification or two factor authentication
+     * verification or two factor authentication.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Closure  $next
@@ -32,8 +31,9 @@ class UserSessionVerification
 
         $id = Auth::user()->verification_id;
 
-        if (!$id) {
+        if (! $id) {
             Auth::logout();
+
             return redirect()->route('auth.signin');
         }
 

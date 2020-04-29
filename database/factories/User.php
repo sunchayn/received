@@ -2,13 +2,13 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
-use App\Models\User;
 use App\Models\Plan;
+use App\Models\User;
 use Faker\Generator as Faker;
 
 $factory->define(User::class, function (Faker $faker) {
     return [
-        'name' => $faker->firstName . ' ' . $faker->lastName,
+        'name' => $faker->firstName.' '.$faker->lastName,
         'username' => $faker->uuid,
         'email' => $faker->unique()->email,
         'password' => bcrypt($faker->word),

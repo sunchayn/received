@@ -4,11 +4,11 @@ namespace Tests;
 
 use App\Models\File;
 use App\Models\Folder;
+use App\Models\User;
+use Auth;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Testing\TestResponse;
-use App\Models\User;
-use Auth;
 use Storage;
 
 abstract class TestCase extends BaseTestCase
@@ -16,7 +16,7 @@ abstract class TestCase extends BaseTestCase
     use CreatesApplication;
 
     /**
-     * Mimic an asynchronous request
+     * Mimic an asynchronous request.
      * @param $verb
      * @param $route
      * @param array $data
@@ -44,7 +44,7 @@ abstract class TestCase extends BaseTestCase
     }
 
     /**
-     * Make sure that given entity has the expected new data
+     * Make sure that given entity has the expected new data.
      *
      * @param $data
      * @param $entity
@@ -71,7 +71,7 @@ abstract class TestCase extends BaseTestCase
 
         $user = factory(User::class)->state('with_subscription')->create();
 
-        # Set plan storage limit
+        // Set plan storage limit
         $user->subscription->plan->update([
             'storage_limit' => $storageLimit,
         ]);
@@ -122,8 +122,7 @@ abstract class TestCase extends BaseTestCase
 
         UploadedFile::fake()
             ->create($file->getQualifiedFilename(), 2000)
-            ->storeAs($folder->getPath(), $file->getQualifiedFilename(), 'buckets')
-        ;
+            ->storeAs($folder->getPath(), $file->getQualifiedFilename(), 'buckets');
 
         return $file;
     }

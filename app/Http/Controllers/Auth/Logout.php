@@ -1,16 +1,15 @@
 <?php
 
-
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\RedirectResponse;
 use Auth;
+use Illuminate\Http\RedirectResponse;
 
 class Logout extends Controller
 {
     /**
-     * GET /auth/logout
+     * GET /auth/logout.
      *
      * Logout the current user
      * @return RedirectResponse
@@ -18,6 +17,7 @@ class Logout extends Controller
     public function logout()
     {
         Auth::logout();
+
         return redirect()->route('landing_page');
     }
 }

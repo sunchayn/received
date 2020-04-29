@@ -2,8 +2,8 @@
 
 namespace App\Http\Requests\Auth;
 
-use Illuminate\Foundation\Http\FormRequest;
 use Auth;
+use Illuminate\Foundation\Http\FormRequest;
 
 class VerificationRequest extends FormRequest
 {
@@ -14,7 +14,7 @@ class VerificationRequest extends FormRequest
      */
     public function authorize()
     {
-        return Auth::check() && !Auth::user()->isVerified();
+        return Auth::check() && ! Auth::user()->isVerified();
     }
 
     /**

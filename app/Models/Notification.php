@@ -2,12 +2,11 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Model;
 
 /**
- * Class Notification
- * @package App\Models
+ * Class Notification.
  * @property bool is_seen
  * @property bool is_notified
  * @property Carbon created_at
@@ -37,8 +36,7 @@ class Notification extends Model
     public static function notNotified(string $channel)
     {
         return self::where('is_seen', false)
-            ->where($channel, false)
-        ;
+            ->where($channel, false);
     }
 
     /**
@@ -55,7 +53,7 @@ class Notification extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function setDataAttribute($data):void
+    public function setDataAttribute($data): void
     {
         $this->attributes['data'] = json_encode($data);
     }
@@ -71,6 +69,7 @@ class Notification extends Model
         $data = parent::toArray();
 
         $data['created_at'] = $this->created_at->diffForHumans();
+
         return $data;
     }
 }

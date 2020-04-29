@@ -36,10 +36,10 @@ class Provider
         $service = config('services.sms.service');
         if ($service === 'TWILIO') {
             self::$service = new Twilio();
-        } else if ($service === 'FAKE') {
+        } elseif ($service === 'FAKE') {
             self::$service = new FAKE();
         } else {
-            throw new ServiceNotSupportedException('SMS service not supported "'. $service .'".');
+            throw new ServiceNotSupportedException('SMS service not supported "'.$service.'".');
         }
     }
 

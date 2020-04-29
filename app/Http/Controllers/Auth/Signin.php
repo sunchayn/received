@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Auth;
 
-use Auth;
 use App\Models\User;
+use Auth;
 
 class Signin extends \App\Http\Controllers\Controller
 {
     /**
-     * GET /auth/signin
+     * GET /auth/signin.
      *
      * Return signin form
      *
@@ -20,7 +20,7 @@ class Signin extends \App\Http\Controllers\Controller
     }
 
     /**
-     * POST /auth/signin
+     * POST /auth/signin.
      *
      * Attempt to login the user with the given credentials
      *
@@ -38,10 +38,12 @@ class Signin extends \App\Http\Controllers\Controller
 
             if ($user->isVerified()) {
                 $user->send2FaCode();
+
                 return $this->redirectAndConsiderAjax(route('auth.2fa'));
             }
 
             $id = $user->sendVerificationCode();
+
             return $this->redirectAndConsiderAjax(route('auth.verify', ['verification_id' => $id]));
         }
 

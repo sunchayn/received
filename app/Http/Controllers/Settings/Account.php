@@ -6,14 +6,14 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Settings\ChangingPasswordRequest;
 use App\Http\Requests\Settings\ChangingPhoneRequest;
 use App\Http\Requests\Settings\VerifyingPhoneRequest;
+use App\Models\User;
 use App\Repositories\UsersRepository;
 use Auth;
-use App\Models\User;
 
 class Account extends Controller
 {
     /**
-     * POST /settings/account/change_phone
+     * POST /settings/account/change_phone.
      *
      * Start a phone changing process.
      *
@@ -35,18 +35,18 @@ class Account extends Controller
         }
 
         // Send verification code
-        $phoneNumber = $phoneNumber = '+' . $data['country_code'] . $data['phone_number'];
+        $phoneNumber = $phoneNumber = '+'.$data['country_code'].$data['phone_number'];
         $user->sendVerificationCode($phoneNumber);
 
         $user->ongoingNewPhoneVerification()->create($data);
 
         return $this->jsonData([
-            'verification_route' => route('settings.verify_phone', ['verification_id' => $user->verification_id])
+            'verification_route' => route('settings.verify_phone', ['verification_id' => $user->verification_id]),
         ]);
     }
 
     /**
-     * POST /settings/account/verify_phone/{verification_id}
+     * POST /settings/account/verify_phone/{verification_id}.
      *
      * Verify a phone number and update user data if it's valid.
      *
@@ -72,11 +72,12 @@ class Account extends Controller
         }
 
         $user = $users->confirmOngoingPhoneVerification($user);
+
         return $this->jsonData($user);
     }
 
     /**
-     * PATCH /settings/account/password
+     * PATCH /settings/account/password.
      *
      * Change current user password.
      *

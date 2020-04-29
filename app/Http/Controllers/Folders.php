@@ -9,14 +9,14 @@ use App\Http\Requests\Folders\PasswordChangingRequest;
 use App\Http\Requests\Folders\RevokeRequest;
 use App\Http\Requests\Folders\ShareRequest;
 use App\Http\Requests\Folders\UpdateRequest;
-use App\Repositories\FoldersRepository;
 use App\Models\Folder;
+use App\Repositories\FoldersRepository;
 use Auth;
 
 class Folders extends Controller
 {
     /**
-     * GET /folders/all
+     * GET /folders/all.
      *
      * Return a JSON array of current user folders.
      *
@@ -28,7 +28,7 @@ class Folders extends Controller
     }
 
     /**
-     * POST /folders
+     * POST /folders.
      *
      * Create a new folder
      *
@@ -39,11 +39,12 @@ class Folders extends Controller
     public function store(CreateRequest $request, FoldersRepository $folders)
     {
         $folder = $folders->create($request->validated());
+
         return $this->jsonData($folder, 201);
     }
 
     /**
-     * PATCH /folders/edit/{folder}
+     * PATCH /folders/edit/{folder}.
      *
      * Update a given folder
      *
@@ -55,11 +56,12 @@ class Folders extends Controller
     public function save(UpdateRequest $request, FoldersRepository $folders, Folder $folder)
     {
         $folder = $folders->update($folder, $request->validated());
+
         return $this->jsonData($folder);
     }
 
     /**
-     * PATCH /folders/share/{folder}
+     * PATCH /folders/share/{folder}.
      *
      * Share a given folder
      *
@@ -81,11 +83,12 @@ class Folders extends Controller
         }
 
         $folders->share($folder, $data);
+
         return $this->jsonSuccess('The folder has been shared.');
     }
 
     /**
-     * PATCH /folders/change_password/{folder}
+     * PATCH /folders/change_password/{folder}.
      *
      * Change a given folder's password
      *
@@ -97,11 +100,12 @@ class Folders extends Controller
     public function changePassword(PasswordChangingRequest $request, FoldersRepository $folders, Folder $folder)
     {
         $folders->changePassword($folder, $request->validated());
+
         return $this->jsonSuccess('The folder has been updated.');
     }
 
     /**
-     * PATCH /folders/revoke/{folder}
+     * PATCH /folders/revoke/{folder}.
      *
      * @param RevokeRequest $request
      * @param FoldersRepository $folders
@@ -111,11 +115,12 @@ class Folders extends Controller
     public function revoke(RevokeRequest $request, FoldersRepository $folders, Folder $folder)
     {
         $folders->revoke($folder);
+
         return $this->jsonSuccess('The folder access has been revoked.');
     }
 
     /**
-     * DELETE /folders/{folder}
+     * DELETE /folders/{folder}.
      *
      * Delete a given folder
      *
@@ -136,7 +141,7 @@ class Folders extends Controller
     }
 
     /**
-     * GET /folders/download/{folder}
+     * GET /folders/download/{folder}.
      *
      * Download a given folder
      *
@@ -148,6 +153,7 @@ class Folders extends Controller
     public function download(DownloadRequest $request, FoldersRepository $folders, Folder $folder)
     {
         $zip = $folders->zip($folder);
+
         return response()->download($zip);
     }
 }

@@ -8,12 +8,12 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 
 /**
- * App\Models\OngoingNewPhoneVerification
+ * App\Models\OngoingNewPhoneVerification.
  *
  * @property int $id
  * @property string $phone_number
  * @property string $verification_id
- * @property integer $country_code
+ * @property int $country_code
  * @property Carbon|null $verified_at
  * @property Carbon|null $last_code_sent_at
  * @property Carbon|null $created_at
