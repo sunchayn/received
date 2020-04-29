@@ -4,6 +4,8 @@
 <!-- CSRF Token -->
 <meta name="csrf-token" content="{{ csrf_token() }}">
 
+@include('partials.social_meta_tags')
+
 <title>
     @hasSection('title')
         @yield('title') &ndash; {{ config('app.name', 'Received') }}
