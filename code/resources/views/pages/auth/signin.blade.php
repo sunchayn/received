@@ -25,8 +25,6 @@
                             }
                         }"
                     >Loading...</signin>
-
-                    <p class="mt-2 mb-0"><a href="#">I forget my password</a></p>
                 </div>
             </div>
 

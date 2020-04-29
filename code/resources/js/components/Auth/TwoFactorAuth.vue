@@ -5,7 +5,7 @@
         </div>
 
         <div class="form-groups">
-            <div class="form-group mb-0">
+            <div class="form-group">
                 <input
                     type="text"
                     class="input px-2"
@@ -19,19 +19,29 @@
                 <div class="input-error"></div>
             </div>
 
-            <div class="form-group flex mb-0">
+            <div class="form-group">
                 <input type="submit" value="Verify" class="button shadow-none w-full uppercase">
             </div>
         </div>
 
+        <ResendCode
+            :route="this.routes.resend"
+        />
     </form>
 </template>
 
 <script>
     import submitForm from "../../mixins/submitForm";
+    import ResendCode from "@/ui/ResendCode";
 
     export default {
+        props: ['routes'],
+
         mixins: [submitForm],
+
+        components: {
+            ResendCode,
+        },
 
         data() {
             return {

@@ -19,7 +19,8 @@
                     <two-factor-auth
                         :routes="{
                             submit: '{{route('auth.2fa')}}',
-                            }"
+                            resend: '{{route('auth.resend_2fa_code')}}',
+                        }"
                     >Loading...</two-factor-auth>
                 </div>
             </div>

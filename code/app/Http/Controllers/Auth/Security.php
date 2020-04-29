@@ -16,13 +16,18 @@ class Security extends \App\Http\Controllers\Controller
      *
      * Return the verification code form page.
      *
+     * @param UsersRepository $users
+     * @param $verification_id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
      */
-    public function verification()
+    public function verification(UsersRepository $users, $verification_id)
     {
         if (Auth::user()->isVerified()) {
             return redirect()->route('home');
         }
+
+        $user = $users->getByVerificationId($verification_id) ?? abort(404, 'Invalid verification id.');
+
 
         return view('pages.auth.verify');
     }
