@@ -4,3 +4,4 @@
 *.js linguist-vendored
 CHANGELOG.md export-ignore
 __dev/ export-ignore
+__guide/ export-ignore
