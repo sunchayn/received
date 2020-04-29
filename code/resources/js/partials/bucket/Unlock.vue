@@ -1,12 +1,12 @@
 <template>
     <div class="card p-10 md:mx-12">
         <form @submit.prevent="unlock">
-            <h1 class="text-2xl font-bold text-black w-2/3 mx-auto text-center">
-                Kindly enter the password to unlock the bucket.
+            <h1 class="text-lg md:text-2xl font-bold text-black md:w-2/3 mx-auto text-center">
+                Kindly enter the password to unlock the&nbsp;bucket.
             </h1>
 
             <div class="form-group">
-                <input type="text" placeholder="Password" class="input" v-model="password">
+                <input type="password" placeholder="Password" class="input" v-model="password">
                 <small class="input-error" :class="{'is-visible': error}">{{error}}</small>
             </div>
 
