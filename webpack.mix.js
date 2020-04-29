@@ -26,10 +26,11 @@ mix
     .tailwind()
     .purgeCss({
         enabled: mix.inProduction(),
-        extensions: ['php'],
-        folders: ['src/resources/views'],
+        extensions: ['php', 'vue'],
+        folders: ['./resources/views', './resources/js'],
         paths: glob.sync([
-            path.join(__dirname, 'src/resources/views/**/*.blade.php'),
+            path.join(__dirname, './resources/views/**/*.blade.php'),
+            path.join(__dirname, './resources/js/**/*.vue'),
         ]),
         defaultExtractor: content => content.match(/[\w-/:]+(?<!:)/g) || [],
         whitelistPatterns: [/^(is|js|os)/],
