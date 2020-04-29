@@ -58,9 +58,9 @@
                             <form action="{{route('auth.signup')}}" method="post" class="card_content">
                                 <h2 class="font-bold text-lg">Create a free account</h2>
                                 <ul class="mb-4 text-sm">
-                                    <li>- Give assess to folder using multiple passwords.</li>
-                                    <li>- Set the size and type of files you want to receive.</li>
-                                    <li>- Sync your files with Cloud storage.</li>
+                                    <li>- Give access to folder using multiple passwords.</li>
+                                    <li class="italic">- Set the size and type of files you want to receive.</li>
+                                    <li class="italic">- Sync your files with Cloud storage.</li>
                                 </ul>
 
                                 <div class="form-group">
