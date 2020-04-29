@@ -42451,11 +42451,11 @@ var render = function() {
           "h1",
           {
             staticClass:
-              "text-2xl font-bold text-black w-2/3 mx-auto text-center"
+              "text-lg md:text-2xl font-bold text-black md:w-2/3 mx-auto text-center"
           },
           [
             _vm._v(
-              "\n            Kindly enter the password to unlock the bucket.\n        "
+              "\n            Kindly enter the password to unlock the bucket.\n        "
             )
           ]
         ),
@@ -42471,7 +42471,7 @@ var render = function() {
               }
             ],
             staticClass: "input",
-            attrs: { type: "text", placeholder: "Password" },
+            attrs: { type: "password", placeholder: "Password" },
             domProps: { value: _vm.password },
             on: {
               input: function($event) {
