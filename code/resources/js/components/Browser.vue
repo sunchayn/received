@@ -1,6 +1,5 @@
 <template>
-    <div class="flex-1 flex">
-
+    <div class="flex-1 flex flex-col md:flex-row relative">
         <Sidebar
             :folders="folders"
             :storage="storage"
@@ -11,7 +10,7 @@
             @showFolder="showFolder"
         />
 
-        <div class="flex flex-col w-4/5">
+        <div class="flex-1 flex flex-col w-full md:w-3/4 lg:w-4/5">
             <Toolbar
                 ref="toolbar"
                 :folder="folder"

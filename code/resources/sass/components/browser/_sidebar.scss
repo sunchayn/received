@@ -3,7 +3,30 @@
  */
 
 .browser-sidebar {
-    @apply border-r border-gray-300 flex flex-col;
+    @apply border-r border-gray-300 flex flex-col w-full border-b border-gray-300;
+
+    @include medium {
+        & {
+            @apply border-b-0;
+        }
+    }
+}
+
+.browser-sidebar_folders-holder {
+    @apply flex-1 flex flex-col absolute z-30 bg-white w-full bottom-0 top-0;
+    transition: transform 300ms ease;
+    transform: translateX(100%);
+
+    &.is-active {
+        transform: translateX(0);
+    }
+
+    @include medium {
+        & {
+            @apply static;
+            transform: translateX(0);
+        }
+    }
 }
 
 .browser-sidebar_folders {

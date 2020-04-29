@@ -7,10 +7,10 @@
 }
 
 .files_header {
-    @apply border-b border-gray-300 flex text-sm select-none absolute w-full;
+    @apply flex text-sm select-none absolute w-full;
 
     & > .files_column {
-        @apply border-r border-gray-300;
+        @apply border-r border-b border-gray-300 ;
         background: linear-gradient(to top, rgba(212,212,213,0.5) 0%, rgba(212,212,213,0) 20%)
     }
 }
@@ -37,9 +37,17 @@
 
 .files_column {
     @apply px-2 flex-grow inline-block text-sm;
-    min-width: 160px;
     max-width: 300px;
+    min-width: 120px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+
+    &--small {
+        min-width: 90px;
+    }
+
+    &--wide {
+        min-width: 160px;
+    }
 }

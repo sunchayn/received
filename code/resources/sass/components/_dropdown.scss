@@ -7,7 +7,7 @@
 }
 
 .dropdown_menu {
-    @apply absolute bg-white z-50 py-2 left-0 border border-gray-300 rounded shadow-md;
+    @apply absolute bg-white z-30 py-2 left-0 border border-gray-300 rounded shadow-md;
 
     min-width: 160px;
     transform: translateY(8px);
@@ -35,9 +35,15 @@
 }
 
 .dropdown_menu_item {
-    @apply flex items-center py-1 px-4 select-none cursor-pointer text-black leading-snug;
+    @apply flex items-center text-left w-full py-1 px-4 select-none cursor-pointer text-black leading-snug text-sm;
 
     &:hover {
         @apply bg-teal-100;
+    }
+
+    @include medium {
+        & {
+            @apply text-base;
+        }
     }
 }

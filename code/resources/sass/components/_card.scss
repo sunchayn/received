@@ -8,5 +8,11 @@
 }
 
 .card_content {
-    @apply p-6;
+    @apply p-4;
+}
+
+@include medium {
+    .card_content {
+        @apply p-6;
+    }
 }

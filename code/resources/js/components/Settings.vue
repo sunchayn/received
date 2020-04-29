@@ -1,9 +1,11 @@
 <template>
-    <div class="flex mb-5">
+    <div class="flex flex-col md:flex-row mb-5 relative" style="min-height: 70vh;">
+
         <Sidebar
             :current.sync="current"
         />
-        <div class="card mb-0 p-5 flex-1">
+
+        <div class="card mb-0 p-5 w-full md:flex-1">
             <Profile
                 :fill="this.data.profile.fill"
                 :username="this.data.profile.username"

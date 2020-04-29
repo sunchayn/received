@@ -3,7 +3,7 @@
  */
 
 .settings-sidebar {
-    @apply mr-5 border border-gray-200 p-5;
+    @apply border border-gray-200 p-5;
 }
 
 .settings-sidebar_item {
@@ -15,5 +15,30 @@
         & .secondary {
             @apply text-blue-500;
         }
+    }
+}
+
+.settings-sidebar_nav {
+    @apply absolute right-0 left-0 top-0 bottom-0 opacity-0 bg-white z-20 p-5;
+    transition: opacity;
+    pointer-events: none;
+    transform: translateX(100%);
+
+    &.is-active {
+        pointer-events: all;
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@include medium {
+    .settings-sidebar {
+        @apply mr-5 ;
+    }
+
+    .settings-sidebar_nav {
+        @apply static p-0 opacity-100 bg-transparent;
+        pointer-events: all;
+        transform: translateX(0);
     }
 }

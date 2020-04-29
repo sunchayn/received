@@ -4,6 +4,8 @@
 
 require('./bootstrap');
 
+// Register utils
+// --
 require('./vue');
 
 /**
@@ -21,9 +23,5 @@ const app = new Vue({
     el: '#app',
 });
 
-// Register modules
-// --
-
 import Dropdown from "./utils/Dropdown";
-
 new Dropdown('.js-dropdown');

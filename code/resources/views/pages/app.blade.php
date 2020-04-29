@@ -5,7 +5,7 @@
     <div class="flex flex-col h-screen">
         @component('components.navbar.user')@endcomponent
         <browser
-            class="flex-1 flex"
+            class="flex flex-wrap md:flex-no-wrap md:flex-1 "
             :routes="{
                 folders: '{{route('folders.all')}}',
                 create: '{{route('folders.create')}}',
@@ -19,12 +19,12 @@
                 storage_info: '{{route('me.storage_info')}}',
             }"
         >
-            <aside class="browser-sidebar w-1/5">
+            <aside class="browser-sidebar w-full md:w-1/5">
                 <header class="p-5">
                     <div class="placeholder placeholder--button"></div>
                 </header>
 
-                <div class="flex-1 flex flex-col">
+                <div class="md:flex-1 flex flex-col">
                     <div class="browser-sidebar_folders">
                         <header class="browser-sidebar_folders_header">
                             <div class="placeholder placeholder--text w-1/3"></div>

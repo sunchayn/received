@@ -1,6 +1,6 @@
 <template>
     <fragment>
-        <h2>Notifications preferences</h2>
+        <h2>Shared folders</h2>
         <hr class="my-2">
 
         <template v-if="folders.length > 0">

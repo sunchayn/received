@@ -2,6 +2,10 @@
 * Typography
  */
 
+html, body {
+    @apply overflow-x-hidden;
+}
+
 body {
     @apply text-gray-800 font-sans;
 }
@@ -31,6 +35,13 @@ form {
     margin-bottom: 0;
 }
 
+small {
+    @apply leading-tight;
+}
+
+/**
+* Icons
+ */
 .primary {
     @apply fill-current text-gray-400;
 }

@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="leading-none">
         <template v-if="! canResend">
             <small class="text-gray-700">You can request a new code after {{resendTimer}}.</small>
         </template>

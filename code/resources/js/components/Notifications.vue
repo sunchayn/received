@@ -17,7 +17,7 @@
         <div
             v-show="showing"
             class="absolute right-0 border-gray-200 border border-b-0 shadow mt-2 bg-white z-20"
-            style="width: 260px;"
+            style="width: 210px;"
         >
             <template v-if="notifications.length > 0">
                 <div
