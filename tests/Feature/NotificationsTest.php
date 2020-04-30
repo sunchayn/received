@@ -2,6 +2,8 @@
 
 namespace Tests\Feature;
 
+use App\Events\FilesUploaded;
+use App\Models\Folder;
 use App\Models\Notification;
 use App\Models\User;
 use Auth;
@@ -87,5 +89,32 @@ class NotificationsTest extends TestCase
                 $this->assertNotTrue($notification->isSeen());
             }
         }
+    }
+
+    /**
+     * @test
+     */
+    public function it_accumulate_similar_notifications()
+    {
+        $user = factory(User::class)->create();
+
+        $folder = factory(Folder::class)->create([
+            'user_id' => $user->id,
+        ]);
+
+        /**
+         * @var User $user
+         */
+        $notification = factory(Notification::class)->create([
+            'type' => Notification::TYPE_RECEIVED_FILES,
+            'data' => ['folder_id' => $folder->id, 'files' => 1, 'folder_name' => $folder->name],
+            'user_id' => $user->id,
+            'is_seen' => false,
+        ]);
+
+        event(new FilesUploaded($user, $folder, ['dummy']));
+
+        $this->assertEquals(1, $user->unreadNotifications->count());
+        $this->assertEquals(2, $notification->refresh()->data->files);
     }
 }

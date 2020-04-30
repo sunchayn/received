@@ -9,10 +9,10 @@ trait StorageSize
     /**
      * Get the size in the most suitable unit from the given list.
      *
-     * @param int $size Size in Kb
+     * @param float $size Size in Kb
      * @return string
      */
-    public function getSuitableSizeUnit(int $size)
+    public function getSuitableSizeUnit(float $size)
     {
         return $this->cycleTroughUnits($size * 1024, 0);
     }
