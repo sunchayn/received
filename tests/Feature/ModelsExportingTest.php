@@ -7,7 +7,7 @@ use App\Models\Plan;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-class ModelsExportingTests extends TestCase
+class ModelsExportingTest extends TestCase
 {
     use RefreshDatabase;
 
