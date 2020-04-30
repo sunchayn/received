@@ -16,9 +16,9 @@ $factory->define(File::class, function (Faker $faker) {
 });
 
 /**
- * With folder state
+ * With folder state.
  */
-$factory->state(File::class, 'with_folder',function (Faker $faker) {
+$factory->state(File::class, 'with_folder', function (Faker $faker) {
     return [
         'filename' => $faker->uuid,
         'type' => $faker->sentence(1),
@@ -29,4 +29,3 @@ $factory->state(File::class, 'with_folder',function (Faker $faker) {
         ])->id,
     ];
 });
-
