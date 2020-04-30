@@ -2,12 +2,16 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Class NotificationPrefs.
+ * App\Models\Notification.
+ *
  * @property bool $notify_by_sms
  * @property bool $notify_by_mail
+ *
+ * @mixin Builder
  */
 class NotificationPrefs extends Model
 {

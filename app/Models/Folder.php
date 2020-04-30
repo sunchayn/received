@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Traits\StorageSize;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
@@ -19,7 +20,7 @@ use Illuminate\Support\Collection;
  * @property Carbon|null $shared_at
  * @property Collection|null $files
  *
- * @mixin \Eloquent
+ * @mixin Builder
  */
 class Folder extends Model
 {
@@ -35,31 +36,62 @@ class Folder extends Model
         'files',
     ];
 
+    /**
+     * Determine if current folder is shared.
+     *
+     * @return bool
+     */
     public function isShared()
     {
         return $this->shared_at !== null && $this->password !== null;
     }
 
+    /**
+     * Get the owner of this folder.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 
+    /**
+     * Get the files within this folder.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function files()
     {
         return $this->hasMany(File::class)->latest();
     }
 
+    /**
+     * Check if this folder is owned by the given $user.
+     *
+     * @param User $user
+     * @return bool
+     */
     public function isOwnedBy(User $user)
     {
         return $this->user_id == $user->id;
     }
 
+    /**
+     * Get folder path in bucket.
+     *
+     * @return string
+     */
     public function getPath()
     {
         return $this->user->getBucket().'/'.$this->slug;
     }
 
+    /**
+     * Calculate folder size.
+     *
+     * @return string
+     */
     public function getFolderSize()
     {
         $size = $this->files->reduce(function ($carry, $file) {

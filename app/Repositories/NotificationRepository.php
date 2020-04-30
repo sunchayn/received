@@ -7,6 +7,10 @@ use App\Models\Notification;
 use App\Models\User;
 use Illuminate\Support\Collection;
 
+/**
+ * Class NotificationRepository
+ * @package App\Repositories
+ */
 class NotificationRepository
 {
     /**
@@ -52,6 +56,13 @@ class NotificationRepository
         $notification->save();
     }
 
+    /**
+     * Create a notification content for uploaded files.
+     *
+     * @param int $numberOfFiles
+     * @param string $folderName
+     * @return string
+     */
     public static function craftContentForFiles(int $numberOfFiles, string $folderName)
     {
         $wordCountability = $numberOfFiles > 0 ? 'files' : 'file';
@@ -59,6 +70,13 @@ class NotificationRepository
         return 'You\'ve received '.$numberOfFiles.' new '.$wordCountability.' into "'.$folderName.'" folder.';
     }
 
+    /**
+     * Push the notification to users using another channels like ( SMS, Emails ).
+     *
+     * @param string $channel
+     * @param \Closure $shouldSend
+     * @param \Closure $delivery
+     */
     public static function deliveryNotifications(string $channel, \Closure $shouldSend, \Closure $delivery)
     {
         $notificationsByUser = Notification::notNotified($channel)->with('user')->get()->groupBy('user_id');

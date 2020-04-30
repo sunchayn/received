@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $id
  * @property int $storage_limit
  * @property Carbon $created_at
+ *
  * @mixin Builder
  */
 class Plan extends Model
@@ -23,6 +24,7 @@ class Plan extends Model
 
     /**
      * Get default Plan.
+     *
      * @return Plan|Model|object|null
      */
     public static function default()

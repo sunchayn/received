@@ -20,6 +20,7 @@ use Illuminate\Support\Collection;
  * @property Carbon|null $updated_at
  *
  * @property Collection|null $folders
+ *
  * @mixin Builder
  */
 class OngoingNewPhoneVerification extends Model

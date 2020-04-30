@@ -7,13 +7,15 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Class File.
+ * App\Models\File.
  *
  * @property string $filename
  * @property string $extension
  * @property int $size
  * @property Folder $folder
  * @property Carbon $created_at
+ *
+ * @mixin \Eloquent
  */
 class File extends Model
 {
@@ -21,16 +23,31 @@ class File extends Model
 
     protected $guarded = [];
 
+    /**
+     * Get file parent folder.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function folder()
     {
         return $this->belongsTo(Folder::class);
     }
 
+    /**
+     * Get the concatenation result of filename and extension.
+     *
+     * @return string
+     */
     public function getQualifiedFilename()
     {
         return $this->filename.'.'.$this->extension;
     }
 
+    /**
+     * Get file path in the bucket.
+     *
+     * @return string
+     */
     public function getPath()
     {
         return $this->folder->getPath().'/'.$this->getQualifiedFilename();

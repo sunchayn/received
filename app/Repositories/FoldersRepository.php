@@ -12,11 +12,26 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Str;
 use Storage;
 
+/**
+ * Class FoldersRepository
+ * @package App\Repositories
+ */
 class FoldersRepository
 {
+    /**
+     * Create a folder.
+     *
+     * @param array $data
+     * @return \Illuminate\Database\Eloquent\Model
+     */
     public function create(array $data)
     {
         $data['slug'] = Str::slug($data['name']);
+
+        /**
+         * @var Folder $folder
+         */
+
         $folder = Auth::user()->folders()->create($data);
 
         $bucket = $this->createUserBucketIfNotExists();
@@ -25,6 +40,13 @@ class FoldersRepository
         return $folder;
     }
 
+    /**
+     * Update a folder
+     *
+     * @param Folder $folder
+     * @param array $data
+     * @return Folder
+     */
     public function update(Folder $folder, array $data)
     {
         $data['slug'] = Str::slug($data['name']);
@@ -36,6 +58,13 @@ class FoldersRepository
         return $folder;
     }
 
+    /**
+     * Share a folder.
+     *
+     * @param Folder $folder
+     * @param array $data
+     * @return Folder
+     */
     public function share(Folder $folder, array $data)
     {
         $folder->update([
@@ -46,6 +75,13 @@ class FoldersRepository
         return $folder;
     }
 
+    /**
+     * Change folder password.
+     *
+     * @param Folder $folder
+     * @param array $data
+     * @return Folder
+     */
     public function changePassword(Folder $folder, array $data)
     {
         $folder->update([
@@ -55,6 +91,12 @@ class FoldersRepository
         return $folder;
     }
 
+    /**
+     * Revoke folder access.
+     *
+     * @param Folder $folder
+     * @return Folder
+     */
     public function revoke(Folder $folder)
     {
         $folder->update([
@@ -65,6 +107,12 @@ class FoldersRepository
         return $folder;
     }
 
+    /**
+     * Delete a folder.
+     *
+     * @param Folder $folder
+     * @return bool
+     */
     public function delete(Folder $folder)
     {
         if ($this->deleteDirectory($folder)) {
@@ -77,6 +125,13 @@ class FoldersRepository
         }
     }
 
+    /**
+     * Find the folder identified by the given $password.
+     *
+     * @param User $user
+     * @param string $password
+     * @return Fodler|mixed|null
+     */
     public function getFolderByPassword(User $user, string $password)
     {
         $result = null;
@@ -97,6 +152,11 @@ class FoldersRepository
     // Inner Helpers
     // --
 
+    /**
+     * Create a user bucket if it does not exists.
+     *
+     * @return string
+     */
     private function createUserBucketIfNotExists()
     {
         $bucket = Auth::user()->getBucket();
@@ -107,11 +167,23 @@ class FoldersRepository
         return $bucket;
     }
 
+    /**
+     * Create physical folder in the bucket.
+     *
+     * @param string $bucket
+     * @param Folder $folder
+     */
     private function createFolderStorageEndpoint(string $bucket, Folder $folder)
     {
         Storage::disk('buckets')->makeDirectory($bucket.'/'.$folder->slug);
     }
 
+    /**
+     * Rename a folder in the bucket.
+     *
+     * @param $old
+     * @param $new
+     */
     private function renameFolder($old, $new)
     {
         if ($old === $new) {
@@ -122,11 +194,24 @@ class FoldersRepository
         Storage::disk('buckets')->move($bucket.'/'.$old, $bucket.'/'.$new);
     }
 
+    /**
+     * Delete a folder from the bucket.
+     *
+     * @param Folder $folder
+     * @return bool
+     */
     private function deleteDirectory(Folder $folder)
     {
         return Storage::disk('buckets')->deleteDirectory(Auth::user()->getBucket().'/'.$folder->slug);
     }
 
+    /**
+     * Determine if the folder owner has enough storage to accept more files or not.
+     *
+     * @param $files
+     * @param Subscription $subscription
+     * @return bool
+     */
     public function canUploadFiles($files, Subscription $subscription)
     {
         $size = $this->getUploadedFilesSize($files);
@@ -134,6 +219,12 @@ class FoldersRepository
         return $subscription->remainingStorageRaw() > $size;
     }
 
+    /**
+     * Calculate the size of the POSTed files.
+     *
+     * @param $files
+     * @return float|int
+     */
     public function getUploadedFilesSize($files)
     {
         $size = 0;
@@ -148,6 +239,13 @@ class FoldersRepository
         return $size;
     }
 
+    /**
+     * Store files in the bucket.
+     *
+     * @param $files
+     * @param Folder $folder
+     * @return array
+     */
     public function uploadFiles($files, Folder $folder)
     {
         $entities = [];
@@ -162,6 +260,12 @@ class FoldersRepository
         return $entities;
     }
 
+    /**
+     * Create a ZIP archive for the folder.
+     *
+     * @param Folder $folder
+     * @return string
+     */
     public function zip(Folder $folder)
     {
         // Zipped folder are stored in folder organized by dates to delete them later after a specific period

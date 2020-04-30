@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Traits\StorageSize;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -12,7 +13,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $used_storage
  * @property Plan $plan
  *
- * @mixin \Eloquent
+ * @mixin Builder
  */
 class Subscription extends Model
 {
@@ -20,18 +21,31 @@ class Subscription extends Model
 
     protected $guarded = [];
 
+    /**
+     * Get subscription Plan.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function plan()
     {
         return $this->belongsTo(Plan::class);
     }
 
+    /**
+     * Calculate the remaining storage.
+     *
+     * @return string
+     */
     public function remainingStorage()
     {
-        $size = max($this->plan->storage_limit - $this->used_storage, 0);
-
-        return $this->getSuitableSizeUnit($size);
+        return $this->getSuitableSizeUnit( $this->remainingStorageRaw() );
     }
 
+    /**
+     * Calculate the remaining storage without formatting.
+     *
+     * @return mixed
+     */
     public function remainingStorageRaw()
     {
         return max($this->plan->storage_limit - $this->used_storage, 0);

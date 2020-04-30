@@ -106,6 +106,7 @@ trait Verification
 
     /**
      * Send a 2FA code to the given user.
+     *
      * @return bool
      */
     public function send2FaCode()

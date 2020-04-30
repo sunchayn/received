@@ -7,8 +7,18 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
 
+/**
+ * Class UsersRepository
+ * @package App\Repositories
+ */
 class UsersRepository
 {
+    /**
+     * Create a user.
+     *
+     * @param $data
+     * @return User|\Illuminate\Database\Eloquent\Model
+     */
     public function create($data)
     {
         $user = User::create([
@@ -26,19 +36,12 @@ class UsersRepository
         return $user;
     }
 
-    public function getByVerificationId($verification_id)
-    {
-        return User::where('verification_id', $verification_id)->first();
-    }
-
-    public function markAsVerified(User $user)
-    {
-        $user->verification_id = null;
-        $user->ongoing_two_fa = false;
-        $user->verified_at = Carbon::now();
-        $user->save();
-    }
-
+    /**
+     * Approve user new phone.
+     *
+     * @param User $user
+     * @return User
+     */
     public function confirmOngoingPhoneVerification(User $user)
     {
         $user->update([
@@ -54,12 +57,46 @@ class UsersRepository
         return $user;
     }
 
+    /**
+     * Mark a user as verified.
+     *
+     * @param User $user
+     */
+    public function markAsVerified(User $user)
+    {
+        $user->verification_id = null;
+        $user->ongoing_two_fa = false;
+        $user->verified_at = Carbon::now();
+        $user->save();
+    }
+
+    /**
+     * Clear ongoing 2FA status from the user.
+     *
+     * @param User $user
+     */
     public function clear2FaStatus(User $user)
     {
         $user->ongoing_two_fa = false;
         $user->save();
     }
 
+    /**
+     * Get a user by its verification id.
+     *
+     * @param $verification_id
+     * @return User|\Illuminate\Database\Eloquent\Model|object|null
+     */
+    public function getByVerificationId($verification_id)
+    {
+        return User::where('verification_id', $verification_id)->first();
+    }
+
+    /**
+     * Get a user by its username.
+     * @param $username
+     * @return User
+     */
     public function getByUsername($username): User
     {
         return User::where('username', $username)->firstOrFail();
