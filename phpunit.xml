@@ -20,7 +20,8 @@
         <whitelist processUncoveredFilesFromWhitelist="true">
             <directory suffix=".php">./app</directory>
             <exclude>
-                <file>Services/Providers/Twilio.php</file>
+                <file>Services/SMS/Providers/Twilio.php</file>
+                <file>Services/SMS/Provider.php</file>
             </exclude>
         </whitelist>
     </filter>

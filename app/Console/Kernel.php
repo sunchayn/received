@@ -25,7 +25,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->command('notify:sms')->everyThirtyMinutes();
-        $schedule->command('notify:email')->hourly();
+        $schedule->command('notify:mail')->hourly();
     }
 
     /**

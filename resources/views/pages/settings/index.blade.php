@@ -44,11 +44,11 @@
                     },
 
                     notifications: {
-                        fill: {{Auth::user()->notificationPrefs->toJson()}},
+                        fill: {{Auth::user()->notificationPrefs ? Auth::user()->notificationPrefs->toJson() : null}},
                     },
 
                     sharedFolders: {
-                        folders: {{Auth::user()->shared->toJson()}},
+                        folders: {{Auth::user()->shared ? Auth::user()->shared->toJson() : null}},
                     },
                     subscription: {
                         data: {{Auth::user()->subscription ? Auth::user()->subscription->load('plan')->toJson() : null}},

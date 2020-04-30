@@ -20,27 +20,21 @@ class FilesUploadTest extends TestCase
         Storage::fake('buckets');
     }
 
+    public function user_public_bucket_exists() {
+
+    }
+
     /**
      * @test
      */
-    public function it_fetch_proper_folder_with_password()
+    public function it_properly_shows_user_public_bucket()
     {
-        $password = '123456';
+        $user = factory(User::class)->create();
 
-        $user = factory(User::class)->state('with_subscription')->create();
-
-        factory(Folder::class)->create([
-            'user_id' => $user->id,
-            'password' => bcrypt($password),
-            'shared_at' => now(),
-        ]);
-
-        $data = ['password' => $password];
-
-        $route = route('send.unlock', ['username' => $user->username]);
+        $route = route('send.index', ['username' => $user->username]);
 
         $this
-            ->ajax('post', $route, $data)
+            ->get($route)
             ->assertOk();
     }
 

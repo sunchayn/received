@@ -15,7 +15,7 @@ class NotifyUsersByEmail extends Command
      *
      * @var string
      */
-    protected $signature = 'notify:email';
+    protected $signature = 'notify:mail';
 
     /**
      * The console command description.
@@ -37,7 +37,6 @@ class NotifyUsersByEmail extends Command
     /**
      * Execute the console command.
      *
-     * @return mixed
      */
     public function handle()
     {
@@ -55,7 +54,5 @@ class NotifyUsersByEmail extends Command
         );
 
         $this->info('Done!');
-
-        return true;
     }
 }

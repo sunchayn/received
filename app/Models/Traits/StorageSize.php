@@ -7,27 +7,6 @@ trait StorageSize
     private $units = ['Bytes', 'Kb', 'Mb', 'Gb', 'Tb'];
 
     /**
-     * Get size in the given unit.
-     *
-     * @param int $size Size in Kb
-     * @param string $unit
-     * @return string
-     */
-    public function getSizeIn(int $size, $unit = 'kb')
-    {
-        switch ($unit) {
-            case 'mb':
-                $size = $size / 1024;
-                break;
-            case 'gb':
-                $size = $size / 1024 / 1024;
-                break;
-        }
-
-        return number_format((float) $size, 3, '.', '');
-    }
-
-    /**
      * Get the size in the most suitable unit from the given list.
      *
      * @param int $size Size in Kb

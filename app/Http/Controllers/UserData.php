@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Subscription;
 use Auth;
 
 class UserData extends Controller
@@ -13,11 +14,14 @@ class UserData extends Controller
      */
     public function storageInfo()
     {
-        $subscription = Auth::user()->subscription;
+        /**
+         * @var Subscription $sub
+         */
+        $sub = Auth::user()->subscription;
 
-        $usedStorage = $subscription ? $subscription->getSuitableSizeUnit($subscription->used_storage) : null;
-        $total_storage = $subscription ? $subscription->plan->getSuitableSizeUnit($subscription->plan->storage_limit) : null;
-        $percentage = $subscription ? floor($subscription->used_storage * 100 / $subscription->plan->storage_limit) : 0;
+        $usedStorage = $sub ? $sub->getSuitableSizeUnit($sub->used_storage) : null;
+        $total_storage = $sub ? $sub->plan->getSuitableSizeUnit($sub->plan->storage_limit) : null;
+        $percentage = $sub ? floor($sub->used_storage * 100 / $sub->plan->storage_limit) : 0;
 
         $data = [
             'used_storage' => $usedStorage,
