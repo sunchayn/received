@@ -10,7 +10,6 @@ class UserDataTest extends TestCase
     use RefreshDatabase;
 
     /**
-     *
      * @test
      */
     public function user_can_fetch_his_storage_info()
@@ -24,7 +23,6 @@ class UserDataTest extends TestCase
                 'used_storage',
                 'total_storage',
                 'percentage',
-            ])
-        ;
+            ]);
     }
 }

@@ -5,10 +5,10 @@ namespace Tests\Feature;
 use App\Models\Notification;
 use App\Models\NotificationPrefs;
 use App\Models\User;
-use Tests\TestCase;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\Services\SMS\Provider as SMSProvider;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Mail;
+use Tests\TestCase;
 
 class DeliveryNotificationsCommandsTest extends TestCase
 {
@@ -24,10 +24,10 @@ class DeliveryNotificationsCommandsTest extends TestCase
     /**
      * @test
      */
-    public function it_runs_scheduled_tasks() {
+    public function it_runs_scheduled_tasks()
+    {
         $this->artisan('schedule:run')
-            ->assertExitCode(0)
-        ;
+            ->assertExitCode(0);
     }
 
     /**
@@ -50,8 +50,7 @@ class DeliveryNotificationsCommandsTest extends TestCase
         }
 
         $this->artisan('notify:sms')
-            ->assertExitCode(0)
-        ;
+            ->assertExitCode(0);
 
         $deliveredNotifications = Notification::where('is_notified_by_sms', true)->whereIn('user_id', $users->pluck('id'))->count();
 
@@ -61,7 +60,8 @@ class DeliveryNotificationsCommandsTest extends TestCase
     /**
      * @test
      */
-    public function it_respect_users_sms_preferences() {
+    public function it_respect_users_sms_preferences()
+    {
         $user = factory(User::class)->state('with_prefs')->create();
 
         $user->notificationPrefs->update([
@@ -75,12 +75,10 @@ class DeliveryNotificationsCommandsTest extends TestCase
         ]);
 
         $this->artisan('notify:sms')
-            ->assertExitCode(0)
-        ;
+            ->assertExitCode(0);
 
         $this->assertFalse($notification->refresh()->is_notified_by_sms);
     }
-
 
     /**
      * @test
@@ -102,8 +100,7 @@ class DeliveryNotificationsCommandsTest extends TestCase
         }
 
         $this->artisan('notify:mail')
-            ->assertExitCode(0)
-        ;
+            ->assertExitCode(0);
 
         $deliveredNotifications = Notification::where('is_notified_by_mail', true)->whereIn('user_id', $users->pluck('id'))->count();
 
@@ -113,7 +110,8 @@ class DeliveryNotificationsCommandsTest extends TestCase
     /**
      * @test
      */
-    public function it_respect_users_mail_preferences() {
+    public function it_respect_users_mail_preferences()
+    {
         $user = factory(User::class)->state('with_prefs')->create();
 
         $user->notificationPrefs->update([
@@ -127,8 +125,7 @@ class DeliveryNotificationsCommandsTest extends TestCase
         ]);
 
         $this->artisan('notify:sms')
-            ->assertExitCode(0)
-        ;
+            ->assertExitCode(0);
 
         $this->assertFalse($notification->refresh()->is_notified_by_mail);
     }

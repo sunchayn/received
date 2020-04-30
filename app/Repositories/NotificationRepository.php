@@ -8,8 +8,7 @@ use App\Models\User;
 use Illuminate\Support\Collection;
 
 /**
- * Class NotificationRepository
- * @package App\Repositories
+ * Class NotificationRepository.
  */
 class NotificationRepository
 {

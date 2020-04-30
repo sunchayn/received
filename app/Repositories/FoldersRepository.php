@@ -13,8 +13,7 @@ use Illuminate\Support\Str;
 use Storage;
 
 /**
- * Class FoldersRepository
- * @package App\Repositories
+ * Class FoldersRepository.
  */
 class FoldersRepository
 {
@@ -31,7 +30,6 @@ class FoldersRepository
         /**
          * @var Folder $folder
          */
-
         $folder = Auth::user()->folders()->create($data);
 
         $bucket = $this->createUserBucketIfNotExists();
@@ -41,7 +39,7 @@ class FoldersRepository
     }
 
     /**
-     * Update a folder
+     * Update a folder.
      *
      * @param Folder $folder
      * @param array $data

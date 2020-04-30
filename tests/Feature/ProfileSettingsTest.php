@@ -14,13 +14,13 @@ class ProfileSettingsTest extends TestCase
     /**
      * @test
      */
-    public function it_shows_user_settings_page() {
+    public function it_shows_user_settings_page()
+    {
         $this->signin();
 
         $this
             ->get(route('settings.index'))
-            ->assertOk()
-        ;
+            ->assertOk();
     }
 
     /**
@@ -38,8 +38,7 @@ class ProfileSettingsTest extends TestCase
 
         $this
             ->patch(route('settings.username'), $data)
-            ->assertOk()
-        ;
+            ->assertOk();
 
         $this->assertEquals($username, Auth::user()->refresh()->username);
     }

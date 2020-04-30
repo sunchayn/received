@@ -8,8 +8,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Str;
 
 /**
- * Class UsersRepository
- * @package App\Repositories
+ * Class UsersRepository.
  */
 class UsersRepository
 {

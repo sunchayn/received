@@ -20,8 +20,8 @@ class FilesUploadTest extends TestCase
         Storage::fake('buckets');
     }
 
-    public function user_public_bucket_exists() {
-
+    public function user_public_bucket_exists()
+    {
     }
 
     /**

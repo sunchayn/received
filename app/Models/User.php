@@ -174,7 +174,7 @@ class User extends Authenticatable implements SmsServiceContract
      */
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getAuthyAppId()
     {
@@ -182,7 +182,7 @@ class User extends Authenticatable implements SmsServiceContract
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getPhoneNumber(): string
     {
@@ -190,7 +190,7 @@ class User extends Authenticatable implements SmsServiceContract
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getCountryCode(): string
     {
@@ -198,7 +198,7 @@ class User extends Authenticatable implements SmsServiceContract
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function setAuthyAppId(string $id)
     {

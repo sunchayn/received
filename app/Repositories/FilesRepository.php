@@ -6,12 +6,10 @@ use App\Models\Folder;
 use Illuminate\Http\UploadedFile;
 
 /**
- * Class FilesRepository
- * @package App\Repositories
+ * Class FilesRepository.
  */
 class FilesRepository
 {
-
     /**
      * Create a new file.
      *
@@ -38,6 +36,7 @@ class FilesRepository
     private function getType(UploadedFile $file)
     {
         $mime = $file->getMimeType();
+
         return $mime ? explode('/', $mime)[0] : 'n/a';
     }
 

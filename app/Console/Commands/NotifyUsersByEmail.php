@@ -36,7 +36,6 @@ class NotifyUsersByEmail extends Command
 
     /**
      * Execute the console command.
-     *
      */
     public function handle()
     {

@@ -38,7 +38,7 @@ class Subscription extends Model
      */
     public function remainingStorage()
     {
-        return $this->getSuitableSizeUnit( $this->remainingStorageRaw() );
+        return $this->getSuitableSizeUnit($this->remainingStorageRaw());
     }
 
     /**
