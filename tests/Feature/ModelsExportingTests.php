@@ -5,12 +5,10 @@ namespace Tests\Feature;
 use App\Models\File;
 use App\Models\Plan;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class ModelsExportingTests extends TestCase
 {
-
     use RefreshDatabase;
 
     /**
