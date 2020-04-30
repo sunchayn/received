@@ -1,7 +1,7 @@
 ![Received;](https://received.blob.core.windows.net/assets/logo-200px.png)
 ---
 
-[![Actions Status](https://github.com/sunchayn/received/workflows/Received%20CI/badge.svg)](https://github.com/ravgeetdhillon/dropilio/actions)
+[![Actions Status](https://github.com/sunchayn/received/workflows/Received%20CI/badge.svg)](https://github.com/sunchayn/received/actions)
 [![Coverage Status](https://coveralls.io/repos/github/sunchayn/received/badge.svg?branch=master)](https://coveralls.io/github/sunchayn/received?branch=master)
 [![StyleCI](https://github.styleci.io/repos/253168130/shield?branch=master)](https://github.styleci.io/repos/253168130)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](./LICENSE)
