@@ -139,6 +139,7 @@ class FilesUploadTest extends TestCase
     public function file_uploading_data_provider()
     {
         $content = 'ccc'; // 3 Bytes
+
         return [
             [
                 [
