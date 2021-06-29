@@ -19,7 +19,8 @@ trait CreatesApplication
 
         $middleware = \App\Http\Middleware\VerifyCsrfToken::class;
 
-        $app->instance($middleware, new class {
+        $app->instance($middleware, new class
+        {
             public function handle($request, $next)
             {
                 return $next($request);

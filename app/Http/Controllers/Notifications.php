@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Auth;
-use Illuminate\Http\Request;
 
 class Notifications extends Controller
 {
