@@ -27,13 +27,12 @@ use Illuminate\Support\Collection;
  * @property Carbon|null $last_code_sent_at
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- *
  * @property Collection|null $folders
  * @property Collection|null $shared
  * @property OngoingNewPhoneVerification|null $ongoingNewPhoneVerification
  * @property NotificationPrefs $notificationPrefs
  * @property Subscription $subscription
- * @property  Collection|null $notifications
+ * @property Collection|null $notifications
  * @property  Collection|null unreadNotifications
  * @property Plan $plan
  *

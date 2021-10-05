@@ -14,7 +14,7 @@ class Profile extends Controller
      *
      * Change current user username.
      *
-     * @param ChangingUsernameRequest $request
+     * @param  ChangingUsernameRequest  $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function username(ChangingUsernameRequest $request)
@@ -29,7 +29,7 @@ class Profile extends Controller
      *
      * Update user profile's data.
      *
-     * @param ChangingProfileDataRequest $request
+     * @param  ChangingProfileDataRequest  $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function profile(ChangingProfileDataRequest $request)

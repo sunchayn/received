@@ -16,7 +16,7 @@ class Controller extends BaseController
      *
      * @param $route
      * @param $error
-     * @param int $status
+     * @param  int  $status
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
     public function redirectWithError($route, $error, $status = 422)
@@ -35,7 +35,7 @@ class Controller extends BaseController
      * Return a JSON error.
      *
      * @param $error
-     * @param int $status
+     * @param  int  $status
      * @return \Illuminate\Http\JsonResponse
      */
     public function jsonError($error, $status = 422)
@@ -49,7 +49,7 @@ class Controller extends BaseController
      * Return JSON success message.
      *
      * @param $message
-     * @param int $status
+     * @param  int  $status
      * @return \Illuminate\Http\JsonResponse
      */
     public function jsonSuccess($message, $status = 200)
@@ -76,7 +76,7 @@ class Controller extends BaseController
      * Return a json array of validation errors with HTTP Unprocessable Entity Code.
      *
      * @param $errors
-     * @param array $data Extra data tp send alongside the errors
+     * @param  array  $data  Extra data tp send alongside the errors
      * @return \Illuminate\Http\JsonResponse
      */
     public function validationErrors($errors, $data = [])
@@ -108,7 +108,7 @@ class Controller extends BaseController
      * Return JSON data.
      *
      * @param $data
-     * @param int $status
+     * @param  int  $status
      * @return \Illuminate\Http\JsonResponse
      */
     public function jsonData($data, $status = 200)

@@ -17,9 +17,9 @@ class Folders extends \App\Http\Controllers\Controller
      *
      * Check folder availability for upload
      *
-     * @param FolderUnlockRequest $request
-     * @param FoldersRepository $folders
-     * @param UsersRepository $users
+     * @param  FolderUnlockRequest  $request
+     * @param  FoldersRepository  $folders
+     * @param  UsersRepository  $users
      * @param $username
      * @return \Illuminate\Http\JsonResponse
      */
@@ -65,9 +65,9 @@ class Folders extends \App\Http\Controllers\Controller
      *
      * Upload files to the specified folder by password.
      *
-     * @param FilesUploadRequest $request
-     * @param FoldersRepository $folders
-     * @param UsersRepository $users
+     * @param  FilesUploadRequest  $request
+     * @param  FoldersRepository  $folders
+     * @param  UsersRepository  $users
      * @param $username
      * @return \Illuminate\Http\JsonResponse
      */

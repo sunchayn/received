@@ -20,7 +20,7 @@ class FoldersRepository
     /**
      * Create a folder.
      *
-     * @param array $data
+     * @param  array  $data
      * @return \Illuminate\Database\Eloquent\Model
      */
     public function create(array $data)
@@ -41,8 +41,8 @@ class FoldersRepository
     /**
      * Update a folder.
      *
-     * @param Folder $folder
-     * @param array $data
+     * @param  Folder  $folder
+     * @param  array  $data
      * @return Folder
      */
     public function update(Folder $folder, array $data)
@@ -59,8 +59,8 @@ class FoldersRepository
     /**
      * Share a folder.
      *
-     * @param Folder $folder
-     * @param array $data
+     * @param  Folder  $folder
+     * @param  array  $data
      * @return Folder
      */
     public function share(Folder $folder, array $data)
@@ -76,8 +76,8 @@ class FoldersRepository
     /**
      * Change folder password.
      *
-     * @param Folder $folder
-     * @param array $data
+     * @param  Folder  $folder
+     * @param  array  $data
      * @return Folder
      */
     public function changePassword(Folder $folder, array $data)
@@ -92,7 +92,7 @@ class FoldersRepository
     /**
      * Revoke folder access.
      *
-     * @param Folder $folder
+     * @param  Folder  $folder
      * @return Folder
      */
     public function revoke(Folder $folder)
@@ -108,7 +108,7 @@ class FoldersRepository
     /**
      * Delete a folder.
      *
-     * @param Folder $folder
+     * @param  Folder  $folder
      * @return bool
      */
     public function delete(Folder $folder)
@@ -126,8 +126,8 @@ class FoldersRepository
     /**
      * Find the folder identified by the given $password.
      *
-     * @param User $user
-     * @param string $password
+     * @param  User  $user
+     * @param  string  $password
      * @return Fodler|mixed|null
      */
     public function getFolderByPassword(User $user, string $password)
@@ -168,8 +168,8 @@ class FoldersRepository
     /**
      * Create physical folder in the bucket.
      *
-     * @param string $bucket
-     * @param Folder $folder
+     * @param  string  $bucket
+     * @param  Folder  $folder
      */
     private function createFolderStorageEndpoint(string $bucket, Folder $folder)
     {
@@ -195,7 +195,7 @@ class FoldersRepository
     /**
      * Delete a folder from the bucket.
      *
-     * @param Folder $folder
+     * @param  Folder  $folder
      * @return bool
      */
     private function deleteDirectory(Folder $folder)
@@ -207,7 +207,7 @@ class FoldersRepository
      * Determine if the folder owner has enough storage to accept more files or not.
      *
      * @param $files
-     * @param Subscription $subscription
+     * @param  Subscription  $subscription
      * @return bool
      */
     public function canUploadFiles($files, Subscription $subscription)
@@ -241,7 +241,7 @@ class FoldersRepository
      * Store files in the bucket.
      *
      * @param $files
-     * @param Folder $folder
+     * @param  Folder  $folder
      * @return array
      */
     public function uploadFiles($files, Folder $folder)
@@ -261,7 +261,7 @@ class FoldersRepository
     /**
      * Create a ZIP archive for the folder.
      *
-     * @param Folder $folder
+     * @param  Folder  $folder
      * @return string
      */
     public function zip(Folder $folder)

@@ -21,6 +21,7 @@ class AccountSettingsTest extends TestCase
 
     /**
      * @dataProvider phone_changing_data_provider
+     *
      * @param $data
      * @test
      */
@@ -82,6 +83,7 @@ class AccountSettingsTest extends TestCase
 
     /**
      * @dataProvider phone_changing_data_provider
+     *
      * @param $data
      * @test
      */

@@ -71,6 +71,7 @@ class ProfileSettingsTest extends TestCase
     /**
      * @dataProvider valid_profile_data_provider
      * @test
+     *
      * @param $data
      */
     public function user_can_change_his_profile($data)
@@ -87,6 +88,7 @@ class ProfileSettingsTest extends TestCase
     /**
      * @dataProvider invalid_profile_data_provider
      * @test
+     *
      * @param $data
      * @param $expectedErrors
      */

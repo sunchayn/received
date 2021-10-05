@@ -49,6 +49,7 @@ class FoldersManagementTest extends TestCase
 
     /**
      * @dataProvider folder_valid_data
+     *
      * @param $data
      * @test
      */
@@ -71,6 +72,7 @@ class FoldersManagementTest extends TestCase
 
     /**
      * @dataProvider folder_valid_data
+     *
      * @param $data
      * @test
      */
@@ -88,6 +90,7 @@ class FoldersManagementTest extends TestCase
 
     /**
      * @dataProvider folder_valid_data
+     *
      * @param $data
      * @test
      */
@@ -106,6 +109,7 @@ class FoldersManagementTest extends TestCase
 
     /**
      * @dataProvider folder_valid_data
+     *
      * @param $data
      * @test
      */
@@ -123,6 +127,7 @@ class FoldersManagementTest extends TestCase
 
     /**
      * @dataProvider folder_invalid_data
+     *
      * @param $data
      * @param $expectedErrors
      * @test
@@ -139,8 +144,10 @@ class FoldersManagementTest extends TestCase
 
     /**
      * @dataProvider folder_valid_data
+     *
      * @param $data
      * @test
+     *
      * @throws \Exception
      */
     public function it_does_not_allow_multiple_folders_with_the_same_name($data)
@@ -282,6 +289,7 @@ class FoldersManagementTest extends TestCase
 
     /**
      * @dataProvider folder_valid_data
+     *
      * @param $data
      * @test
      */

@@ -38,7 +38,7 @@ class UsersRepository
     /**
      * Approve user new phone.
      *
-     * @param User $user
+     * @param  User  $user
      * @return User
      */
     public function confirmOngoingPhoneVerification(User $user)
@@ -59,7 +59,7 @@ class UsersRepository
     /**
      * Mark a user as verified.
      *
-     * @param User $user
+     * @param  User  $user
      */
     public function markAsVerified(User $user)
     {
@@ -72,7 +72,7 @@ class UsersRepository
     /**
      * Clear ongoing 2FA status from the user.
      *
-     * @param User $user
+     * @param  User  $user
      */
     public function clear2FaStatus(User $user)
     {
@@ -93,6 +93,7 @@ class UsersRepository
 
     /**
      * Get a user by its username.
+     *
      * @param $username
      * @return User
      */

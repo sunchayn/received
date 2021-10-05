@@ -17,18 +17,21 @@ trait Verification
 {
     /**
      * Field mapping for verification request id.
+     *
      * @var string
      */
     protected $verificationIdField = 'verification_id';
 
     /**
      * Field mapping for Ongoing 2FA requests.
+     *
      * @var string
      */
     protected $ongoing2FaField = 'ongoing_two_fa';
 
     /**
      * Field mapping for sms delivery time.
+     *
      * @var string
      */
     protected $smsDeliveryTimeField = 'last_code_sent_at';
@@ -50,7 +53,7 @@ trait Verification
     /**
      * Send a verification code to user phone.
      *
-     * @param null $phoneNumber A different phone number to send verification to (used when changing user phone)
+     * @param  null  $phoneNumber  A different phone number to send verification to (used when changing user phone)
      * @return bool|string
      */
     public function sendVerificationCode($phoneNumber = null)
@@ -83,7 +86,7 @@ trait Verification
     /**
      * Check the integrity of the given code.
      *
-     * @param string $code
+     * @param  string  $code
      * @return bool
      */
     public function checkVerificationCode(string $code)
@@ -139,7 +142,7 @@ trait Verification
     /**
      * Check the integrity of the given 2FA code.
      *
-     * @param string $code
+     * @param  string  $code
      * @return bool
      */
     public function check2FaCode(string $code)

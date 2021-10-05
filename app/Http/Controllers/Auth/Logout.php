@@ -12,6 +12,7 @@ class Logout extends Controller
      * GET /auth/logout.
      *
      * Logout the current user
+     *
      * @return RedirectResponse
      */
     public function logout()
