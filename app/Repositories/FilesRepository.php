@@ -13,8 +13,8 @@ class FilesRepository
     /**
      * Create a new file.
      *
-     * @param Folder $folder
-     * @param UploadedFile $file
+     * @param  Folder  $folder
+     * @param  UploadedFile  $file
      * @return \Illuminate\Database\Eloquent\Model
      */
     public function create(Folder $folder, UploadedFile $file)
@@ -30,7 +30,7 @@ class FilesRepository
     /**
      * Determine file type category from its Mime.
      *
-     * @param UploadedFile $file
+     * @param  UploadedFile  $file
      * @return mixed|string
      */
     private function getType(UploadedFile $file)
@@ -43,8 +43,8 @@ class FilesRepository
     /**
      * Sort out a unique name for the file.
      *
-     * @param Folder $folder
-     * @param UploadedFile $file
+     * @param  Folder  $folder
+     * @param  UploadedFile  $file
      * @return mixed|string
      */
     private function decideFileName(Folder $folder, UploadedFile $file)

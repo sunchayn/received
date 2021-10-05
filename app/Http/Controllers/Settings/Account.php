@@ -17,7 +17,7 @@ class Account extends Controller
      *
      * Start a phone changing process.
      *
-     * @param ChangingPhoneRequest $request
+     * @param  ChangingPhoneRequest  $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function changePhone(ChangingPhoneRequest $request)
@@ -50,8 +50,8 @@ class Account extends Controller
      *
      * Verify a phone number and update user data if it's valid.
      *
-     * @param VerifyingPhoneRequest $request
-     * @param UsersRepository $users
+     * @param  VerifyingPhoneRequest  $request
+     * @param  UsersRepository  $users
      * @param $verification_id
      * @return \Illuminate\Http\JsonResponse
      */
@@ -81,7 +81,7 @@ class Account extends Controller
      *
      * Change current user password.
      *
-     * @param ChangingPasswordRequest $request
+     * @param  ChangingPasswordRequest  $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function password(ChangingPasswordRequest $request)

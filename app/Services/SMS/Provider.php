@@ -16,6 +16,7 @@ class Provider
 
     /**
      * Create a fake service for testing.
+     *
      * @param $config
      */
     public static function setupFakeService($config)
@@ -25,6 +26,7 @@ class Provider
 
     /**
      * Provider constructor.
+     *
      * @throws ServiceNotSupportedException
      */
     public function __construct()
@@ -45,6 +47,7 @@ class Provider
 
     /**
      * Get the initialized SMS service.
+     *
      * @return Twilio|Fake|null
      */
     public function getService()

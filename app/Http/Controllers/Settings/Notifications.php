@@ -13,7 +13,7 @@ class Notifications extends Controller
      *
      *  Update user notifications preferences
      *
-     * @param NotificationsRequest $request
+     * @param  NotificationsRequest  $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function save(NotificationsRequest $request)

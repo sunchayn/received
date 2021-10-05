@@ -8,12 +8,14 @@ class SignupRequest
 {
     /**
      * The validated data.
+     *
      * @var array
      */
     protected $data = [];
 
     /**
      * The validation errors.
+     *
      * @var array
      */
     protected $errors = [];
@@ -35,6 +37,7 @@ class SignupRequest
 
     /**
      * Redirect the user to the right route with the validation errors.
+     *
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
     public function sendBackErrors()
@@ -53,6 +56,7 @@ class SignupRequest
 
     /**
      * Apply the request validation rules and validate it.
+     *
      * @throws \Illuminate\Validation\ValidationException
      */
     public function validate()
@@ -70,6 +74,7 @@ class SignupRequest
 
     /**
      * Determine whether the given request data was valid or not.
+     *
      * @return bool
      */
     public function fails()
@@ -79,6 +84,7 @@ class SignupRequest
 
     /**
      * Return the validated data.
+     *
      * @return array
      */
     public function validated()

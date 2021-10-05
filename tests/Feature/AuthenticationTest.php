@@ -22,6 +22,7 @@ class AuthenticationTest extends TestCase
 
     /**
      * @dataProvider valid_user_data
+     *
      * @param $data
      * @test
      */
@@ -37,6 +38,7 @@ class AuthenticationTest extends TestCase
 
     /**
      * @dataProvider valid_user_data
+     *
      * @param $data
      * @test
      */
@@ -52,6 +54,7 @@ class AuthenticationTest extends TestCase
 
     /**
      * @dataProvider invalid_user_data
+     *
      * @param $data
      * @param $expectedErrors
      * @test
@@ -141,6 +144,7 @@ class AuthenticationTest extends TestCase
     /**
      * @dataProvider valid_user_data
      * @test
+     *
      * @param $data
      */
     public function user_cant_login_with_invalid_credentials($data)
@@ -171,6 +175,7 @@ class AuthenticationTest extends TestCase
      * or close then open it.
      *
      * The logic is handled within a Middleware.
+     *
      * @test
      */
     public function it_only_redirect_unverified_users_to_verification_page()
@@ -200,6 +205,7 @@ class AuthenticationTest extends TestCase
      * or close then open it.
      *
      * The logic is handled within a Middleware.
+     *
      * @test
      */
     public function it_redirect_the_right_users_to_2fa_page()
