@@ -16,8 +16,8 @@ class Files extends Controller
      *
      * Download a given file.
      *
-     * @param DownloadRequest $request
-     * @param File $file
+     * @param  DownloadRequest  $request
+     * @param  File  $file
      * @return \Symfony\Component\HttpFoundation\StreamedResponse
      */
     public function download(DownloadRequest $request, File $file)
@@ -30,9 +30,10 @@ class Files extends Controller
      *
      * Delete a given file.
      *
-     * @param DeleteRequest $request
-     * @param File $file
+     * @param  DeleteRequest  $request
+     * @param  File  $file
      * @return \Illuminate\Http\JsonResponse
+     *
      * @throws \Exception
      */
     public function delete(DeleteRequest $request, File $file)

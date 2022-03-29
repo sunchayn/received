@@ -18,7 +18,6 @@ use Illuminate\Support\Collection;
  * @property Carbon|null $last_code_sent_at
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- *
  * @property Collection|null $folders
  *
  * @mixin Builder

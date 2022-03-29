@@ -26,9 +26,10 @@ class Signup extends \App\Http\Controllers\Controller
      *
      * Attempt to create a user, send a verification code with the given data.
      *
-     * @param SignupRequest $request
-     * @param UsersRepository $users
+     * @param  SignupRequest  $request
+     * @param  UsersRepository  $users
      * @return \Illuminate\Http\JsonResponse|RedirectResponse
+     *
      * @throws \Illuminate\Validation\ValidationException
      */
     public function store(SignupRequest $request, UsersRepository $users)

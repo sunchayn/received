@@ -67,6 +67,7 @@ class FilesUploadTest extends TestCase
 
     /**
      * @dataProvider file_uploading_data_provider
+     *
      * @param $files
      * @param $expectedSize
      * @test
@@ -106,6 +107,7 @@ class FilesUploadTest extends TestCase
 
     /**
      * @dataProvider file_uploading_data_provider
+     *
      * @param $files
      * @param $expectedSize
      * @test

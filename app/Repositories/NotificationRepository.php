@@ -15,9 +15,9 @@ class NotificationRepository
     /**
      * Create a new notification for RECEIVED_FILES type.
      *
-     * @param User $user
-     * @param Folder $folder
-     * @param int $numberOfFiles
+     * @param  User  $user
+     * @param  Folder  $folder
+     * @param  int  $numberOfFiles
      */
     public static function createForFilesUploaded(User $user, Folder $folder, int $numberOfFiles)
     {
@@ -38,7 +38,7 @@ class NotificationRepository
      * Update a previous unseen notification to accumulate more files to the notification content.
      *
      * @param $notification
-     * @param int $numberOfFiles
+     * @param  int  $numberOfFiles
      */
     public static function updateReceivedFilesNotificationWithNewData($notification, int $numberOfFiles)
     {
@@ -58,8 +58,8 @@ class NotificationRepository
     /**
      * Create a notification content for uploaded files.
      *
-     * @param int $numberOfFiles
-     * @param string $folderName
+     * @param  int  $numberOfFiles
+     * @param  string  $folderName
      * @return string
      */
     public static function craftContentForFiles(int $numberOfFiles, string $folderName)
@@ -72,9 +72,9 @@ class NotificationRepository
     /**
      * Push the notification to users using another channels like ( SMS, Emails ).
      *
-     * @param string $channel
-     * @param \Closure $shouldSend
-     * @param \Closure $delivery
+     * @param  string  $channel
+     * @param  \Closure  $shouldSend
+     * @param  \Closure  $delivery
      */
     public static function deliveryNotifications(string $channel, \Closure $shouldSend, \Closure $delivery)
     {

@@ -36,6 +36,7 @@ class UserNotificationPreferencesTest extends TestCase
     /**
      * @dataProvider preferences_data_provider
      * @test
+     *
      * @param $data
      */
     public function user_can_update_his_notification_preferences($data)
