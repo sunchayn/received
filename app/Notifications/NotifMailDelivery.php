@@ -15,7 +15,7 @@ class NotifMailDelivery extends Notification
     /**
      * Create a new notification instance.
      *
-     * @param string $content
+     * @param  string  $content
      */
     public function __construct(string $content)
     {

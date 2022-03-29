@@ -49,7 +49,7 @@ class Notification extends Model
     /**
      * Get only the undelivered notifications for the given $channel.
      *
-     * @param string $channel
+     * @param  string  $channel
      * @return Notification
      */
     public static function notNotified(string $channel)

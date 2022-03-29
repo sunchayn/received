@@ -15,7 +15,7 @@ class Security extends \App\Http\Controllers\Controller
      *
      * Return the verification code form page.
      *
-     * @param UsersRepository $users
+     * @param  UsersRepository  $users
      * @param $verification_id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
      */
@@ -35,8 +35,8 @@ class Security extends \App\Http\Controllers\Controller
      *
      * Check the integrity of the entered code.
      *
-     * @param VerificationRequest $request
-     * @param UsersRepository $users
+     * @param  VerificationRequest  $request
+     * @param  UsersRepository  $users
      * @param $verification_id
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
@@ -78,8 +78,8 @@ class Security extends \App\Http\Controllers\Controller
      *
      * Check the integrity of the entered 2fa code.
      *
-     * @param TwoFactorAuthRequest $request
-     * @param UsersRepository $users
+     * @param  TwoFactorAuthRequest  $request
+     * @param  UsersRepository  $users
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
     public function check2FA(TwoFactorAuthRequest $request, UsersRepository $users)

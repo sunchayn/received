@@ -19,9 +19,9 @@ class FilesUploaded
     /**
      * Create a new event instance.
      *
-     * @param User $user
-     * @param Folder $folder
-     * @param array $files
+     * @param  User  $user
+     * @param  Folder  $folder
+     * @param  array  $files
      */
     public function __construct(User $user, Folder $folder, array $files)
     {

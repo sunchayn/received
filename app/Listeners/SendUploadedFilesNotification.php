@@ -18,7 +18,7 @@ class SendUploadedFilesNotification
     /**
      * Handle the event.
      *
-     * @param FilesUploaded $event
+     * @param  FilesUploaded  $event
      * @return void
      */
     public function handle(FilesUploaded $event)

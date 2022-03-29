@@ -15,6 +15,7 @@ class Fake implements ProviderInterface
 
     /**
      * Fake constructor.
+     *
      * @param $config
      */
     public function __construct($config = [])

@@ -9,7 +9,7 @@ trait StorageSize
     /**
      * Get the size in the most suitable unit from the given list.
      *
-     * @param float $size Size in Kb
+     * @param  float  $size  Size in Kb
      * @return string
      */
     public function getSuitableSizeUnit(float $size)

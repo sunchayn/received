@@ -14,7 +14,7 @@ interface SmsServiceContract
     /**
      * Set an Authy app id for the given user.
      *
-     * @param string $id
+     * @param  string  $id
      * @return mixed
      */
     public function setAuthyAppId(string $id);

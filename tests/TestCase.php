@@ -17,9 +17,10 @@ abstract class TestCase extends BaseTestCase
 
     /**
      * Mimic an asynchronous request.
+     *
      * @param $verb
      * @param $route
-     * @param array $data
+     * @param  array  $data
      * @return TestResponse
      */
     public function ajax($verb, $route, $data = [])
@@ -29,7 +30,8 @@ abstract class TestCase extends BaseTestCase
 
     /**
      * Create user session with the given $user or authenticate a new one.
-     * @param User|null $user
+     *
+     * @param  User|null  $user
      * @return \Illuminate\Contracts\Auth\Authenticatable
      */
     public function signin(User $user = null)

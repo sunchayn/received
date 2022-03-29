@@ -16,7 +16,7 @@ class BucketUpdated
     /**
      * Create a new event instance.
      *
-     * @param User $user
+     * @param  User  $user
      */
     public function __construct(User $user)
     {

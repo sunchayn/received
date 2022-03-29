@@ -69,7 +69,7 @@ class Folder extends Model
     /**
      * Check if this folder is owned by the given $user.
      *
-     * @param User $user
+     * @param  User  $user
      * @return bool
      */
     public function isOwnedBy(User $user)

@@ -32,8 +32,8 @@ class Folders extends Controller
      *
      * Create a new folder
      *
-     * @param CreateRequest $request
-     * @param FoldersRepository $folders
+     * @param  CreateRequest  $request
+     * @param  FoldersRepository  $folders
      * @return \Illuminate\Http\JsonResponse
      */
     public function store(CreateRequest $request, FoldersRepository $folders)
@@ -48,9 +48,9 @@ class Folders extends Controller
      *
      * Update a given folder
      *
-     * @param UpdateRequest $request
-     * @param Folder $folder
-     * @param FoldersRepository $folders
+     * @param  UpdateRequest  $request
+     * @param  Folder  $folder
+     * @param  FoldersRepository  $folders
      * @return \Illuminate\Http\JsonResponse
      */
     public function save(UpdateRequest $request, FoldersRepository $folders, Folder $folder)
@@ -65,9 +65,9 @@ class Folders extends Controller
      *
      * Share a given folder
      *
-     * @param ShareRequest $request
-     * @param Folder $folder
-     * @param FoldersRepository $folders
+     * @param  ShareRequest  $request
+     * @param  Folder  $folder
+     * @param  FoldersRepository  $folders
      * @return \Illuminate\Http\JsonResponse
      */
     public function share(ShareRequest $request, FoldersRepository $folders, Folder $folder)
@@ -92,9 +92,9 @@ class Folders extends Controller
      *
      * Change a given folder's password
      *
-     * @param PasswordChangingRequest $request
-     * @param FoldersRepository $folders
-     * @param Folder $folder
+     * @param  PasswordChangingRequest  $request
+     * @param  FoldersRepository  $folders
+     * @param  Folder  $folder
      * @return \Illuminate\Http\JsonResponse
      */
     public function changePassword(PasswordChangingRequest $request, FoldersRepository $folders, Folder $folder)
@@ -107,9 +107,9 @@ class Folders extends Controller
     /**
      * PATCH /folders/revoke/{folder}.
      *
-     * @param RevokeRequest $request
-     * @param FoldersRepository $folders
-     * @param Folder $folder
+     * @param  RevokeRequest  $request
+     * @param  FoldersRepository  $folders
+     * @param  Folder  $folder
      * @return \Illuminate\Http\JsonResponse
      */
     public function revoke(RevokeRequest $request, FoldersRepository $folders, Folder $folder)
@@ -124,9 +124,9 @@ class Folders extends Controller
      *
      * Delete a given folder
      *
-     * @param DeleteRequest $request
-     * @param FoldersRepository $folders
-     * @param Folder $folder
+     * @param  DeleteRequest  $request
+     * @param  FoldersRepository  $folders
+     * @param  Folder  $folder
      * @return \Illuminate\Http\JsonResponse
      */
     public function delete(DeleteRequest $request, FoldersRepository $folders, Folder $folder)
@@ -145,9 +145,9 @@ class Folders extends Controller
      *
      * Download a given folder
      *
-     * @param DownloadRequest $request
-     * @param FoldersRepository $folders
-     * @param Folder $folder
+     * @param  DownloadRequest  $request
+     * @param  FoldersRepository  $folders
+     * @param  Folder  $folder
      * @return \Symfony\Component\HttpFoundation\BinaryFileResponse
      */
     public function download(DownloadRequest $request, FoldersRepository $folders, Folder $folder)

@@ -10,12 +10,14 @@ class StorageSizeTest extends TestCase
     /**
      * @dataProvider size_formatting_data_provider
      * @test
+     *
      * @param $size
      * @param $expectedOutput
      */
     public function it_properly_format_size($size, $expectedOutput)
     {
-        $trait = new class {
+        $trait = new class
+        {
             use StorageSize;
         };
         $this->assertEquals($expectedOutput, $trait->getSuitableSizeUnit($size));
